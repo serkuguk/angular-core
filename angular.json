@@ -80,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "nttdata:build:production"
+              "buildTarget": "nttdata:build:production"
             },
             "development": {
-              "browserTarget": "nttdata:build:development"
+              "buildTarget": "nttdata:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nttdata:build"
+            "buildTarget": "nttdata:build"
           }
         },
         "test": {
