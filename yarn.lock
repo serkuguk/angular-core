@@ -2609,6 +2609,49 @@
   dependencies:
     tslib "^2.2.0"
 
+"@ngrx/effects@^17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-17.0.1.tgz#daee09529cd93c916de7bb331017f15369df45b5"
+  integrity sha512-U7ewZpUoJlLrWyZVyzAMU6Qfxmte7Noi9n/pJb5BR3pWmdHnU+VPs08xnSIQUa0US7K6dJJRTGtcEpEvv/IT4A==
+  dependencies:
+    "@ngrx/operators" "17.0.0-beta.0"
+    tslib "^2.0.0"
+
+"@ngrx/entity@^17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-17.0.1.tgz#75bd13e9c53c6953cd40fa39ebaa7d12b91df113"
+  integrity sha512-7/N/r5GKJgp6sUJKPJmFeCdNU33INViVvg1oootuAEPyzLKEzeu0fuTwVOodm5VVuy89rMi15WGdZel+HDy3zg==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/operators@17.0.0-beta.0":
+  version "17.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/operators/-/operators-17.0.0-beta.0.tgz#030486f3a610fa919d2b155aad3bc7b4c708550d"
+  integrity sha512-EbO8AONuQ6zo2v/mPyBOi4y0CTAp1x4Z+bx7ZF+Pd8BL5ma53BTCL1TmzaeK5zPUe0yApudLk9/ZbHXPnVox5A==
+  dependencies:
+    tslib "^2.3.0"
+
+"@ngrx/router-store@^17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-17.0.1.tgz#be6547aac1a8aa92cc0da4cd7e8d1416ad84fb29"
+  integrity sha512-O4kz/yvIaAfG0Hzloj24RqL17E1oddQ7wpxjU6UrTr/oZkX1/lIehaSxSJIVzq02vQWShIq0RFo/t8ac5mzqZQ==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/store-devtools@^17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-17.0.1.tgz#42824879bcdccba5db83345318a5262a4a2789b7"
+  integrity sha512-1/BrHmd1KnjEvZtUkmMeOAhftzTLCBxpk0KoVSnl7BFr0LGQZrYUTXHI3b6tzJ2igGuj0d9hk/JRMOXmYn/5WA==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/store@^17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-17.0.1.tgz#e8ebad6ff28e53cd7c945939d84f26be965a406c"
+  integrity sha512-BmVzN+fqyz0ZrVEmJ+jrNwePMKcpNL49vb8sbQ3yDDftxgZz2HqRKFMexqlXpz5ixwK5LqTOblHNQOgi9irsTw==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngtools/webpack@17.0.3":
   version "17.0.3"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-17.0.3.tgz#3be3358353df2cad8daad089187a6bcc2e59d0e7"
@@ -7742,7 +7785,7 @@ typed-assert@^1.0.8:
   resolved "https://registry.yarnpkg.com/typed-assert/-/typed-assert-1.0.9.tgz#8af9d4f93432c4970ec717e3006f33f135b06213"
   integrity sha512-KNNZtayBCtmnNmbo5mG47p1XsCyrx6iVqomjcZnec/1Y5GGARaxPs6r49RnSPeUP3YjNYiU9sQHAtY4BBvnZwg==
 
-typescript@~5.2.2:
+typescript@5.2.0:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
   integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
