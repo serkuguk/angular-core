@@ -7,11 +7,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from "src/environments/environment";
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -24,6 +31,15 @@ import { StoreModule } from "@ngrx/store";
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      defaultLanguage:'sp'
+    }),
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot({router: routerReducer},{
         runtimeChecks: {

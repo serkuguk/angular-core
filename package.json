@@ -25,6 +25,8 @@
     "@ngrx/router-store": "^17.0.1",
     "@ngrx/store": "^17.0.1",
     "@ngrx/store-devtools": "^17.0.1",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "@taiga-ui/addon-charts": "^3.44.1",
     "@taiga-ui/addon-table": "^3.44.1",
     "@taiga-ui/addon-tablebars": "^3.44.1",

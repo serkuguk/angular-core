@@ -23,8 +23,11 @@
       "dom"
     ],
     "paths": {
+      "@app/*": ["./src/app"],
       "@core": ["./src/app/core"],
-      "@core/*": ["./src/app/core"]
+      "@core/*": ["./src/app/core"],
+      "@components/*": ["./src/app/components"],
+      "@shared/*": ["./src/app/shared"]
     },
     "useDefineForClassFields": false
   },

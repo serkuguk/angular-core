@@ -11,8 +11,6 @@ import {BasicExampleRoutingModule } from './basic-example-routing.module'
 import {BasicExampleComponent} from './components/basic-example/basic-example.component'
 
 
-
-
 @NgModule({
   declarations: [
     BasicExampleComponent

@@ -1,0 +1,33 @@
+<table class="table" *ngIf="displayedColumns.length > 0">
+  <thead>
+    <tr>
+      <th *ngFor="let col of displayedColumns" [style]="columnWidths[col]">
+        <ng-container
+          *ngTemplateOutlet="getHeaderTemplate(col) || defaultHeader"
+        ></ng-container>
+  
+        <ng-template #defaultHeader>
+          {{ col }}
+        </ng-template>
+      </th>
+    </tr>
+  </thead>
+    <tbody>
+      <tr 
+        *ngFor="let row of dataSource; let idx=index; let even=even" 
+        [class.selected-tr-naranja]="selectedRow?.id === row.id"
+        (click)="changeTableRowColor(row)"
+      >
+        <td *ngFor="let col of displayedColumns" [style]="columnWidths[col]">
+            <ng-container
+              *ngTemplateOutlet="getCellTemplate(col) || defaultCell; context: {$implicit: row}"
+            ></ng-container>
+
+            <ng-template #defaultCell>
+                {{ row[col] }}
+            </ng-template> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+

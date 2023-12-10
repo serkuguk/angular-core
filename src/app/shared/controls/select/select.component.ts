@@ -2,10 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@ang
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 import { MatSelectChange } from '@angular/material/select';
-
-import { ControlItem, Value } from '@app/models/frontend';
-export { ControlItem, Value } from '@app/models/frontend';
-
+import { ControlItemInterface, Value } from '../../types/frontend/types/control-item-interface';
 @Component({
     selector: 'app-select',
     templateUrl: './select.component.html',
@@ -19,12 +16,12 @@ export { ControlItem, Value } from '@app/models/frontend';
     ]
 })
 export class SelectComponent implements OnInit, ControlValueAccessor {
-    @Input() items: ControlItem[];
-    @Input() placeholder: string;
+    @Input() items: ControlItemInterface[] | undefined;
+    @Input() placeholder: string | undefined;
     @Output() changed = new EventEmitter<Value>();
 
-    value: Value;
-    isDisabled: boolean;
+    value: Value | undefined;
+    isDisabled: boolean = false;
 
     constructor() { }
 

@@ -9,6 +9,7 @@ export type ButtonType = 'button' | 'submit';
 export class ButtonComponent implements OnInit {
 
     @Input() type: ButtonType;
+    @Input() disabled: boolean = false;
 
     constructor() {
         this.type = 'button';

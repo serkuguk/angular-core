@@ -5,15 +5,15 @@ const routes: Routes = [
   {
       path: '',
       children: [
-          {
-              path: 'basic-example',
-              loadChildren: () => import('./pages/basic-example/basic-example.module').then(m => m.BasicExampleModule)
-          },
-          {
-              path: '',
-              pathMatch: 'full',
-              redirectTo: 'static/welcome'
-          }
+        {
+            path: 'basic-example',
+            loadChildren: () => import('./pages/basic-example/basic-example.module').then(m => m.BasicExampleModule)
+        },
+        {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'static/welcome'
+        }
       ]
     },
     {

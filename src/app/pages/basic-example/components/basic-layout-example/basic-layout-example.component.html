@@ -1,0 +1,127 @@
+<div class="ZoomResponsive"> 
+    <div class="basic-container container-fluid w-100">
+        <h1>Basic Layout Example</h1>
+
+        <div class="wrapper">
+            <basic-layout [formGroup]="form" 
+                    [canEdit]="canEdit"
+                    [canSave]="form.valid && canSave"
+                    [messages]="messageMap$ | async"
+                    (clearButton)="clearButton()"
+                    (addNewButton)="addNewButton()"
+                    (editButton)="editButton()"
+                    (deleteButton)="removeButton()"
+                    (saveButton)="saveButton()"
+                    (cancelButton)="cancelButton()">
+            <ng-container filter>
+                <div class="filter_container"> 
+                    <div class="filter_container-item">
+                        <app-form-field label="Basic Input"
+                            [required]="false"
+                            [isInline]="isInline">
+                            <app-input formControlName="firstInput"
+                                    [class]="'hand-cursor rounded'" 
+                                    [placeholder]="'Nombre...'"
+                                    (changed)="filterData()"></app-input>
+                        </app-form-field>  
+                    </div>
+                    <div class="filter_container-item">
+                        <app-form-field label="Primer Selector"
+                                        [required]="false"
+                                        [isInline]="isInline">
+                            <app-select formControlName="firstSeletSearch" 
+                                        [class]="'hand-cursor rounded'"
+                                        [items]="[]"
+                                        [placeholder]="'Selecciona un tipo...'"
+                                        [emptyOption]="true"
+                                        (changed)="filterData()"></app-select>
+                        </app-form-field>
+                    </div>                          
+                    <div class="filter_container-item">
+                        <app-form-field label="Área de conocimiento"
+                                        [required]="false"
+                                        [isInline]="isInline">
+                            <app-select formControlName="secondSelectSearch" 
+                                        [class]="'hand-cursor rounded'"
+                                        [items]="[]" 
+                                        [placeholder]="'Selecciona un área...'"
+                                        [emptyOption]="true"
+                                        (changed)="filterData()"></app-select>
+                        </app-form-field>
+                    </div>
+                    <div class="filter_container-item checkbox-item">
+                        <app-checkboxes 
+                            formControlName="isTransversalSearch" 
+                            [items]="checkbox"
+                            (changed)="filterData()"
+                        ></app-checkboxes>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container table>
+                <ng-container  *ngIf="(loading$ | async)">
+                    <div class="loader">
+                        <app-loading></app-loading>
+                    </div>
+                </ng-container>
+                
+                <dynamic-table [dataSource]="dataSource"
+                                     [displayedColumns]="dysplayedColumns" 
+                                     [selectedRow]="selectedRow"
+                                     [columnWidths]="columnWidths"
+                                     (selectRow)="selectRow($event)">
+                    <ng-template appTableHeader="nombre">Nombre</ng-template>
+                    <ng-template appTableHeader="nombre_tipocapacitacion">Tipo de capacitación</ng-template>
+                    <ng-template appTableHeader="nombre_areaconocimiento">Área de conocimiento</ng-template>
+                    <ng-template appTableHeader="es_transversal">Transversal</ng-template>
+
+                    <ng-template appTableCell="nombre" let-row>{{ row.nombre }}</ng-template>
+                    <ng-template appTableCell="nombre_tipocapacitacion" let-row>{{ row.nombre_tipocapacitacion }}</ng-template>
+                    <ng-template appTableCell="nombre_areaconocimiento" let-row>{{ row.nombre_areaconocimiento }}</ng-template>
+                    <ng-template appTableCell="es_transversal" let-row><div class="icon_position"><i [class]="setIconTransversal(row.es_transversal)"></i></div></ng-template>
+                </dynamic-table>
+            </ng-container>
+            <ng-container formulario> 
+                <div class="forumlario_container">
+                    <div class="forumlario_container-item">
+                        <app-form-field label="Nombre"
+                            [required]="true"
+                            [control]="form.controls.inputSave"
+                            [isInline]="isInline">
+                            <app-input formControlName="inputSave"
+                                    [class]="'hand-cursor rounded'"
+                                    [placeholder]="'Nombre...'"
+                            ></app-input>
+                        </app-form-field> 
+                    </div>
+                    <div class="forumlario_container-item">
+                        <app-form-field label="Tipo de capacitación"
+                                        [required]="true"
+                                        [control]="form.controls.firstSelectNew"
+                                        [isInline]="isInline">
+                            <app-select formControlName="firstSelectNew" 
+                                        [class]="'hand-cursor rounded'"
+                                        [items]="tipoCapacitacionItems"
+                                        [emptyOption]="true"
+                                        [placeholder]="'Selecciona un tipo...'"
+                            ></app-select>
+                        </app-form-field>
+                    </div>
+                    <div class="forumlario_container-item">
+                        <app-form-field label="Área de conocimiento"
+                                        [required]="true"
+                                        [control]="form.controls.secondSelectNew"
+                                        [isInline]="isInline">
+                            <app-select formControlName="secondSelectNew"
+                                        [items]="areaconocimientoItems" 
+                                        [emptyOption]="true"
+                                        [placeholder]="'Selecciona un área...'"
+                            ></app-select>
+                        </app-form-field>
+                    </div>    
+                </div>
+             </ng-container>
+            </basic-layout>
+        </div>     
+    </div>
+</div>

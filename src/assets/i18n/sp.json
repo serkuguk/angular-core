@@ -1,0 +1,12 @@
+{
+  "HOME" : {
+    "TITLE": "Bien benido a NTT DATA",
+    "WELCOME": "Gracias {{name}}"
+  },
+  "BUTTON" : {
+    "LANG": {
+      "EN": "Ingles",
+      "SP": "Español"
+    }
+  }
+}
