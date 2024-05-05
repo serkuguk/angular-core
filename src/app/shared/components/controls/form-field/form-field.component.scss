@@ -1,4 +1,4 @@
-@import 'styles/colors';
+//@import 'styles/colors';
 
 .form-field {
     padding-bottom: 8px;
@@ -15,7 +15,7 @@
     &__error {
         opacity: 0;
         font-size: 12px;
-        color: $error;
+        color: red;//$error;
         padding: 4px 0;
         min-height: 22px;
 

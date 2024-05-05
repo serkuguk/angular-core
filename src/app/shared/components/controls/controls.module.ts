@@ -18,23 +18,23 @@ import { AutocompleteModule } from './autocomplete/autocomplete.module';
         InputModule,
         FormFieldModule,
         PasswordModule,
-        SelectModule,
+        /*SelectModule,
         CheckboxesModule,
         RadiosModule,
         DateModule,
         DateRangeModule,
-        AutocompleteModule
+        AutocompleteModule*/
     ],
     exports: [
         InputModule,
         FormFieldModule,
         PasswordModule,
-        SelectModule,
+        /*SelectModule,
         CheckboxesModule,
         RadiosModule,
         DateModule,
         DateRangeModule,
-        AutocompleteModule
+        AutocompleteModule*/
     ]
 })
 export class ControlsModule { }

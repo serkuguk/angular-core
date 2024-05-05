@@ -1,0 +1,24 @@
+<div class="login-wrapper">
+    <div class="login-container">
+        <h3>Login</h3>
+        <form [formGroup]="loginForm">
+            <app-form-field label="Input"
+                        [required]="true"
+                        [control]="loginForm.controls.login"
+                        [isInline]="isInline">
+                <app-input formControlName="login" 
+                           [placeholder]="'Login'"></app-input>
+            </app-form-field>
+            <app-form-field label="Input"
+                        [required]="true"
+                        [control]="loginForm.controls.password"
+                        [isInline]="isInline">
+                <app-input formControlName="password" 
+                           [placeholder]="'Password'"></app-input>
+            </app-form-field>
+        </form>
+        
+        <a routerLink="/basic-example">Example</a> 
+    </div>
+</div>
+

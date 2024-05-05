@@ -8,7 +8,6 @@
         <ng-content></ng-content>
 
         <div class="form-field__error">
-
             <ng-container *ngIf="control && errorKey" [ngSwitch]="errorKey">
                 <span *ngSwitchCase="'min'">Minimum {{control.errors[errorKey].min}}</span>
                 <span *ngSwitchCase="'max'">Maximum {{control.errors[errorKey].max}}</span>
@@ -22,8 +21,6 @@
                     <span *ngIf="!patternError">Pattern does not match</span>
                 </span>
             </ng-container>
-
         </div>
     </div>
-
 </div>

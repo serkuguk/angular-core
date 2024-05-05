@@ -14,11 +14,12 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
     ]
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
-    @Input() placeholder: string;
+    @Input() placeholder?: string;
+    @Input() TextfieldSize?: string = 's';
     @Output() changed = new EventEmitter<string>();
 
-    value: string;
-    isDisabled: boolean;
+    value: string | undefined;
+    isDisabled: boolean | undefined;
 
     constructor() { }
 

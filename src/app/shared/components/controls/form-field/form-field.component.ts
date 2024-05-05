@@ -7,11 +7,11 @@ import { AbstractControl } from '@angular/forms';
     styleUrls: ['./form-field.component.scss']
 })
 export class FormFieldComponent implements OnInit {
-    @Input() label: string;
-    @Input() required: boolean;
+    @Input() label?: string;
+    @Input() required?: boolean;
     @Input() isInline: boolean;
-    @Input() control: AbstractControl;
-    @Input() patternError: string;
+    @Input() control!: AbstractControl;
+    @Input() patternError?: string;
 
     constructor() {
         this.isInline = true;

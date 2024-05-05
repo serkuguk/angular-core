@@ -25,10 +25,10 @@ export interface Placeholder {
 })
 export class DateRangeComponent implements OnInit, ControlValueAccessor {
 
-    @Input() placeholder: Placeholder;
+    @Input() placeholder?: Placeholder;
     @Output() changed = new EventEmitter<Value>();
 
-    form: FormGroup;
+    form!: FormGroup;
 
     constructor(private fb: FormBuilder) { }
 

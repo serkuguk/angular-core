@@ -21,8 +21,8 @@ export { ControlItem, Value } from '@app/models/frontend';
 })
 export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
-    @Input() items: ControlItem[];
-    @Input() placeholder: string;
+    @Input() items!: ControlItem[];
+    @Input() placeholder?: string;
 
     @Output() changed = new EventEmitter<Value>();
 
