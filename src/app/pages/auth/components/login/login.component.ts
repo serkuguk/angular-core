@@ -38,6 +38,10 @@ export class LoginComponent implements OnInit {
               ]
           }]  
       })
-  }      
+  }
+  
+  outputData(event: any) {
+    console.log('OutPut Data', event);
+  }
 
 }

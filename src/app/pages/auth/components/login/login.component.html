@@ -7,6 +7,7 @@
                         [control]="loginForm.controls.login"
                         [isInline]="isInline">
                 <app-input formControlName="login" 
+                            (changed)="outputData($event)"
                            [placeholder]="'Login'"></app-input>
             </app-form-field>
             <app-form-field label="Input"
@@ -14,8 +15,13 @@
                         [control]="loginForm.controls.password"
                         [isInline]="isInline">
                 <app-input formControlName="password" 
+                           (changed)="outputData($event)"
                            [placeholder]="'Password'"></app-input>
             </app-form-field>
+
+            <app-button [icon]="'tuiIconSettings'"
+                        [size]="'l'"
+            >Save</app-button>  
         </form>
         
         <a routerLink="/basic-example">Example</a> 

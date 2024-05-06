@@ -5,6 +5,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from 'src/app/shared/components/controls/input/input.module';
 import { FormFieldModule } from 'src/app/shared/components/controls/form-field/form-field.module';
+import { ButtonModule } from 'src/app/shared/buttons';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -13,7 +14,8 @@ import { FormFieldModule } from 'src/app/shared/components/controls/form-field/f
     LoginRoutingModule,
     ReactiveFormsModule,
     FormFieldModule,
-    InputModule
+    InputModule,
+    ButtonModule
   ],
   exports: [LoginComponent]
 })

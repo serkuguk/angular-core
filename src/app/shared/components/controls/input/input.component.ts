@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
@@ -11,11 +11,13 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
             useExisting: forwardRef(() => InputComponent),
             multi: true
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
     @Input() placeholder?: string;
-    @Input() TextfieldSize?: string = 's';
+    @Input() textfieldSize?: string = 'm';
+    @Input() formControlName?: string;
     @Output() changed = new EventEmitter<string>();
 
     value: string | undefined;
