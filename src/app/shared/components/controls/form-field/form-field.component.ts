@@ -10,6 +10,7 @@ export class FormFieldComponent implements OnInit {
     @Input() label?: string;
     @Input() required?: boolean;
     @Input() isInline: boolean;
+    @Input() showLabel!: boolean;
     @Input() control!: AbstractControl;
     @Input() patternError?: string;
 

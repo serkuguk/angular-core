@@ -1,10 +1,12 @@
 <div class="login-wrapper">
     <div class="login-container">
-        <h3>Login</h3>
+        <h2>NTT DATA</h2>
+        <h3>Login Form</h3>
         <form [formGroup]="loginForm">
             <app-form-field label="Input"
                         [required]="true"
                         [control]="loginForm.controls.login"
+                        [showLabel]="false"
                         [isInline]="isInline">
                 <app-input formControlName="login" 
                             (changed)="outputData($event)"
@@ -13,6 +15,7 @@
             <app-form-field label="Input"
                         [required]="true"
                         [control]="loginForm.controls.password"
+                        [showLabel]="false"
                         [isInline]="isInline">
                 <app-input formControlName="password" 
                            (changed)="outputData($event)"
@@ -21,10 +24,8 @@
 
             <app-button [icon]="'tuiIconSettings'"
                         [size]="'l'"
-            >Save</app-button>  
+            >Login</app-button>  
         </form>
-        
-        <a routerLink="/basic-example">Example</a> 
     </div>
 </div>
 

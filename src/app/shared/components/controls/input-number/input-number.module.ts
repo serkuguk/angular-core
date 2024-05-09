@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputComponent } from './input.component';
+import { InputNumberComponent } from './input-number.component';
 import { TuiInputNumberModule } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
 import { tuiNumberFormatProvider } from '@taiga-ui/core';
 
 @NgModule({
-    declarations: [InputComponent],
+    declarations: [InputNumberComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         TuiInputNumberModule
     ],
     exports: [
-        InputComponent
+        InputNumberComponent
     ],
     providers: [tuiNumberFormatProvider({decimalSeparator: ',', thousandSeparator: '.'})],
 })
-export class InputModule { }
+export class InputNumberModule { }

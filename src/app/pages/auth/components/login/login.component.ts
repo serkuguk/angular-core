@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   //public regexErrors = regexErrors
 
   constructor(private fb: FormBuilder) {
-    this.isInline = true
+    this.isInline = false
   }
 
   ngOnInit(): void {

@@ -1,0 +1,15 @@
+<tui-input
+	tuiTextfieldSize="textfieldSize"
+>
+  {{placeholder}}
+	<input 
+		type="text"
+		tuiTextfield 
+		class="app-input" 
+		[attr.disabled]="isDisabled ? true : null" 
+		(keyup)="onKeyup($event.target.value)" 
+		(blur)="onBlur()"
+		[value]="value"
+	/>
+</tui-input>
+    
