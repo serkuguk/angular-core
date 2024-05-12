@@ -3,6 +3,11 @@
     "TITLE": "Bien benido a NTT DATA",
     "WELCOME": "Gracias {{name}}"
   },
+  "LOGIN" :  {
+    "TITLE": "Formulario de inicio",
+    "USER" : "Ususario",
+    "PASSWORD": "Contraseña"
+  },
   "BUTTON" : {
     "LANG": {
       "EN": "Ingles",

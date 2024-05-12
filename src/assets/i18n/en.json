@@ -3,6 +3,11 @@
     "TITLE": "Welcome, to NTT DATA",
     "WELCOME": "Thank you {{name}},  you are"
   },
+  "LOGIN" :  {
+    "TITLE" : "Login Form",
+    "USER" : "User",
+    "PASSWORD": "Password"
+  },
   "BUTTON" : {
     "LANG": {
       "EN": "English",

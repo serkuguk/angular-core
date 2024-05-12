@@ -1,7 +1,7 @@
 <div class="login-wrapper">
     <div class="login-container">
         <h2>NTT DATA</h2>
-        <h3>Login Form</h3>
+        <h3>{{'LOGIN.TITLE' | translate }}</h3>
         <form [formGroup]="loginForm">
             <app-form-field label="Input"
                         [required]="true"
@@ -10,7 +10,7 @@
                         [isInline]="isInline">
                 <app-input formControlName="login" 
                             (changed)="outputData($event)"
-                           [placeholder]="'Login'"></app-input>
+                           [placeholder]="'LOGIN.USER' | translate"></app-input>
             </app-form-field>
             <app-form-field label="Input"
                         [required]="true"
@@ -19,7 +19,7 @@
                         [isInline]="isInline">
                 <app-input formControlName="password" 
                            (changed)="outputData($event)"
-                           [placeholder]="'Password'"></app-input>
+                           [placeholder]="'LOGIN.PASSWORD' | translate"></app-input>
             </app-form-field>
 
             <app-button [icon]="'tuiIconSettings'"

@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from 'src/app/shared/components/controls/input/input.module';
 import { FormFieldModule } from 'src/app/shared/components/controls/form-field/form-field.module';
 import { ButtonModule } from 'src/app/shared/buttons';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -15,7 +16,8 @@ import { ButtonModule } from 'src/app/shared/buttons';
     ReactiveFormsModule,
     FormFieldModule,
     InputModule,
-    ButtonModule
+    ButtonModule,
+    TranslateModule
   ],
   exports: [LoginComponent]
 })

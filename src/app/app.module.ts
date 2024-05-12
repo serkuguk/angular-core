@@ -15,7 +15,7 @@ import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
-import { HeaderComponent } from "./shared/components/header/header.component";
+import { HeaderModule } from "./shared/components/header/header.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -33,6 +33,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         BrowserAnimationsModule,
         TuiRootModule,
         HttpClientModule,
+        HeaderModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -50,7 +51,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         }),
         EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-        HeaderComponent
     ]
 })
 export class AppModule { }

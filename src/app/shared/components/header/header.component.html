@@ -3,8 +3,8 @@
         <div class="menu">Menu</div>
         <div class="logo">NTT DATA</div>
         <div class="langage">
-            <span>Español</span>
-            <span>English</span>
+            <button (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</button>
+            <button (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</button>
         </div>
         <div class="logout">
             <a router-link="/logout">Logout</a>
