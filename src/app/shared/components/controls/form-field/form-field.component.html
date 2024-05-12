@@ -2,7 +2,7 @@
     @if (showLabel) {
      <label class="form-field__label">
         {{ label }}
-        <span class="form-field__req" *ngIf="required">*</span>
+        @if (required) {<span class="form-field__req">*</span>}
      </label>   
     }
     
@@ -10,19 +10,40 @@
         <ng-content></ng-content>
 
         <div class="form-field__error">
-            <ng-container *ngIf="control && errorKey" [ngSwitch]="errorKey">
-                <span *ngSwitchCase="'min'">Minimum {{control.errors[errorKey].min}}</span>
-                <span *ngSwitchCase="'max'">Maximum {{control.errors[errorKey].max}}</span>
-                <span *ngSwitchCase="'required'">This field is required</span>
-                <span *ngSwitchCase="'requiredTrue'">This field is required</span>
-                <span *ngSwitchCase="'minlength'">At least {{control.errors[errorKey].requiredLength}} characters</span>
-                <span *ngSwitchCase="'maxlength'">No more than {{control.errors[errorKey].requiredLength}}
-                    characters</span>
-                <span *ngSwitchCase="'pattern'">
-                    <span *ngIf="patternError">{{patternError}}</span>
-                    <span *ngIf="!patternError">Pattern does not match</span>
-                </span>
-            </ng-container>
+            @if(control && errorKey) { 
+                @switch(errorKey) {
+                    @case("min") {
+                        <span>Minimum {{control?.errors[errorKey].min}}</span>
+                    }
+                    @case("max") {
+                        <span>Maximum {{control?.errors[errorKey].max}}</span>
+                    }
+                    @case("required") {
+                        <span>This field is required</span>
+                    }
+                    @case("requiredTrue") {
+                        <span>This field is required</span>
+                    }
+                    @case("minlength") {
+                        <span>At least {{control?.errors[errorKey].requiredLength}} characters</span>
+                    }
+                    @case("maxlength") {
+                        <span>No more than {{control?.errors[errorKey].requiredLength}}characters</span>
+                    }
+                    @default {
+                        @if ("pattern") {
+                            <span>
+                                @if (patternError) {
+                                    <span>{{patternError}}</span>
+                                }
+                                @if (!patternError) {
+                                    <span>Pattern does not match</span>
+                                }
+                            </span>
+                        }
+                    }
+                }
+            }
         </div>
     </div>
 </div>
