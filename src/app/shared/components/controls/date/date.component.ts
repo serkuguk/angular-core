@@ -1,9 +1,6 @@
 import { Component, forwardRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-
-type Value = number;
+import { TuiDay } from '@taiga-ui/cdk';
 
 @Component({
     selector: 'app-date',
@@ -19,16 +16,14 @@ type Value = number;
 })
 export class DateComponent implements OnInit, ControlValueAccessor {
 
-    @Input() placeholder: string;
+    @Input() placeholder?: string;
+    @Input() min?: Date;
+    @Input() max?: Date;
 
-    @Input() min: Date;
-
-    @Input() max: Date;
-
-    @Output() changed = new EventEmitter<Value>();
+    @Output() changed = new EventEmitter<TuiDay | null>();
     @Output() closed = new EventEmitter<void>();
 
-    value: Value;
+    value: TuiDay | null = null;
     isDisabled: boolean;
 
     constructor() { }
@@ -36,15 +31,11 @@ export class DateComponent implements OnInit, ControlValueAccessor {
     ngOnInit(): void {
     }
 
-    get inputValue(): Date {
-        return this.value ? new Date(this.value) : null;
-    }
-
     private propagateChange: any = () => { };
     private propagateTouched: any = () => { };
 
-    writeValue(value: Value): void {
-        this.value = value;
+    writeValue(day: TuiDay): void {
+        this.value = day;
     }
 
     registerOnChange(fn: any): void {
@@ -59,8 +50,8 @@ export class DateComponent implements OnInit, ControlValueAccessor {
         this.isDisabled = isDisabled;
     }
 
-    onChanged(event: MatDatepickerInputEvent<Date>): void {
-        const value = event.value ? event.value.getTime() : null;
+    onChanged(day: TuiDay): void {
+        const value = day ? day : null;
 
         this.value = value;
         this.propagateChange(value);

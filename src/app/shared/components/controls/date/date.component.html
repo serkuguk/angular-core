@@ -1,3 +1,7 @@
 <div class="date">
-    
+    <tui-calendar
+    [value]="value"
+    [ariaDisabled]="isDisabled"
+    (dayClick)="onChanged($event)"></tui-calendar>
+    <div *ngIf="value">Chosen date: {{ value }}</div>
 </div>
