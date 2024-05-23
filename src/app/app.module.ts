@@ -1,7 +1,7 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
 import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@taiga-ui/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from '@angular/core';
+import { NgModule, StateKey, TransferState } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { environment } from "src/environments/environment";
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -21,18 +21,15 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         AppComponent
     ],
-    providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
-    bootstrap: [AppComponent],
+    bootstrap: [AppComponent], 
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         TuiRootModule,
-        HttpClientModule,
         HeaderModule,
         TranslateModule.forRoot({
             loader: {
@@ -50,7 +47,5 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         }),
         EffectsModule.forRoot([]),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    ]
-})
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })], providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
