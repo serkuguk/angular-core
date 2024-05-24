@@ -9,7 +9,7 @@
                         [showLabel]="false"
                         [isInline]="isInline">
                 <app-input formControlName="login" 
-                            (changed)="outputData($event)"
+                           (changed)="outputData($event)"
                            [placeholder]="'LOGIN.USER' | translate"></app-input>
             </app-form-field>
             <app-form-field label="Input"
@@ -24,7 +24,8 @@
 
             <app-button [icon]="'tuiIconSettings'"
                         [size]="'l'"
-            ><a routerLink="/basic-example">Login</a></app-button>  
+                        (click)="login()"
+            >{{ 'BUTTON.LOGIN' | translate }}</app-button>  
         </form>
     </div>
 </div>

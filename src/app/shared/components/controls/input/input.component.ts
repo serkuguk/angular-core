@@ -1,5 +1,5 @@
 import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-input',
@@ -17,11 +17,11 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 export class InputComponent implements OnInit, ControlValueAccessor {
     @Input() placeholder?: string;
     @Input() textfieldSize?: string = 'm';
-    @Input() formControlName?: string;
     @Output() changed = new EventEmitter<string>();
 
+    control = new FormControl();
+
     value: string | undefined;
-    isDisabled: boolean | undefined;
 
     constructor() { }
 
@@ -32,11 +32,12 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     private propagateTouched: any = () => { };
 
     writeValue(value: string): void {
-        this.value = value;
+        this.control.setValue(value);
     }
 
     registerOnChange(fn: any): void {
         this.propagateChange = fn;
+        this.control.valueChanges.subscribe(this.propagateChange);
     }
 
     registerOnTouched(fn: any): void {
@@ -44,7 +45,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     }
 
     setDisabledState(isDisabled: boolean): void {
-        this.isDisabled = isDisabled;
+        isDisabled ? this.control.disable() : this.control.enable();
     }
 
     onKeyup(value: string): void {
