@@ -1,4 +1,4 @@
-import {UserStateInterface} from '@app/pages/auth/types/user-state-interface'
+/*import {UserStateInterface} from '@app/pages/auth/types/user-state-interface'
 import {Action, createReducer, on} from '@ngrx/store'
 import {loginActions,
         loginFailureActions,
@@ -25,3 +25,4 @@ const baseReducer = createReducer(
 export function reducers(state: IBaseState, action: Action) {
   return userReducer(state, action)
 }
+*/

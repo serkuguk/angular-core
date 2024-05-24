@@ -1,4 +1,4 @@
-import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
+
 import { TuiRootModule, TUI_SANITIZER } from "@taiga-ui/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule, StateKey, TransferState } from '@angular/core';
@@ -13,9 +13,10 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from "@ngrx/effects";
-import { StoreModule } from "@ngrx/store";
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects'; 
 import { HeaderModule } from "./shared/components/header/header.module";
+import { FooterComponent } from "./componentes/footer/footer.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -24,13 +25,17 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({ declarations: [
         AppComponent
     ],
-    bootstrap: [AppComponent], 
+    bootstrap: [AppComponent],
+    providers: [
+        provideHttpClient(withInterceptorsFromDi())
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         TuiRootModule,
         HeaderModule,
+        FooterComponent,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -47,13 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         }),
         EffectsModule.forRoot([]),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })], 
-        providers: [
-				{ 
-						provide: TUI_SANITIZER, 
-						useClass: NgDompurifySanitizer 
-				}, 
-				provideHttpClient(withInterceptorsFromDi())] 
-})
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    ] })
 
 export class AppModule { }

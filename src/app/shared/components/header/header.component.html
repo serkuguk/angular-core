@@ -1,12 +1,12 @@
 <div class="header-wrapper">
     <div class="header-container">
-        <div class="menu">Menu</div>
-        <div class="logo">NTT DATA</div>
-        <div class="langage">
+        <div class="header-container__menu">Menu</div>
+        <div class="header-container__logo">NTT DATA</div>
+        <div class="header-container__langage">
             <button (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</button>
             <button (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</button>
         </div>
-        <div class="logout">
+        <div class="header-container__logout">
             <a router-link="/logout">Logout</a>
         </div>
     </div>

@@ -1,4 +1,4 @@
-import {createAction, props} from '@ngrx/store'
+/*import {createAction, props} from '@ngrx/store'
 import {ActionTypes} from '@app/pages/auth/store/actionTypes'
 import {EmailPasswordCredentialsInterface} from '@app/pages/auth/types/email-password-credentials-interface'
 import firebase from 'firebase';
@@ -19,4 +19,4 @@ export const loginFailureActions = createAction(
   ActionTypes.SIGN_IN_EMAIL_FAILURE,
   props<{error: string}>()
 )
-
+*/

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core'
+/*import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {loginActions, loginFailureActions, loginSuccessActions} from '@app/pages/auth/store/actions/login.actions';
 import {catchError, filter, map, switchMap, take, tap} from 'rxjs/operators';
@@ -46,4 +46,4 @@ export class LoginEffects {
               private afs: AngularFirestore,
               private userService: UserService,
               private router: Router) {}
-}
+}*/
