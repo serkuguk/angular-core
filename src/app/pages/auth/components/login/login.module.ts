@@ -7,6 +7,7 @@ import { InputModule } from 'src/app/shared/components/controls/input/input.modu
 import { FormFieldModule } from 'src/app/shared/components/controls/form-field/form-field.module';
 import { ButtonModule } from 'src/app/shared/buttons';
 import { TranslateModule } from '@ngx-translate/core';
+import { InputPasswordModule } from 'src/app/shared/components/controls/input-pussword/input-password.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -17,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormFieldModule,
     InputModule,
     ButtonModule,
-    TranslateModule
+    TranslateModule,
+    InputPasswordModule
   ],
   exports: [LoginComponent]
 })

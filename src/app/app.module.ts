@@ -1,5 +1,5 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
-import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@taiga-ui/core";
+import { TuiRootModule, TUI_SANITIZER } from "@taiga-ui/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule, StateKey, TransferState } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -47,5 +47,13 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         }),
         EffectsModule.forRoot([]),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })], providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }, provideHttpClient(withInterceptorsFromDi())] })
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })], 
+        providers: [
+				{ 
+						provide: TUI_SANITIZER, 
+						useClass: NgDompurifySanitizer 
+				}, 
+				provideHttpClient(withInterceptorsFromDi())] 
+})
+
 export class AppModule { }

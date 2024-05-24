@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface IAuth {
@@ -14,12 +14,9 @@ interface IAuth {
 export class LoginComponent implements OnInit {
 
   public loginForm!: FormGroup
-  public isInline: boolean
+  public isInline: boolean = false;
   //public regexErrors = regexErrors
-
-  constructor(private fb: FormBuilder) {
-    this.isInline = false
-  }
+  private fb = inject(FormBuilder);
 
   ngOnInit(): void {
       this.loginForm = this.fb.group({
@@ -38,6 +35,8 @@ export class LoginComponent implements OnInit {
               ]
           }]  
       })
+
+      this.loginForm.controls.password.disable();
   }
   
   outputData(event: any) {

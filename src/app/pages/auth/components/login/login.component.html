@@ -17,9 +17,9 @@
                         [control]="loginForm.controls.password"
                         [showLabel]="false"
                         [isInline]="isInline">
-                <app-input formControlName="password" 
+                <app-input-password formControlName="password" 
                            (changed)="outputData($event)"
-                           [placeholder]="'LOGIN.PASSWORD' | translate"></app-input>
+                           [placeholder]="'LOGIN.PASSWORD' | translate"></app-input-password>
             </app-form-field>
 
             <app-button [icon]="'tuiIconSettings'"

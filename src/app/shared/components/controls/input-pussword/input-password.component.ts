@@ -2,19 +2,19 @@ import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetec
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
-    selector: 'app-input',
-    templateUrl: './input.component.html',
-    styleUrls: ['./input.component.scss'],
+    selector: 'app-input-password',
+    templateUrl: './input-password.component.html',
+    styleUrls: ['./input-password.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => InputComponent),
+            useExisting: forwardRef(() => InputPasswordComponent),
             multi: true
         }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputComponent implements OnInit, ControlValueAccessor {
+export class InputPasswordComponent implements OnInit, ControlValueAccessor {
     @Input() placeholder?: string;
     @Input() textfieldSize?: string = 'm';
     @Input() formControlName?: string;
