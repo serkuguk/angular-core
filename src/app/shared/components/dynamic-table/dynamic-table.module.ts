@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DynamicTableComponent } from './dynamic-table.component';
-import { TableCellDirective } from './directives/table-cell.directive';
-import { TableHeaderDirective } from './directives/table-header.directive';
+import { TuiTableModule } from '@taiga-ui/addon-table';
+
 
 @NgModule({
-  declarations: [DynamicTableComponent, TableCellDirective, TableHeaderDirective],
+  declarations: [DynamicTableComponent],
   providers: [],
   imports: [
-    CommonModule
+    CommonModule,
+    TuiTableModule
   ],
-  exports:[DynamicTableComponent, TableCellDirective, TableHeaderDirective]
+  exports:[DynamicTableComponent]
 })
 export class DynamicTableModule { }

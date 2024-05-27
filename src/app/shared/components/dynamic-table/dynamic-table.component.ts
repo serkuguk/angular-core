@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef } from '@angular/core';
-import { TableHeaderDirective } from './directives/table-header.directive';
-import { TableCellDirective } from './directives/table-cell.directive';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 @Component({
   selector: 'dynamic-table',
   templateUrl: './dynamic-table.component.html',
@@ -14,28 +13,16 @@ export class DynamicTableComponent {
   @Input() columnWidths: {[key: string]: string} = {};
   @Output() selectRow = new EventEmitter<{row:unknown, selected:boolean}>();
 
-  selectedRowBoolean: boolean | undefined;
+  readonly data = [
+    {
+        name: 'Alex Inkin',
+        balance: 1323525,
+    },
+    {
+        name: 'Roman Sedov',
+        balance: 423242,
+    },
+  ] as const;
 
-  @ContentChildren(TableHeaderDirective) headerTemplates!: QueryList<TableHeaderDirective>;
-  @ContentChildren(TableCellDirective) cellTemplates!: QueryList<TableCellDirective>;
-
-  getHeaderTemplate(colName: string): TemplateRef<any> | undefined {
-    return this.headerTemplates.find(item => item.appTableHeader === colName)?.templateRef;
-  }
-
-  getCellTemplate(colName: string): TemplateRef<any> | undefined {
-    return this.cellTemplates.find(item => item.appTableCell === colName)?.templateRef;
-  }
-
-  changeTableRowColor(row: any) { 
-    if(this.selectedRow?.id === row.id) {
-      this.selectedRow = null;
-      this.selectedRowBoolean = false;
-    } else {
-      this.selectedRow = row;
-      this.selectedRowBoolean = true;
-    }
-
-    this.selectRow.emit({row: this.selectedRow, selected: this.selectedRowBoolean});
-  }
+  readonly columns = Object.keys(this.data[0]);
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TuiAlertModule, TuiDialogModule, TuiRootModule } from '@taiga-ui/core';
 import { BasicExampleRoutingModule } from '../../basic-example-routing.module';
+import { DynamicTableModule } from 'src/app/shared/components/dynamic-table';
 
 @NgModule({
   declarations: [],
@@ -11,7 +12,8 @@ import { BasicExampleRoutingModule } from '../../basic-example-routing.module';
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
-    BasicExampleRoutingModule
+    BasicExampleRoutingModule,
+    DynamicTableModule
   ],
   exports: []
 })

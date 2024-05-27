@@ -9,16 +9,16 @@ import {LoginEffects} from '@app/pages/auth/store/effects/login.effects'
 import {LogoutEffects} from "@app/pages/auth/store/effects/logout.effects";*/
 import {BasicExampleRoutingModule } from './basic-example-routing.module'
 import { BasicExampleComponent } from './components/basic-example/basic-example.component'
+import { DynamicTableModule } from "../../shared/components/dynamic-table/dynamic-table.module";
 
 @NgModule({
-  declarations: [BasicExampleComponent],
-  imports: [
-    CommonModule,
-    BasicExampleRoutingModule,
-    /*StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature([RegistrationEffects, LoginEffects, LogoutEffects])*/
-  ],
-  exports: [],
-  providers: []
+    declarations: [BasicExampleComponent],
+    exports: [],
+    providers: [],
+    imports: [
+        CommonModule,
+        BasicExampleRoutingModule,
+        DynamicTableModule
+    ]
 })
 export class BasicExampleModule { }
