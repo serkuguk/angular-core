@@ -2,6 +2,11 @@ import { routerReducer } from '@ngrx/router-store';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthTokenStorageService } from '../../services/auth-token-storage.service';
+import { AuthService } from '../../services/auth.service';
+import { LoginRequestInterface } from '../../types/login-request_interface';
+import {select, Store} from '@ngrx/store'
+import { loginActions } from '../../store/actions/login.actions';
 
 interface IAuth {
   login: string
@@ -21,10 +26,18 @@ export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private authTokenStorageService: AuthTokenStorageService = inject(AuthTokenStorageService);
+  //private notificationService: NotificationService = inject(NotificationService);
+  private authService: AuthService = inject(AuthService);
+  private store: Store = inject(Store);
 
   ngOnInit(): void {
-      this.loginForm = this.fb.group({
-        login: [null, {
+    if (this.authTokenStorageService.getUser()) {
+      this.router.navigate(['main'])
+    }
+
+    this.loginForm = this.fb.group({
+        username: [null, {
           updateOn: 'blur',
               validators: [
                 Validators.required,
@@ -45,6 +58,26 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+    const request: LoginRequestInterface = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password
+    }
+
+    //this.store.dispatch(loginActions({request}));
+
+    this.authService.login(request).subscribe(user => {
+      this.authTokenStorageService.saveToken(user.token);
+      this.authTokenStorageService.saveUser(user);
+
+      //this.notificationService.showSnackBar("Successfully logged in")
+      this.router.navigate(['/'])
+      window.location.reload()
+    }, (error: { message: any; }) => {
+      //this.notificationService.showSnackBar(`Error: ${error.message}`)
+    })
+
     this.router.navigate(['/basic-example']);
   }
 }
+
+

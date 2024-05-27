@@ -5,10 +5,10 @@
         <form [formGroup]="loginForm">
             <app-form-field label="Input"
                         [required]="true"
-                        [control]="loginForm.controls.login"
+                        [control]="loginForm.controls.username"
                         [showLabel]="false"
                         [isInline]="isInline">
-                <app-input formControlName="login" 
+                <app-input formControlName="username" 
                            (changed)="outputData($event)"
                            [placeholder]="'LOGIN.USER' | translate"></app-input>
             </app-form-field>

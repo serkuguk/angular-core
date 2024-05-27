@@ -24,6 +24,7 @@
     ],
     "paths": {
       "@app/*": ["./src/app"],
+      "@pages/*": ["./src/app/pages"],
       "@core": ["./src/app/core"],
       "@core/*": ["./src/app/core"],
       "@components/*": ["./src/app/components"],

@@ -8,6 +8,8 @@ import { FormFieldModule } from 'src/app/shared/components/controls/form-field/f
 import { ButtonModule } from 'src/app/shared/buttons';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputPasswordModule } from 'src/app/shared/components/controls/input-pussword/input-password.module';
+import { AuthService } from '../../services/auth.service';
+import { AuthTokenStorageService } from '../../services/auth-token-storage.service';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -21,6 +23,7 @@ import { InputPasswordModule } from 'src/app/shared/components/controls/input-pu
     TranslateModule,
     InputPasswordModule
   ],
+  providers: [AuthService, AuthTokenStorageService],
   exports: [LoginComponent]
 })
 export class LoginModule { }
