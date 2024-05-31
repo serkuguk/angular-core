@@ -2,9 +2,9 @@
   <div class="logo-container">
     <button (click)="toggleCollapse()" class="logo">A</button>
     @if (collapsed) {
-      <div (click)="closeSidenav()" class="logo-text">Angualr</div>
+      <div (click)="closeSidenav()" @fadeInOut class="logo-text">Angualr</div>
 
-      <button class="btn-close">
+      <button class="btn-close" @rotate>
         <i class="fal fa-times close-icon"></i>
       </button>
     }
@@ -12,10 +12,13 @@
   <ul class="sidenav-nav">
     @for (data of navData; track $index) {
       <li class="sidenav-nav-item">
-        <a class="sidenav-nav-link" [routerLink]="[data.routerLink]">
+        <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
+                                    routerLinkActive="active"
+                                    [routerLinkAciveOptions]="{exact: true}"  
+        >
           <i class="sidenav-link-icon" [class]="data.icon"></i>
           @if (collapsed) {
-            <span class="sidenav-link-text">{{data.label}}</span>
+            <span class="sidenav-link-text" @fadeInOut>{{data.label}}</span>
           }
         </a>
       </li>

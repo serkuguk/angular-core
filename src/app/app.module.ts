@@ -18,6 +18,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { HeaderModule } from "./shared/components/header/header.module";
 import { FooterComponent } from "./componentes/footer/footer.component";
 import { SidenavComponent } from "./componentes/sidenav/sidenav.component";
+import { BodyComponent } from "./componentes/body/body.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         BrowserAnimationsModule,
         TuiRootModule,
         HeaderModule,
+        BodyComponent,
         FooterComponent,
         SidenavComponent,
         TranslateModule.forRoot({

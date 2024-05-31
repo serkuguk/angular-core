@@ -1,4 +1,4 @@
 export interface ISideNavToggle {
-  screenWidht: number
+  screenWidth: number
   collapsed: boolean
 }

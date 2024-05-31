@@ -11,9 +11,6 @@ export class AppComponent {
   public title = 'nttdata';
   public nameComponent: string = 'Home Component';
   public isSideNavCollapsed: boolean = false;
-  public sreenWidth: number = 0;
-  //temp
-  public collapsed: boolean = false;
   public screenWidth: number = 0;
 
   constructor (public translate: TranslateService) {
@@ -21,17 +18,8 @@ export class AppComponent {
   }
 
   public onToggleSideNav(data: ISideNavToggle): void {
-    this.sreenWidth = data.screenWidht;
+    this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
   }
 
-  public getBoddyClass(): string {
-    let styleClass = '';
-    if (this.collapsed && this.screenWidth > 768) {
-      styleClass = 'body-treemed';
-    } else if (this.collapsed && this.screenWidth <= 768 && this.sreenWidth > 0) {
-      styleClass = 'body-md-screen';
-    }
-    return styleClass;
-  }
 }

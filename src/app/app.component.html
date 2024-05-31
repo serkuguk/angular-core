@@ -2,15 +2,15 @@
     <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>   
     <div class="global-container">
       <header>
-          <app-header></app-header>
+        <app-header></app-header>
       </header>
       <main>
-        <div class="body" [ngClass]="getBoddyClass()">
-          <router-outlet></router-outlet>
-        </div>
+        <app-body [collapsed]="isSideNavCollapsed"
+                  [screenWidth]="screenWidth"
+        ></app-body>
       </main>
       <footer>
-          <app-footer></app-footer>
+        <app-footer></app-footer>
       </footer>
     </div>
 </div>
