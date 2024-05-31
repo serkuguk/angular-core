@@ -1,0 +1,23 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
+  <div class="logo-container">
+    <button class="logo">A</button>
+    @if (collapsed) {
+      <div class="logo-text">Angualr</div>
+    }
+    <button class="btn-close">
+      <i class="fal fa-times close-icon"></i>
+    </button>
+  </div>
+  <ul class="sidenav-nav">
+    @for (data of navData; track $index) {
+      <li class="sidenav-nav-item">
+        <a class="sidenav-nav-link" [routerLink]="[data.routerLink]">
+          <i class="sidenav-link-icon" [class]="data.icon"></i>
+          @if (collapsed) {
+            <span class="sidenav-link-text">{{data.label}}</span>
+          }
+        </a>
+      </li>
+    }
+  </ul>
+</div>
