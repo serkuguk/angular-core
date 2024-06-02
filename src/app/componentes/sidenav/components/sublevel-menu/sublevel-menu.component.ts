@@ -12,13 +12,13 @@ import { CommonModule } from '@angular/common';
   animations: [
     trigger('submenu', [
       state('hidden', style({
-        heght: '0',
+        height: '0',
         overflow: 'hidden'
       })),
       state('visible', style({
         height: '*'
       })),
-      transition('visible <=>', [style({overflow: 'hidden'}),
+      transition('visible <=> hidden', [style({overflow: 'hidden'}),
         animate('{{transitionParams}}')]),
       transition('void => *', animate(0))  
     ])
@@ -32,7 +32,7 @@ export class SublevelMenuComponent {
     label: '',
     items: []
   }
-  @Input() collapsed = false;
+  @Input() collapsed: boolean = false;
   @Input() animating: boolean | undefined;
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;

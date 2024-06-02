@@ -8,15 +8,15 @@
                    params: {transitionParams: '400ms cubic-bezier(0.86, 0, 0.07, 1)',
                    height: '0'}}">
     @for (item of data.items; track $index) {
-      <li class="subleve-nav-item">
-        @if (item.items && items.tiems.length > 0) {
+      <li class="sublevel-nav-item">
+        @if (item.items && item.items.length > 0) {
           <a (click)="hundleClick(item)" class="sublevel-nav-link">
-            <i class="subleve-link-icon fa fa-circle"></i>
+            <i class="sublevel-link-icon fa fa-circle"></i>
             @if (collapsed) {
-              <span class="subleve-link-text">{{items.label}}</span>
+              <span class="sublevel-link-text">{{item.label}}</span>
             }
             @if (item.items && collapsed) {
-              <i class="menu-collapse-icon" [ngClass]="!item.collapsed ? 'fal fa-angle-right':'fal fa-angle-down'"></i>
+              <i class="menu-collapse-icon" [ngClass]="!item.expanded ? 'fal fa-angle-right':'fal fa-angle-down'"></i>
             }
           </a>
         }
@@ -25,19 +25,20 @@
              routerLinkActive="active-sublevel"
              [routerLinkAciveOptions]="{exact: true}"  
              class="sublevel-nav-link">
-                <i class="subleve-link-icon fa fa-circle"></i>
+                <i class="sublevel-link-icon fa fa-circle"></i>
                 @if (collapsed) {
-                  <span class="subleve-link-text">{{items.label}}</span>
+                  <span class="sublevel-link-text">{{item.label}}</span>
                 }
             </a>
         }
 
-        @if (!item.items && item.items.length > 0) {
+        @if (item.items && item.items.length > 0) {
           <div>
             <app-sublevel-menu
-              [collapsed]="sollapsed"
+              [data]="item"
+              [collapsed]="collapsed"
               [multiple]="multiple"
-              [expanded]="items.expanded"
+              [expanded]="item.expanded"
             ></app-sublevel-menu>
           </div>
         }

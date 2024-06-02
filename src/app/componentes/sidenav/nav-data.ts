@@ -7,7 +7,7 @@ export const navabarData: INavbarData[] = [
     label: 'Dashboard'
   },
   {
-    routerLink: 'examples',
+    routerLink: 'basic-example',
     icon: 'fal fa-box-open',
     label: 'Examples'
   },
@@ -17,7 +17,7 @@ export const navabarData: INavbarData[] = [
     label: 'Statistics'
   },
   {
-    routerLink: 'basic-example',
+    routerLink: 'coupens',
     icon: 'fal fa-tags',
     label: 'Coupens',
     items: [
@@ -44,6 +44,18 @@ export const navabarData: INavbarData[] = [
   {
     routerLink: 'settings',
     icon: 'fal fa-cog',
-    label: 'Settings'
+    label: 'Settings',
+    items: [
+      {
+        routerLink: 'settings/lever1.1',
+        label: 'Level 1.1',
+        items: [
+                {
+                  routerLink: 'settings/lever2.1',
+                  label: 'Level 2.1',
+                }
+               ]
+      }
+    ]
   }
 ]

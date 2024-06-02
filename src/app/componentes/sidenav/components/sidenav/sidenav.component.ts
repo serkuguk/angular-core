@@ -10,7 +10,7 @@ import { SublevelMenuComponent } from '../sublevel-menu/sublevel-menu.component'
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, RouterModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, RouterModule, SublevelMenuComponent],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   animations: [
