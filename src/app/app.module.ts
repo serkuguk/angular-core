@@ -17,8 +17,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects'; 
 import { HeaderModule } from "./shared/components/header/header.module";
 import { FooterComponent } from "./componentes/footer/footer.component";
-import { SidenavComponent } from "./componentes/sidenav/sidenav.component";
 import { BodyComponent } from "./componentes/body/body.component";
+import { SublevelMenuComponent, SidenavComponent } from "./componentes";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -40,6 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         BodyComponent,
         FooterComponent,
         SidenavComponent,
+        SublevelMenuComponent,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

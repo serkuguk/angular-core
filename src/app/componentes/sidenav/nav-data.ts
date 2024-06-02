@@ -1,13 +1,13 @@
 import { INavbarData } from "./interfaces/nav-bar-data.interface";
 
-export const navabarData: any = [
+export const navabarData: INavbarData[] = [
   {
     routerLink: 'auth',
     icon: 'fal fa-home',
     label: 'Dashboard'
   },
   {
-    routerLink: 'basic-example',
+    routerLink: 'examples',
     icon: 'fal fa-box-open',
     label: 'Examples'
   },
@@ -17,7 +17,7 @@ export const navabarData: any = [
     label: 'Statistics'
   },
   {
-    routerLink: 'coupens',
+    routerLink: 'basic-example',
     icon: 'fal fa-tags',
     label: 'Coupens',
     items: [
@@ -43,7 +43,7 @@ export const navabarData: any = [
   },
   {
     routerLink: 'settings',
-    icon: 'fal fa-code',
+    icon: 'fal fa-cog',
     label: 'Settings'
   }
 ]
