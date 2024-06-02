@@ -1,0 +1,56 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
+  <div class="logo-container">
+    <button (click)="toggleCollapse()" class="logo">A</button>
+    @if (collapsed) {
+      <div @fadeInOut class="logo-text">Angualr</div>
+
+      <button (click)="closeSidenav()"  class="btn-close" @rotate>
+        <i class="fal fa-times close-icon"></i>
+      </button>
+    }
+  </div>
+ 
+  <ul class="sidenav-nav">
+    @for (data of navData; track $index) {
+      <li class="sidenav-nav-item">
+        @if (data.items && data.items.length > 0) {
+          <a (click)="hundleClick(data)" class="sidenav-nav-link">
+            <i class="sidenav-link-icon" [class]="data.icon"></i>
+            @if (collapsed) {
+              <span class="sidenav-link-text" @fadeInOut>{{data.label}}</span>
+            }
+            @if (data.items && collapsed) {
+              <i class="menu-collapse-icon" 
+                 [ngClass]="!data.expanded ? 
+                    'fal fa-angle-right':
+                    'fal fa-angle-down'"></i>
+            }
+          </a>
+        }
+
+        @if (!data.items || (data.items && data.items.length === 0)) {
+          <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
+                                      routerLinkActive="active"
+                                      [routerLinkAciveOptions]="{exact: true}"  
+          >
+            <i class="sidenav-link-icon" [class]="data.icon"></i>
+            @if (collapsed) {
+              <span class="sidenav-link-text" @fadeInOut>{{data.label}}</span>
+            }
+          </a>
+        }
+
+        @if (collapsed && data.items && data.items.length > 0) {
+          <div>
+            <app-sublevel-menu
+              [data]="data"
+              [collapsed]="collapsed"
+              [multiple]="multiple"
+              [expanded]="data.expanded"
+            ></app-sublevel-menu>
+          </div>
+        }
+      </li>
+    }
+  </ul>
+</div>

@@ -1,6 +1,6 @@
 import { INavbarData } from "./interfaces/nav-bar-data.interface";
 
-export const navabarData: any = [
+export const navabarData: INavbarData[] = [
   {
     routerLink: 'auth',
     icon: 'fal fa-home',
@@ -43,7 +43,19 @@ export const navabarData: any = [
   },
   {
     routerLink: 'settings',
-    icon: 'fal fa-code',
-    label: 'Settings'
+    icon: 'fal fa-cog',
+    label: 'Settings',
+    items: [
+      {
+        routerLink: 'settings/lever1.1',
+        label: 'Level 1.1',
+        items: [
+                {
+                  routerLink: 'settings/lever2.1',
+                  label: 'Level 2.1',
+                }
+               ]
+      }
+    ]
   }
 ]

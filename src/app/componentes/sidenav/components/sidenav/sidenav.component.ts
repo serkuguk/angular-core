@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { navabarData } from './nav-data';
+import { navabarData } from '../../nav-data';
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
-import { ISideNavToggle } from './interfaces/side-nav-toggle.interface';
+import { ISideNavToggle } from '../../interfaces/side-nav-toggle.interface';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { INavbarData } from '../../interfaces/nav-bar-data.interface';
+import { SublevelMenuComponent } from '../sublevel-menu/sublevel-menu.component';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, RouterModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, RouterModule, SublevelMenuComponent],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   animations: [
@@ -45,6 +47,7 @@ export class SidenavComponent implements OnInit {
   public collapsed: boolean = false;
   public screenWidth: number = 0;
   public navData: any = navabarData;
+  public multiple: boolean = false;
   
   @HostListener('window:resize', ['$event'])
   public onResize(event: any) {
@@ -67,5 +70,16 @@ export class SidenavComponent implements OnInit {
   public closeSidenav(): void {
     this.collapsed = false;
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+  }
+
+  public hundleClick(item: INavbarData): void {
+    if (!this.multiple) {
+      for(let modelItem of this.navData) {
+        if (item !== modelItem && modelItem.expanded) {
+          modelItem.expanded = false;
+        }
+      }
+    }
+    item.expanded = !item.expanded;
   }
 }
