@@ -74,7 +74,7 @@
       display: flex;
       align-items: center;
       height: 3rem;
-      columns: #f3f3f3;
+      color: #f3f3f3;
       text-decoration: none;
       border-radius: 0.625rem;
       transform: all .3s ease;
@@ -92,12 +92,20 @@
       }
     }
   }
-}
 
-.sidenav-nav-item:hover {
-  .sidenav-nav-link {
-    background-color: #fff;
-    color: #000;
+  .sidenav-nav-item:hover {
+    .sidenav-nav-link {
+      background-color: #fff;
+      color: #263238;
+    }
   }
 }
 
+.active {
+  background-color: #fff;
+
+  .sidenav-link-icon,
+  .sidenav-link-text {
+    color: #000;
+  }
+}

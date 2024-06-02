@@ -2,9 +2,9 @@
   <div class="logo-container">
     <button (click)="toggleCollapse()" class="logo">A</button>
     @if (collapsed) {
-      <div (click)="closeSidenav()" @fadeInOut class="logo-text">Angualr</div>
+      <div @fadeInOut class="logo-text">Angualr</div>
 
-      <button class="btn-close" @rotate>
+      <button (click)="closeSidenav()"  class="btn-close" @rotate>
         <i class="fal fa-times close-icon"></i>
       </button>
     }

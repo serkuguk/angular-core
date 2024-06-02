@@ -1,5 +1,9 @@
 ## 1.0.3 (WIP)
 ```
+[develop] added nav bar left side
+```
+
+```
 [develop] udate version of taigaui from 3.80.0 to 3.81.0
 ```
 

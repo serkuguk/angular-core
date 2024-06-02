@@ -3,11 +3,12 @@ import { navabarData } from './nav-data';
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { ISideNavToggle } from './interfaces/side-nav-toggle.interface';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, RouterModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   animations: [
@@ -50,6 +51,7 @@ export class SidenavComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 768) {
       this.collapsed = false;
+      this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
     }
   }
 
