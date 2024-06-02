@@ -1,6 +1,8 @@
-export const navabarData = [
+import { INavbarData } from "./interfaces/nav-bar-data.interface";
+
+export const navabarData: any = [
   {
-    routerLink: 'dashboard',
+    routerLink: 'auth',
     icon: 'fal fa-home',
     label: 'Dashboard'
   },
@@ -17,7 +19,17 @@ export const navabarData = [
   {
     routerLink: 'coupens',
     icon: 'fal fa-tags',
-    label: 'Coupens'
+    label: 'Coupens',
+    items: [
+      {
+        routerLink: 'coupens/list',
+        label: 'List Coupens',
+      },
+      {
+        routerLink: 'coupens/crate',
+        label: 'Create Coupens',
+      }
+    ]
   },
   {
     routerLink: 'pages',
