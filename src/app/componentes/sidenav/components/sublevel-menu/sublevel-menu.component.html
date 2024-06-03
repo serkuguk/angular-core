@@ -10,10 +10,10 @@
     @for (item of data.items; track $index) {
       <li class="sublevel-nav-item">
         @if (item.items && item.items.length > 0) {
-          <a (click)="hundleClick(item)" class="sublevel-nav-link">
+          <a (click)="hundleClick(item)" [ngClass]="getActiveClass(item)" class="sublevel-nav-link">
             <i class="sublevel-link-icon fa fa-circle"></i>
             @if (collapsed) {
-              <span class="sublevel-link-text">{{item.label}}</span>
+              <span class="sublevel-link-text" @fadeInOut>{{item.label}}</span>
             }
             @if (item.items && collapsed) {
               <i class="menu-collapse-icon" [ngClass]="!item.expanded ? 'fal fa-angle-right':'fal fa-angle-down'"></i>
@@ -27,7 +27,7 @@
              class="sublevel-nav-link">
                 <i class="sublevel-link-icon fa fa-circle"></i>
                 @if (collapsed) {
-                  <span class="sublevel-link-text">{{item.label}}</span>
+                  <span class="sublevel-link-text" @fadeInOut>{{item.label}}</span>
                 }
             </a>
         }

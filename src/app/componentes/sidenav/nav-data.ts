@@ -53,6 +53,20 @@ export const navabarData: INavbarData[] = [
                 {
                   routerLink: 'settings/lever2.1',
                   label: 'Level 2.1',
+                },
+                {
+                  routerLink: 'settings/lever2.1',
+                  label: 'Level 2.1',
+                  items: [
+                    {
+                      routerLink: 'settings/lever2.2',
+                      label: 'Level 2.2',
+                    },
+                    {
+                      routerLink: 'settings/lever2.3',
+                      label: 'Level 2.3',
+                    }
+                   ]
                 }
                ]
       }

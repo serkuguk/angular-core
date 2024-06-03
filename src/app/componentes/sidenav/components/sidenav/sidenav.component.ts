@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { navabarData } from '../../nav-data';
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output, inject } from '@angular/core';
 import { ISideNavToggle } from '../../interfaces/side-nav-toggle.interface';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { INavbarData } from '../../interfaces/nav-bar-data.interface';
 import { SublevelMenuComponent } from '../sublevel-menu/sublevel-menu.component';
+import { fadeInOut } from '../../utils/animation-helper';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,20 +15,7 @@ import { SublevelMenuComponent } from '../sublevel-menu/sublevel-menu.component'
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('350ms',
-          style({opacity: 1})
-        )
-      ]),
-      transition(':leave', [
-        style({opacity: 1}),
-        animate('350ms',
-          style({opacity: 0})
-        )
-      ])
-    ]),
+    fadeInOut,
     trigger('rotate', [
       transition(':enter', [
         animate('1000ms', 
@@ -48,6 +36,7 @@ export class SidenavComponent implements OnInit {
   public screenWidth: number = 0;
   public navData: any = navabarData;
   public multiple: boolean = false;
+  public router: Router = inject(Router);
   
   @HostListener('window:resize', ['$event'])
   public onResize(event: any) {
@@ -70,6 +59,10 @@ export class SidenavComponent implements OnInit {
   public closeSidenav(): void {
     this.collapsed = false;
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+  }
+
+  public getActiveClass(item: INavbarData): string {
+    return this.router.url.includes(item.routerLink) ? 'active':'';
   }
 
   public hundleClick(item: INavbarData): void {

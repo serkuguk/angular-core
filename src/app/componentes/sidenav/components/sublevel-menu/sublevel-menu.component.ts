@@ -1,15 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { INavbarData } from '../../interfaces/nav-bar-data.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { fadeInOut } from '../../utils/animation-helper';
+import { Router, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sublevel-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLinkActive],
   templateUrl: './sublevel-menu.component.html',
   styleUrl: './sublevel-menu.component.scss',
   animations: [
+    fadeInOut,
     trigger('submenu', [
       state('hidden', style({
         height: '0',
@@ -37,6 +40,8 @@ export class SublevelMenuComponent {
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;
 
+  public router: Router = inject(Router);
+
   public hundleClick(item: INavbarData): void {
     if (!this.multiple) {
       if (this.data.items && this.data.items.length > 0) {
@@ -48,5 +53,9 @@ export class SublevelMenuComponent {
       }
     }
     item.expanded = !item.expanded;
+  }
+
+  public getActiveClass(item: INavbarData): string {
+    return item.expanded && this.router.url.includes(item.routerLink) ? 'active-sublevel':'';
   }
 }
