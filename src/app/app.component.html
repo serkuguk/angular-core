@@ -1,8 +1,10 @@
 <div class="global-wrapper">
-    <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>   
+    <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
     <div class="global-container">
       <header>
-        <app-header></app-header>
+        <app-header [collapsed]="isSideNavCollapsed"
+                    [screenWidth]="screenWidth"
+        ></app-header>
       </header>
       <main>
         <app-body [collapsed]="isSideNavCollapsed"

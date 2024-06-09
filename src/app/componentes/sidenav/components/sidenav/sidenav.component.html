@@ -1,8 +1,10 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
   <div class="logo-container">
-    <button (click)="toggleCollapse()" class="logo">A</button>
+    <button (click)="toggleCollapse()" class="logo">
+      <img src="..\assets\img\logo\nttD.png" alt="">
+    </button>
     @if (collapsed) {
-      <div @fadeInOut class="logo-text">Angualr</div>
+      <div @fadeInOut class="logo-text">NTTDATA</div>
 
       <button (click)="closeSidenav()"  class="btn-close" @rotate>
         <i class="fal fa-times close-icon"></i>
@@ -32,7 +34,8 @@
           @if (!data.items || (data.items && data.items.length === 0)) {
             <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
                                         routerLinkActive="active"
-                                        [routerLinkAciveOptions]="{exact: true}"  
+                                        [routerLinkAciveOptions]="{exact: true}"
+                                        (click)="shrinkItems(data)"  
             >
               <i class="sidenav-link-icon" [class]="data.icon"></i>
               @if (collapsed) {

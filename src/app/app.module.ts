@@ -14,11 +14,10 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects'; 
-import { HeaderModule } from "./shared/components/header/header.module";
+import { EffectsModule } from '@ngrx/effects';
 import { FooterComponent } from "./componentes/footer/footer.component";
 import { BodyComponent } from "./componentes/body/body.component";
-import { SidenavComponent } from "./componentes";
+import { HeaderComponent, SidenavComponent } from "./componentes";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -36,7 +35,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule,
         BrowserAnimationsModule,
         TuiRootModule,
-        HeaderModule,
+        HeaderComponent,
         BodyComponent,
         FooterComponent,
         SidenavComponent,

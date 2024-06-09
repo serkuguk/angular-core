@@ -16,7 +16,7 @@
     width: 100%;
 
     .logo {
-      background: #fff;
+      background: none; //#fff;
       text-align: center;
       width: 3rem;
       min-width: 3rem;
@@ -26,6 +26,11 @@
       font-weight: 900;
       cursor: pointer;
       border: none;
+
+      img {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
     }
 
     .logo-text {

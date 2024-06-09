@@ -43,6 +43,15 @@ export class SublevelMenuComponent {
   public router: Router = inject(Router);
 
   public hundleClick(item: INavbarData): void {
+    this.shrinkItems(item);
+    item.expanded = !item.expanded;
+  }
+
+  public getActiveClass(item: INavbarData): string {
+    return item.expanded && this.router.url.includes(item.routerLink) ? 'active-sublevel':'';
+  }
+
+  public shrinkItems(item: INavbarData): void {
     if (!this.multiple) {
       if (this.data.items && this.data.items.length > 0) {
         for(let modelItem of this.data.items) {
@@ -52,10 +61,5 @@ export class SublevelMenuComponent {
         }
       }
     }
-    item.expanded = !item.expanded;
-  }
-
-  public getActiveClass(item: INavbarData): string {
-    return item.expanded && this.router.url.includes(item.routerLink) ? 'active-sublevel':'';
   }
 }
