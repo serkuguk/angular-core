@@ -34,11 +34,8 @@
     }
 
     &__right {
-      .head-menu {
-        .head-menu-item {
-          .head-menu-item-btn {}
-        }
-      }
+      display: flex;
+      align-items: center;
 
       .head-user-avatar-container {
         margin-left: 20px;
@@ -48,7 +45,7 @@
 
           .user-avatar {
             margin-bottom: -4px;
-            width: 50px;
+            //width: 50px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px 0 rgb(35 35 35 / 15%);
             cursor: pointer;
@@ -67,4 +64,28 @@
 .head-md-screen {
   width: calc(100% - 5rem);
   margin-left: 5rem;
+}
+
+.overlay-user {
+  ul {
+    padding: 0.5rem 0;
+    list-style: none;
+    width: 10rem;
+
+    li {
+      padding: 0.35rem 1.5rem;
+      font-size: 14px;
+      font-weight: 400;
+      color: #495057;
+      cursor: pointer;
+
+      .icon {
+        margin-right: 0.6rem;
+      }
+    }
+
+    li:hover {
+      background: #eff2f3;
+    }
+  }
 }

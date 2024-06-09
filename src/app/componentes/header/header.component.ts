@@ -1,27 +1,39 @@
+import { languages, positions, userItems } from './header-dummy-data';
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { OverlayModule } from "@angular/cdk/overlay";
+import { CdkMenuModule } from "@angular/cdk/menu";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  imports: [CommonModule, TranslateModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+            TranslateModule, 
+            ReactiveFormsModule, 
+            OverlayModule,
+            CdkMenuModule],
   providers: [TranslateService]
 })
 export class HeaderComponent implements OnInit {
+[x: string]: any;
 
   @Input() collapsed: boolean = false;
   @Input() screenWidth: number = 0;
 
-  //public canShowSe
+  public selectedLanguage: any;
+  public languages = languages;
+  public userItems = userItems; 
+  public positions = positions;
 
   public translate = inject(TranslateService);
 
   ngOnInit(): void {
     this.translate.setDefaultLang('sp');
+    this.selectedLanguage = this.languages[0];
   }
 
   public getHeadClass(): string {

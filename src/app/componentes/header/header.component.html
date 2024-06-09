@@ -5,22 +5,30 @@
             <!--span>NTTDATA</span-->
         </div>
         <div class="header-container__right">
-            <div class="head-menu">
-                <div class="head-menu-item">
-                    <button class="head-menu-item-btn ripple">
-                        <i class="far fa-expanded menu-icon"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="head-user-avatar-container">
-                <div class="head-user-avatar">
-                    <i class="fas fa-user-circle" class="user-avatar"></i>
+            <div class="head-user-avatar-container" [cdkContextMenuTriggerFor]="userOverlay">
+                <div class="head-user-avatar" [cdkMenuTriggerFor]="userOverlay">
+                    <i class="fas fa-user-circle user-avatar"></i>
                 </div>
             </div>
         </div>
     </div>
 </div>
-  <!--div class="header-container__langage">
+
+<ng-template #userOverlay>
+    <div class="overlay overlay-user overlay-fall" cdkMenu>
+        <ul>
+            @for(item of userItems; track $index) {
+                <li cdkMenuItem>
+                   <a>
+                    <i class="icon" [ngClass]="item.icon"></i>
+                    <span>{{item.label}}</span>
+                   </a> 
+                </li>
+            }
+        </ul>
+        <div class="header-container__langage">
             <button (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</button>
             <button (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</button>
-        </div-->    
+        </div>  
+    </div>
+</ng-template> 

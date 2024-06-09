@@ -19,6 +19,7 @@ import { FooterComponent } from "./componentes/footer/footer.component";
 import { BodyComponent } from "./componentes/body/body.component";
 import { HeaderComponent, SidenavComponent } from "./componentes";
 
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -56,6 +57,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         }),
         EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
-    ] })
+    ]})
 
 export class AppModule { }
