@@ -11,23 +11,23 @@ import { CdkMenuModule } from "@angular/cdk/menu";
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  imports: [CommonModule, 
-            TranslateModule, 
-            ReactiveFormsModule, 
+  imports: [CommonModule,
+            TranslateModule,
+            ReactiveFormsModule,
             OverlayModule,
             CdkMenuModule],
   providers: [TranslateService]
 })
 export class HeaderComponent implements OnInit {
-[x: string]: any;
 
   @Input() collapsed: boolean = false;
   @Input() screenWidth: number = 0;
 
   public selectedLanguage: any;
   public languages = languages;
-  public userItems = userItems; 
+  public userItems = userItems;
   public positions = positions;
+  public userOverlay: boolean = false;
 
   public translate = inject(TranslateService);
 
@@ -46,4 +46,9 @@ export class HeaderComponent implements OnInit {
 
     return styleClass;
   }
+
+  public userMenuToggle(): void {
+      this.userOverlay = !this.userOverlay;
+  }
+
 }
