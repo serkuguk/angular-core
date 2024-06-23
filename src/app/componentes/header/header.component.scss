@@ -36,6 +36,7 @@
     &__right {
       display: flex;
       align-items: center;
+      position: relative;
 
       .head-user-avatar-container {
         margin-left: 20px;
@@ -45,7 +46,6 @@
 
           .user-avatar {
             margin-bottom: -4px;
-            //width: 50px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px 0 rgb(35 35 35 / 15%);
             cursor: pointer;
@@ -67,6 +67,15 @@
 }
 
 .overlay-user {
+  position: fixed;
+  top: 3rem;
+  right: 0;
+  z-index: 1000;
+  background: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 1rem;
+
   ul {
     padding: 0.5rem 0;
     list-style: none;

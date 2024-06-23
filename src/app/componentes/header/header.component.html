@@ -1,15 +1,15 @@
 <div class="header-wrapper" [ngClass]="getHeadClass()">
     <div class="header-container">
         <div class="header-container__logo">
-            <!--img src="..\assets\img\logo\nttD.png" alt=""-->
-            <!--span>NTTDATA</span-->
+            <img src="..\assets\img\logo\nttD.png" alt="">
+            <span>NTTDATA</span>
         </div>
         <div class="header-container__right">
-            <div class="head-user-avatar-container" [cdkContextMenuTriggerFor]="userOverlay">
-                <div class="head-user-avatar" [cdkMenuTriggerFor]="userOverlay">
-                    <i class="fas fa-user-circle user-avatar"></i>
-                </div>
+          <div class="head-user-avatar-container" [cdkContextMenuTriggerFor]="userOverlay">
+            <div class="head-user-avatar" [cdkMenuTriggerFor]="userOverlay">
+              <i class="fas fa-user-circle user-avatar"></i>
             </div>
+          </div>
         </div>
     </div>
 </div>
@@ -22,13 +22,13 @@
                    <a>
                     <i class="icon" [ngClass]="item.icon"></i>
                     <span>{{item.label}}</span>
-                   </a> 
+                   </a>
                 </li>
             }
         </ul>
         <div class="header-container__langage">
             <button (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</button>
             <button (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</button>
-        </div>  
+        </div>
     </div>
-</ng-template> 
+</ng-template>
