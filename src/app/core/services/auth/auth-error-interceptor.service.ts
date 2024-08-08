@@ -1,8 +1,8 @@
 import {Injectable, inject} from '@angular/core'
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http'
 import {Observable, catchError, throwError} from 'rxjs'
-import {AuthTokenStorageService} from './auth-token-storage.service'
 import {environment} from 'src/environments/environment';
+import { AuthTokenStorageService } from './auth-token-storage.service';
 
 @Injectable()
 export class AuthErrorInterceptorService implements HttpInterceptor{
@@ -23,5 +23,4 @@ export class AuthErrorInterceptorService implements HttpInterceptor{
       return throwError(error);
     }))
   }
-
 }

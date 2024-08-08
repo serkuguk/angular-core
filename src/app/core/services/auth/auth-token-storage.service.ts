@@ -9,7 +9,7 @@ export class AuthTokenStorageService {
     window.sessionStorage.removeItem(environment.token_key);
     //const expDate = new Date(new Date().getTime() + +token.expiresIn * 1000);
     //localStorage.setItem('token-exp', expDate.toString());
-    window.sessionStorage.setItem(environment.token_key, token);
+    window.sessionStorage.setItem('token_key', token);
   }
 
   public getToken(): any {
@@ -18,7 +18,7 @@ export class AuthTokenStorageService {
       this.logOut();
       return null;
     }*/
-    return window.sessionStorage.getItem(environment.token_key)
+    return window.sessionStorage.getItem('token_key');
   }
 
   isAuthentificated(): boolean {

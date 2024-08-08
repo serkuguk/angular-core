@@ -9,7 +9,8 @@ import { ButtonModule } from 'src/app/shared/buttons';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputPasswordModule } from 'src/app/shared/components/controls/input-pussword/input-password.module';
 import { AuthService } from '../../services/auth.service';
-import { AuthTokenStorageService } from '../../services/auth-token-storage.service';
+import { AuthTokenStorageService } from 'src/app/core/services/auth/auth-token-storage.service';
+
 
 @NgModule({
   declarations: [LoginComponent],
