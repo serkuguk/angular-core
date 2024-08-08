@@ -1,10 +1,7 @@
-import { BodyComponent } from './componentes/body/body.component';
+import { Routes } from '@angular/router';
 import { authGuard } from './pages/auth/services/auth.guard';
-import { BasicExampleModule } from './pages/basic-example/components/basic-example/basic-example.module';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     redirectTo: 'auth',
@@ -25,9 +22,3 @@ const routes: Routes = [
     redirectTo: 'auth'
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

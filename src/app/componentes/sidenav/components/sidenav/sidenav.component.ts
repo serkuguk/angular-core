@@ -66,6 +66,11 @@ export class SidenavComponent implements OnInit {
   }
 
   public hundleClick(item: INavbarData): void {
+    this.shrinkItems(item);
+    item.expanded = !item.expanded;
+  }
+
+  public shrinkItems(item: INavbarData): void {
     if (!this.multiple) {
       for(let modelItem of this.navData) {
         if (item !== modelItem && modelItem.expanded) {
@@ -73,6 +78,5 @@ export class SidenavComponent implements OnInit {
         }
       }
     }
-    item.expanded = !item.expanded;
   }
 }

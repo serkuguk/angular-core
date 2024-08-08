@@ -3,6 +3,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [],
-  imports: [AuthRoutingModule]
+  imports: [AuthRoutingModule],
+  providers: []
 })
 export class AuthModule { }

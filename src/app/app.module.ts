@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { environment } from "src/environments/environment";
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -18,8 +18,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { FooterComponent } from "./componentes/footer/footer.component";
 import { BodyComponent } from "./componentes/body/body.component";
 import { HeaderComponent, SidenavComponent } from "./componentes";
-import { AuthInterceptor } from "./core/services/auth/auth.interceptor"; 
-import { AuthErrorInterceptorService } from "./core/services/auth/auth-error-interceptor.service";
+import { authInterceptor } from "./core/services/auth/auth.interceptor"; 
+import { authErrorInterceptor } from "./core/services/auth/auth-error-interceptor";
+import { AuthTokenStorageService } from "./core/services/auth/auth-token-storage.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -30,18 +31,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
     bootstrap: [AppComponent],
     providers: [
-        provideHttpClient(withInterceptorsFromDi()),
-        /*{
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-          },
-          {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthErrorInterceptorService,
-            multi: true
-          },*/
-        
+        AuthTokenStorageService,
+        //provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor])),
     ],
     imports: [
         BrowserModule,
