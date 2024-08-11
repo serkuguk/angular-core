@@ -1,41 +1,40 @@
-import {Injectable} from '@angular/core'
+import {inject, Injectable} from '@angular/core'
 import {environment} from 'src/environments/environment'
 import {Observable, of} from 'rxjs'
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable()
 export class AuthTokenStorageService {
-  
-  public saveToken(token: string): void {
-    window.sessionStorage.removeItem(environment.token_key);
-    //const expDate = new Date(new Date().getTime() + +token.expiresIn * 1000);
-    //localStorage.setItem('token-exp', expDate.toString());
-    window.sessionStorage.setItem('token_key', token);
+
+  jwtHelper: JwtHelperService = inject(JwtHelperService);
+
+  public setToken(token: string): void {
+    localStorage.setItem('access_token', token);
   }
 
-  public getToken(): any {
-    /*const expDate = new Date(window.sessionStorage.getItem(environment.token_key));
-    if (new Date() > expDate) {
-      this.logOut();
-      return null;
-    }*/
-    return window.sessionStorage.getItem('token_key');
+  public getToken(): string | null {
+    return localStorage.getItem('access_token');
   }
 
-  isAuthentificated(): boolean {
-    return !!this.getToken();
+  public refreshAuthToken(token: string): void {
+    this.setToken(token);
+  }
+
+  isAuthenticate(): boolean {
+    const token: string | null = localStorage.getItem('access_token');
+    return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
   public saveUser(user: any): void {
-    window.sessionStorage.removeItem(environment.user_key)
-    window.sessionStorage.setItem(environment.user_key, JSON.stringify(user))
+
   }
 
   public getUser(): Observable<string[]> {
-    return of([]);//JSON.parse(window.sessionStorage.getItem(environment.user_key));
+    return of([]);
   }
 
   public logOut(): void {
-    window.sessionStorage.clear();
+    localStorage.clear();
     window.location.reload();
   }
 }

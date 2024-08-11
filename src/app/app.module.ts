@@ -1,7 +1,7 @@
 
 import { TuiRootModule, TUI_SANITIZER } from "@taiga-ui/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule, StateKey, TransferState } from '@angular/core';
+import {inject, NgModule, StateKey, TransferState} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,21 +9,27 @@ import { AppComponent } from './app.component';
 import { environment } from "src/environments/environment";
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { FooterComponent } from "./componentes/footer/footer.component";
-import { BodyComponent } from "./componentes/body/body.component";
+import { FooterComponent, BodyComponent } from "./componentes";
 import { HeaderComponent, SidenavComponent } from "./componentes";
-import { authInterceptor } from "./core/services/auth/auth.interceptor"; 
+import { authInterceptor } from "./core/services/auth/auth.interceptor";
 import { authErrorInterceptor } from "./core/services/auth/auth-error-interceptor";
 import { AuthTokenStorageService } from "./core/services/auth/auth-token-storage.service";
+import {JwtModule} from "@auth0/angular-jwt";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
+}
+
+export function JwtTokenGetter() {
+  const token = inject(AuthTokenStorageService).getToken();
+  if (!token) return "";
+  return token;
 }
 
 @NgModule({ declarations: [
@@ -44,6 +50,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         BodyComponent,
         FooterComponent,
         SidenavComponent,
+        JwtModule.forRoot({
+          config: {
+            allowedDomains: ['localhost:4200', 'localhost:3000'],
+            tokenGetter: JwtTokenGetter,
+          }
+        }),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

@@ -4,11 +4,11 @@ import { AuthTokenStorageService } from 'src/app/core/services/auth/auth-token-s
 
 export const authGuard = () => {
   const router: Router = inject(Router);
-  const isAuthentificated: boolean = inject(AuthTokenStorageService).isAuthentificated();
+  const isAuthentificated: boolean = inject(AuthTokenStorageService).isAuthenticate();
 
   if (isAuthentificated) {
     return true;
   }
-   
+
   return router.createUrlTree(['/login']);
 }
