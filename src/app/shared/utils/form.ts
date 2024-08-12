@@ -1,7 +1,8 @@
-import { ControlItem } from '@app/models/frontend';
+import { ControlItem } from '@app/core/models/frontend';
+import {FormGroup} from "@angular/forms";
 
-export const markFormGroupTouched = (formGroup) => {
-    (Object as any).values(formGroup.controls).forEach(control => {
+export const markFormGroupTouched = (formGroup: FormGroup) => {
+    (Object as any).values(formGroup.controls).forEach((control: FormGroup) => {
         control.markAsTouched();
 
         if (control.controls) {
@@ -23,7 +24,7 @@ export interface ControlEntities {
 export const mapControls = (controls: ControlEntities): void => {
     Object.keys(controls).forEach(key => {
         if (controls[key].map) {
-            controls[key].map();
+           // controls[key].map();
         }
     });
 };

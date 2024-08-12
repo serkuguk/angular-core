@@ -1,5 +1,5 @@
-import { Action, createAction, props} from '@ngrx/store'
-import { User, UsernamePasswordCredentials, UserCreateRequest } from './user.models';
+import {Action} from '@ngrx/store'
+import {User, UsernamePasswordCredentials} from './user.models';
 
 export enum Types {
   INIT = '[User] Init: Start',
@@ -50,7 +50,7 @@ export class SignIn implements Action {
 
 export class SignInSuccess implements Action {
   readonly type = Types.SIGN_IN_SUCCESS;
-  constructor(public uid: string, public user: User) { }
+  constructor(public user: User) { }
 }
 
 export class SignInError implements Action {
@@ -91,24 +91,6 @@ export class UpdateError implements Action {
   constructor(public error: string) { }
 }
 
-
-
-
-/*export const loginActions = createAction(
-  ActionTypes.SIGN_IN,
-  props<{credentials: LoginRequestInterface}>()
-)
-
-export const loginSuccessActions = createAction(
-  ActionTypes.SIGN_IN_SUCCESS,
-  props<{currentUser: any}>()
-)
-
-export const loginFailureActions = createAction(
-  ActionTypes.SIGN_IN_FAILURE,
-  props<{error: string}>()
-)*/
-
 export type All
     = Init
     | InitAuthorized
@@ -119,4 +101,7 @@ export type All
     | SignInError
     | SignOut
     | SignOutSuccess
-    | SignOutError;
+    | SignOutError
+    | Update
+    | UpdateSuccess
+    | UpdateError;

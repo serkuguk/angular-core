@@ -1,37 +1,65 @@
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, filter, map, switchMap, take, tap} from 'rxjs/operators';
-import { AuthService } from './../../services/auth.service';
-import {from, Observable, of} from 'rxjs';
+import {catchError, exhaustMap, map, tap} from 'rxjs/operators';
+import {of} from 'rxjs';
 import {Router} from '@angular/router';
-import {UserInterface} from '@app/shared/types/backend/types/user-interface';
-import { loginActions, loginFailureActions, loginSuccessActions } from '../actions/login.actions';
+
+import {AuthService} from "@pages/auth/services/auth.service";
+import * as fromActions from './user.actions';
 
 @Injectable()
-export class LoginEffects {
+export class UserEffects {
+  init$ = createEffect(() => this.actions$.pipe(
+      ofType(fromActions.Types.INIT),
+      exhaustMap((login) => this.authService.login(login)
+        .pipe(
+          map(login => new fromActions.Init()),
+          catchError((errorResponse) => {
+            return of(new fromActions.InitError(errorResponse.error));
+          })
+        ))
+    )
+  );
 
   login$ = createEffect(() => this.actions$.pipe(
-                              ofType(loginActions),
-                              switchMap(credentials => {
-                                return from(this.authService.login(credentials)).pipe(
-                                  switchMap(signInState => of([]).pipe(
-                                      map(currentUser => {
-                                        return loginSuccessActions({currentUser})
-                                      })
-                                    )
-                                  ),
-                                  catchError((errorResponse) => {
-                                    return of(loginFailureActions({error: errorResponse.error}));
-                                  })
-                                );
-                              })
-                            )
+      ofType(fromActions.Types.SIGN_IN),
+      exhaustMap((login) => this.authService.login(login)
+        .pipe(
+          map(login => new fromActions.SignInSuccess(login)),
+          catchError((errorResponse) => {
+            return of(new fromActions.SignInError(errorResponse.error));
+          })
+        ))
+    )
+  );
 
-  )
+  /*logout$ = createEffect(() => this.actions$.pipe(
+      ofType(loginActions),
+      exhaustMap((login) => this.authService.logout(login.credentials)
+        .pipe(
+          map(login => loginSuccessActions(login)),
+          catchError((errorResponse) => {
+            return of(loginFailureActions({error: errorResponse.error}));
+          })
+        ))
+    )
+  );
+
+  updateUser$ = createEffect(() => this.actions$.pipe(
+      ofType(loginActions),
+      exhaustMap((login) => this.authService.login(login.credentials)
+        .pipe(
+          map(login => loginSuccessActions(login)),
+          catchError((errorResponse) => {
+            return of(loginFailureActions({error: errorResponse.error}));
+          })
+        ))
+    )
+  );*/
 
   redirectAfterSubmit$ = createEffect(
     () => this.actions$.pipe(
-                          ofType(loginSuccessActions),
+                          ofType(fromActions.Types.SIGN_IN_SUCCESS),
                           tap(() => {
                             this.router.navigateByUrl('/')
                           })
@@ -39,7 +67,7 @@ export class LoginEffects {
                   {dispatch: false}
   )
 
-  constructor(private actions$: Actions,
-              private authService: AuthService,
-              private router: Router) {}
+  constructor(private readonly actions$: Actions,
+              private readonly authService: AuthService,
+              private readonly router: Router) {}
 }

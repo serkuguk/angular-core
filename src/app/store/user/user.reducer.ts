@@ -2,15 +2,15 @@ import { User } from './user.models';
 import * as fromActions from './user.actions';
 
 export interface UserState {
-    entity: User;
-    uid: string;
-    loading: boolean;
-    error: string;
+    user: User | null;
+    access_token: string | null;
+    loading: boolean | null;
+    error: string | null;
 }
 
 const initialState: UserState = {
-    entity: null,
-    uid: null,
+    user: null,
+    access_token: null,
     loading: null,
     error: null
 };
@@ -24,11 +24,11 @@ export function reducer(state = initialState, action: fromActions.All): UserStat
     }
 
     case fromActions.Types.INIT_AUTHORIZED: {
-        return { ...state, entity: action.user, uid: action.uid, loading: false, error: null };
+        return { ...state, user: action.user };
     }
 
     case fromActions.Types.INIT_UNAUTHORIZED: {
-        return { ...state, entity: null, loading: false, error: null };
+        return { ...state, user: null, loading: false, error: null };
     }
 
     case fromActions.Types.INIT_ERROR: {
@@ -41,7 +41,7 @@ export function reducer(state = initialState, action: fromActions.All): UserStat
     }
 
     case fromActions.Types.SIGN_IN_SUCCESS: {
-        return { ...state, entity: action.user, uid: action.uid, loading: false, error: null };
+        return { ...state, user: action.user, };
     }
 
     case fromActions.Types.SIGN_IN_ERROR: {
@@ -50,7 +50,7 @@ export function reducer(state = initialState, action: fromActions.All): UserStat
 
     // Sign Out
     case fromActions.Types.SIGN_OUT: {
-        return { ...state, loading: true };
+        return { ...state, loading: true};
     }
 
     case fromActions.Types.SIGN_OUT_SUCCESS: {
@@ -68,7 +68,7 @@ export function reducer(state = initialState, action: fromActions.All): UserStat
     }
 
     case fromActions.Types.UPDATE_SUCCESS: {
-        return { ...state, entity: action.user, loading: false };
+        return { ...state, user: action.user, loading: false };
     }
 
     case fromActions.Types.UPDATE_ERROR: {

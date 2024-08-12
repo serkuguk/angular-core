@@ -35,6 +35,6 @@ export class AuthTokenStorageService {
 
   public logOut(): void {
     localStorage.clear();
-    window.location.reload();
+    //window.location.reload();
   }
 }

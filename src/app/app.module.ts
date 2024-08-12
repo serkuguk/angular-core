@@ -17,10 +17,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { FooterComponent, BodyComponent } from "./componentes";
 import { HeaderComponent, SidenavComponent } from "./componentes";
-import { authInterceptor } from "./core/services/auth/auth.interceptor";
-import { authErrorInterceptor } from "./core/services/auth/auth-error-interceptor";
-import { AuthTokenStorageService } from "./core/services/auth/auth-token-storage.service";
+import { authInterceptor } from "@core/services/auth/auth.interceptor";
+import { authErrorInterceptor } from "@core/services/auth/auth-error-interceptor";
+import { AuthTokenStorageService } from "@core/services/auth/auth-token-storage.service";
 import {JwtModule} from "@auth0/angular-jwt";
+import {effects, reducers} from "@app/store";
+import { AuthService } from "./pages/auth/services/auth.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -38,6 +40,7 @@ export function JwtTokenGetter() {
     bootstrap: [AppComponent],
     providers: [
         AuthTokenStorageService,
+        AuthService,
         //provideHttpClient(withInterceptorsFromDi()),
         provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor])),
     ],
@@ -65,13 +68,14 @@ export function JwtTokenGetter() {
             defaultLanguage: 'sp'
         }),
         StoreRouterConnectingModule.forRoot(),
-        StoreModule.forRoot({ router: routerReducer }, {
+        //StoreModule.forRoot({ router: routerReducer }, {
+        StoreModule.forRoot(reducers, {
             runtimeChecks: {
                 strictStateImmutability: true,
                 strictActionImmutability: true
             }
         }),
-        EffectsModule.forRoot([]),
+        EffectsModule.forRoot(effects),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
     ]})
 

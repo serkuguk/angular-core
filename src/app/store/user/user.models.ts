@@ -1,7 +1,7 @@
+import {User} from "@core/models/backend/user";
 
-import { User } from 'src/app/core/models/backend/user';
-import { Roles } from 'src/app/core/models/role';
-
+export { User } from '@core/models/backend/user';
+export {Roles} from "@core/models/role";
 
 // Requests models
 
@@ -10,4 +10,4 @@ export interface UsernamePasswordCredentials {
     password: string;
 }
 
-export type UserCreateRequest = Omit<User, 'uid' | 'username' | 'created'>;
+export type UserCreateRequest = Omit<User, 'uid' | 'username' | 'access_token'>;

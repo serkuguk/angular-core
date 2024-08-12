@@ -1,11 +1,24 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store'
-import {AppStateInterface} from '@app/shared/types/store/app-state-interface'
-import {UserStateInterface} from '@app/pages/auth/types/user-state-interface'
+import {createFeatureSelector, createSelector} from "@ngrx/store";
+import { UserState } from './user.reducer';
 
-export const basicSelector = createFeatureSelector<AppStateInterface, UserStateInterface>('basic')
+export const getUserState = createFeatureSelector<UserState>('user');
 
-export const getExampleBasic = createSelector(
-  basicSelector,
-  (state: IBasic) => state.basic
+export const getUser = createSelector(
+  getUserState,
+  (state) => state.user
 );
 
+export const getLoading = createSelector(
+  getUserState,
+  (state) => state.loading
+)
+
+export const getIsAuthenticated = createSelector(
+  getUserState,
+  (state) => !!state.access_token
+)
+
+export const getRoleId = createSelector(
+  getUser,
+  (user) => user && user.roleId
+)

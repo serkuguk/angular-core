@@ -5,7 +5,7 @@ export interface State {
   user: fromUser.UserState
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<State, fromUser.All> = {
   user: fromUser.reducer
 };
 
