@@ -28,10 +28,6 @@ export class LoginComponent implements OnInit {
   public loading$: Observable<boolean | null> | undefined;
 
   private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private authTokenStorageService: AuthTokenStorageService = inject(AuthTokenStorageService);
-  private authService: AuthService = inject(AuthService);
   private store: Store<fromRoot.State> = inject(Store);
 
   ngOnInit(): void {
