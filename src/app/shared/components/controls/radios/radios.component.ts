@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
-import { ControlItem, Value } from '@app/models/frontend';
-export { ControlItem, Value } from '@app/models/frontend';
+// import { ControlItem, Value } from '@app/models/frontend';
+// export { ControlItem, Value } from '@app/models/frontend';
 
 @Component({
     selector: 'app-radios',
+    standalone: true,
     templateUrl: './radios.component.html',
     styleUrls: ['./radios.component.scss'],
     providers: [
@@ -18,12 +19,12 @@ export { ControlItem, Value } from '@app/models/frontend';
 })
 export class RadiosComponent implements OnInit, ControlValueAccessor {
 
-    @Input() items: ControlItem[];
+    @Input() items: any;
 
-    @Output() changed = new EventEmitter<Value>();
+    @Output() changed = new EventEmitter<any>();
 
-    value: Value;
-    isDisabled: boolean;
+    value: any;
+    isDisabled?: boolean;
 
     constructor() { }
 
@@ -32,7 +33,7 @@ export class RadiosComponent implements OnInit, ControlValueAccessor {
 
     private propagateChange: any = () => { };
 
-    writeValue(value: Value): void {
+    writeValue(value: any): void {
         this.value = value;
     }
 
@@ -47,13 +48,13 @@ export class RadiosComponent implements OnInit, ControlValueAccessor {
         this.isDisabled = isDisabled;
     }
 
-    onChanged(value: Value): void {
+    onChanged(value: any): void {
         this.value = value;
         this.propagateChange(value);
         this.changed.emit(value);
     }
 
-    isChecked(value: Value): boolean {
+    isChecked(value: any): boolean {
         return this.value === value;
     }
 

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './pages/auth/services/auth.guard';
+import { authGuard } from '@pages/auth/services/auth.guard';
 
 export const routes: Routes = [
   {
@@ -9,11 +9,11 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
+    loadComponent: () => import('./pages/auth/components/login/login.component').then(c => c.LoginComponent),
   },
   {
     path: 'basic-example',
-    loadChildren: () => import('./pages/basic-example/basic-example.module').then(m => m.BasicExampleModule),
+    loadComponent: () => import('./pages/basic-example/components/basic-example/basic-example.component').then(c => c.BasicExampleComponent),
     canActivate: [authGuard]
   },
   {

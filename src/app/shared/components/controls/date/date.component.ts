@@ -24,7 +24,7 @@ export class DateComponent implements OnInit, ControlValueAccessor {
     @Output() closed = new EventEmitter<void>();
 
     value: TuiDay | null = null;
-    isDisabled: boolean;
+    isDisabled?: boolean;
 
     constructor() { }
 

@@ -1,5 +1,5 @@
 import {createAction, props} from '@ngrx/store'
-import {User, UsernamePasswordCredentials} from './user/user.models';
+import {User} from './user.models';
 import {Types} from './actionTypes';
 
 // Init
@@ -10,12 +10,12 @@ export const init = createAction(
 
 export const initAuthorized = createAction(
   Types.INIT_AUTHORIZED,
-  props<{ user: null }>()
+  props<{ user: User }>()
 );
 
 export const initUnauthorized = createAction(
   Types.INIT_UNAUTHORIZED,
-  props<{user: any}>()
+  props<{error: string}>()
 );
 
 export const initError = createAction(
@@ -27,7 +27,7 @@ export const initError = createAction(
 // Login
 export const login = createAction(
   Types.LOGIN,
-  props<{ credentials: UsernamePasswordCredentials }>()
+  props<{ username: string, password: string }>()
 );
 
 export const loginSuccess = createAction(

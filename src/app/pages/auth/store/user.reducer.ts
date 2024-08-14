@@ -1,7 +1,8 @@
-import { User } from './user/user.models';
-import * as fromActions from './user.actions';
-import {createReducer, on} from "@ngrx/store";
+import { User } from './user.models';
+import {createFeature, createReducer, on} from "@ngrx/store";
 import * as UserLoginActions from './user.actions';
+
+export const USERS_FEATURE_KEY = 'users';
 
 export interface UserState {
     user: User | null;
@@ -17,80 +18,63 @@ export const initialState: UserState = {
     error: null
 };
 
-export const loginReducer = createReducer(
-  initialState,
-  on(UserLoginActions.init,
-      state => (
-        { ...state, loading: true })),
+export const loginFeature = createFeature({
+  name: USERS_FEATURE_KEY,
+  reducer: createReducer(
+    initialState,
+    on(UserLoginActions.init,
+      state => ({ ...state, loading: true })
+    ),
 
-      on(UserLoginActions.initAuthorized,
-    state => (
-        { ...state, user: state.user })),
-);
+    on(UserLoginActions.initAuthorized,
+      state => ({ ...state, user: state.user })
+    ),
 
-export function reducer(state = initialState, action: fromActions.All): UserState {
-  switch (action.type) {
+    on(UserLoginActions.initUnauthorized,
+      state => ({ ...state, user: null, loading: false, error: null })
+    ),
 
-    // Init
-    case fromActions.Types.INIT: {
-        return { ...state, loading: true };
-    }
+    on(UserLoginActions.initError,
+      state => ({ ...state, loading: false, error: state.error })
+    ),
 
-    case fromActions.Types.INIT_AUTHORIZED: {
-        return { ...state, user: action.user };
-    }
+    //Login
+    on(UserLoginActions.login,
+      state => ({ ...state, loading: true })
+    ),
 
-    case fromActions.Types.INIT_UNAUTHORIZED: {
-        return { ...state, user: null, loading: false, error: null };
-    }
+    on(UserLoginActions.loginSuccess,
+      state => ({ ...state, user: state.user, access_token: state.access_token, loading: false })
+    ),
 
-    case fromActions.Types.INIT_ERROR: {
-        return { ...state, loading: false, error: action.error };
-    }
+    on(UserLoginActions.loginError,
+      state => ({ ...state,  error: state.error, loading: false })
+    ),
 
-    // Sign In
-    case fromActions.Types.SIGN_IN: {
-        return { ...state, loading: true };
-    }
+    //Logout
+    on(UserLoginActions.logOut,
+      state => ({ ...state, loading: true })
+    ),
 
-    case fromActions.Types.SIGN_IN_SUCCESS: {
-        return { ...state, user: action.user, };
-    }
+    on(UserLoginActions.logOutSuccess,
+      state => ({ ...state })
+    ),
 
-    case fromActions.Types.SIGN_IN_ERROR: {
-        return { ...state, error: action.error, loading: false };
-    }
+    on(UserLoginActions.logOutError,
+      state => ({ ...state,  error: state.error, loading: false })
+    ),
 
-    // Sign Out
-    case fromActions.Types.SIGN_OUT: {
-        return { ...state, loading: true};
-    }
+    //Update
+    on(UserLoginActions.updateUser,
+      state => ({ ...state, loading: true, error: null })
+    ),
 
-    case fromActions.Types.SIGN_OUT_SUCCESS: {
-        return { ...initialState };
-    }
+    on(UserLoginActions.updateUserSuccess,
+      state => ({ ...state, user: state.user, loading: false })
+    ),
 
-    case fromActions.Types.SIGN_OUT_ERROR: {
-        return { ...state, error: action.error, loading: false };
-    }
-
-
-    // Update
-    case fromActions.Types.UPDATE: {
-        return { ...state, loading: true, error: null };
-    }
-
-    case fromActions.Types.UPDATE_SUCCESS: {
-        return { ...state, user: action.user, loading: false };
-    }
-
-    case fromActions.Types.UPDATE_ERROR: {
-        return { ...state, loading: false, error: action.error };
-    }
-
-    default: {
-        return state;
-    }
-  }
-
-}
+    on(UserLoginActions.updateUserError,
+      state => ({ ...state,  loading: false, error: state.error })
+    ),
+  )
+})

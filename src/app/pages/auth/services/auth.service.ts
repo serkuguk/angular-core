@@ -31,4 +31,13 @@ export class AuthService {
       })
     )
   }
+
+  public init(user: LoginRequestInterface): Observable<any> {
+    return this.http.post<{username: string, password: string}>(`${environment.server_url}/auth/signout`, user).pipe(
+      tap((req: any) => {
+        this.token = null;
+        this.authTokenStorageService.logOut()
+      })
+    )
+  }
 }

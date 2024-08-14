@@ -1,22 +1,33 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {select, Store} from '@ngrx/store'
-import { AuthTokenStorageService } from 'src/app/core/services/auth/auth-token-storage.service';
 import { markFormGroupTouched, regexErrors } from 'src/app/shared/utils';
 
 import * as fromRoot from '@app/store';
-import * as fromUser from '@app/store/user';
-import {Observable} from "rxjs";
+import * as fromLoginAction from '@pages/auth/store/user.actions';
+import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 
-interface IAuth {
-  login: string
-  password: string
-}
+import {Observable} from "rxjs";
+import {CommonModule} from "@angular/common";
+import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.service";
+
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  providers: [
+    AuthTokenStorageService
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    /*ReactiveFormsModule,
+   ormFieldModule,
+   InputModule,
+   ButtonModule,
+   TranslateModule,
+   InputPasswordModule*/
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -31,7 +42,7 @@ export class LoginComponent implements OnInit {
   private store: Store<fromRoot.State> = inject(Store);
 
   ngOnInit(): void {
-    this.loading$ = this.store.pipe(select(fromUser.getLoading));
+    this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
 
     this.loginForm = this.fb.group({
         username: [null, {
@@ -56,15 +67,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.loginForm.valid) {
-      const value = this.loginForm.value;
-
-      const credentials: fromUser.UsernamePasswordCredentials = {
-        username: value.username,
-        password: value.password
-      }
-
-      this.store.dispatch(new fromUser.SignIn(credentials));
-
+      this.store.dispatch(fromLoginAction.login(this.loginForm.value));
     } else {
       markFormGroupTouched(this.loginForm);
     }
