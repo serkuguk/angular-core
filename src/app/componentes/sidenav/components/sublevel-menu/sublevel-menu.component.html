@@ -23,7 +23,7 @@
         @if (!item.items || (item.items && item.items.length === 0)) {
           <a [routerLink]="[item.routerLink]"
              routerLinkActive="active-sublevel"
-             [routerLinkAciveOptions]="{exact: true}"
+             [routerLinkActiveOptions]="{exact: true}"
              class="sublevel-nav-link">
                 <i class="sublevel-link-icon fa fa-circle"></i>
                 @if (collapsed) {

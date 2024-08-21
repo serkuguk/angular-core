@@ -3,12 +3,12 @@ import { INavbarData } from '../../interfaces/nav-bar-data.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { fadeInOut } from '../../utils/animation-helper';
-import { Router, RouterLinkActive } from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-sublevel-menu',
   standalone: true,
-  imports: [CommonModule, RouterLinkActive],
+  imports: [CommonModule, RouterLinkActive, RouterLink],
   templateUrl: './sublevel-menu.component.html',
   styleUrl: './sublevel-menu.component.scss',
   animations: [

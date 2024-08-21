@@ -1,6 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable, inject} from "@angular/core";
-import {Observable, tap} from "rxjs";
+import {Observable, of, tap} from "rxjs";
 import {environment} from "src/environments/environment";
 import {LoginRequestInterface} from "../types/login-request_interface";
 import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.service";
@@ -23,8 +23,8 @@ export class AuthService {
     )
   }
 
-  public logout(user: LoginRequestInterface): Observable<any> {
-    return this.http.post<{username: string, password: string}>(`${environment.server_url}/auth/signout`, user).pipe(
+  public logout(): Observable<any> {
+    return this.http.post(`${environment.server_url}/auth/signout`, null).pipe(
       tap((req: any) => {
         this.token = null;
         this.authTokenStorageService.logOut()
@@ -39,5 +39,9 @@ export class AuthService {
         this.authTokenStorageService.logOut()
       })
     )
+  }
+
+  userUpdate(credentials: any):  Observable<any> {
+    return of([])
   }
 }

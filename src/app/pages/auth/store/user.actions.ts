@@ -49,7 +49,7 @@ export const logOut = createAction(
 
 export const logOutSuccess = createAction(
   Types.LOGOUT_SUCCESS,
-  props<{ user: null }>()
+  props<{ error: string }>()
 );
 
 export const logOutError = createAction(

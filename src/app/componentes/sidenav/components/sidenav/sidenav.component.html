@@ -34,7 +34,7 @@
           @if (!data.items || (data.items && data.items.length === 0)) {
             <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
                                         routerLinkActive="active"
-                                        [routerLinkAciveOptions]="{exact: true}"
+                                        [routerLinkActiveOptions]="{exact: true}"
                                         (click)="shrinkItems(data)"
             >
               <i class="sidenav-link-icon" [class]="data.icon"></i>

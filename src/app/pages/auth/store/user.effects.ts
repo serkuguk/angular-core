@@ -29,12 +29,14 @@ export const init = createEffect(
 //Login
 export const login = createEffect(
   (login$ = inject(Actions),
-   authService = inject(AuthService)) => {
+   authService = inject(AuthService),
+   router = inject(Router)) => {  // Inject the Router service here
     return login$.pipe(
       ofType(fromUserActions.login),
       exhaustMap((credentials) =>
         authService.login(credentials).pipe(
-          map((user) => fromUserActions.loginSuccess(user)),
+          map((user) => fromUserActions.loginSuccess({ user })),  // Pass the user data to the action
+          tap(() => router.navigate(['/basic-example'])),
           catchError((error: { message: string }) =>
             of(fromUserActions.loginError({ error: error.message }))
           )
@@ -45,40 +47,40 @@ export const login = createEffect(
   { functional: true }
 );
 
+//Logout
+export const logout = createEffect(
+  (logout$ = inject(Actions),
+   authService = inject(AuthService)) => {
+    return logout$.pipe(
+      ofType(fromUserActions.logOut),
+      exhaustMap(_ =>
+        authService.logout().pipe(
+          map((user) => fromUserActions.logOutSuccess(user)),
+          catchError((error: { message: string }) =>
+            of(fromUserActions.logOutSuccess({ error: error.message }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
+);
 
-  /*logout$ = createEffect(() => this.actions$.pipe(
-      ofType(loginActions),
-      exhaustMap((login) => this.authService.logout(login.credentials)
-        .pipe(
-          map(login => loginSuccessActions(login)),
-          catchError((errorResponse) => {
-            return of(loginFailureActions({error: errorResponse.error}));
-          })
-        ))
-    )
-  );
-
-  updateUser$ = createEffect(() => this.actions$.pipe(
-      ofType(loginActions),
-      exhaustMap((login) => this.authService.login(login.credentials)
-        .pipe(
-          map(login => loginSuccessActions(login)),
-          catchError((errorResponse) => {
-            return of(loginFailureActions({error: errorResponse.error}));
-          })
-        ))
-    )
-  );*/
-
-  // redirectAfterSubmit$ = createEffect(
-  //   () => this.actions$.pipe(
-  //                         ofType(fromUserActions.updateUserSuccess),
-  //                         tap(() => {
-  //                           void this.router.navigateByUrl('/basic-example')
-  //                         })
-  //                       ),
-  //                 {dispatch: false}
-  // )
-
- // constructor(private readonly router: Router) {}
-
+//User update
+export const updateUser = createEffect(
+  (userUpdate$ = inject(Actions),
+   authService = inject(AuthService)) => {
+    return userUpdate$.pipe(
+      ofType(fromUserActions.updateUser),
+      exhaustMap(credentials =>
+        authService.userUpdate(credentials).pipe(
+          map((user) => fromUserActions.updateUserSuccess(user)),
+          catchError((error: { message: string }) =>
+            of(fromUserActions.logOutSuccess({ error: error.message }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
+);
