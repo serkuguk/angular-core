@@ -1,10 +1,18 @@
-export enum ActionTypes {
+export enum Types {
+  INIT = '[User] Init: Start',
+  INIT_AUTHORIZED = '[User] Init: Authorized',
+  INIT_UNAUTHORIZED = '[User] Init: Unauthorized',
+  INIT_ERROR = '[User] Init: Error',
 
-  SIGN_IN = '[User] Sign In: Start',
-  SIGN_IN_SUCCESS = '[User] Sign In: Success',
-  SIGN_IN_FAILURE = '[User] Sign In: Failure',
+  LOGIN = '[User] Login: Start',
+  LOGIN_SUCCESS = '[User] Login: Success',
+  LOGIN_ERROR = '[User] Login: Error',
 
-  SIGN_OUT = '[User] Sign Out: Start',
-  SIGN_OUT_SUCCESS = '[User] Sign Out: Success',
-  SIGN_OUT_FAILURE = '[User] Sign Out: Failure'
+  LOGOUT = '[User] Logout: Start',
+  LOGOUT_SUCCESS = '[User] Logout: Success',
+  LOGOUT_ERROR = '[User] Logout: Error',
+
+  UPDATE = '[User] Update: Start',
+  UPDATE_SUCCESS = '[User] Update: Success',
+  UPDATE_ERROR = '[User] Update: Error'
 }

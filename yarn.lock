@@ -159,10 +159,10 @@
     vite "5.2.11"
     watchpack "2.4.1"
 
-"@angular/cdk@16.2.4":
-  version "16.2.4"
-  resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-16.2.4.tgz"
-  integrity sha512-Hnh7Gs+gAkBnRYIMkDXRElEPAmBFas37isIfOtiqEmkgmSPFxsPpDOXK1soXeDk8U+yNmDWnO0fcHPp/pobHCw==
+"@angular/cdk@18.0.2":
+  version "18.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-18.0.2.tgz#2c21b4546885f65f783efae3135fe191232a30d3"
+  integrity sha512-KQTfi17PV/DYg8UcsoF9Jxfz+3nCPImm5eY1Mq7wGK8qUOlw9Y8fZ3eNU9ZH4hdg2FcKXJrAJqSA7I2nqdSX7w==
   dependencies:
     tslib "^2.3.0"
   optionalDependencies:
@@ -253,6 +253,13 @@
   integrity sha512-bytfTypkJbHDv2QkD8jT2w63DWKicSYi5l7N+LPukb9/0pl3XYXKJ8cjlVLbiFvoo5Oz2oBFWYFucWsaPqDw3A==
   dependencies:
     tslib "^2.3.0"
+
+"@auth0/angular-jwt@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@auth0/angular-jwt/-/angular-jwt-5.2.0.tgz#3a734be51f7f4b1bb85ac2535e987b7e6e706481"
+  integrity sha512-9FS2L0QwGNlxA/zgeehCcsR9CZscouyXkoIj1fODM36A8BLfdzg9k9DWAXUQ2Drjk0AypGAFzeNZR4vsLMhdeQ==
+  dependencies:
+    tslib "^2.0.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.23.5", "@babel/code-frame@^7.24.2":
   version "7.24.2"

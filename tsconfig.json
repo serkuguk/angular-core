@@ -23,12 +23,11 @@
       "dom"
     ],
     "paths": {
-      "@app/*": ["./src/app"],
-      "@pages/*": ["./src/app/pages"],
-      "@core": ["./src/app/core"],
-      "@core/*": ["./src/app/core"],
-      "@components/*": ["./src/app/components"],
-      "@shared/*": ["./src/app/shared"]
+      "@app/*": ["./src/app/*"],
+      "@pages/*": ["./src/app/pages/*"],
+      "@core/*": ["./src/app/core/*"],
+      "@components/*": ["./src/app/components/*"],
+      "@shared/*": ["./src/app/shared/*"]
     },
     "useDefineForClassFields": false
   },
@@ -38,5 +37,5 @@
     "strictInputAccessModifiers": true,
     //"strictTemplates": true
   },
-  
+
 }

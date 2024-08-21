@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteComponent } from './autocomplete.component';
 import { HighlightPipe } from './pipes/highlight.pipe';
 
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+//import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        MatAutocompleteModule
+        //MatAutocompleteModule
     ],
     exports: [
         AutocompleteComponent

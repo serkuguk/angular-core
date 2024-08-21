@@ -1,14 +1,17 @@
 <div class="global-wrapper">
-    <div class="global-container">
-        <header>
-            <app-header></app-header>
-        </header>
-        <main>
-            <router-outlet></router-outlet>
-        </main>
-        <footer>
-            <app-footer></app-footer>
-        </footer>
-    </div>
+  <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+  <div class="global-container">
+    <header>
+      <app-header [collapsed]="isSideNavCollapsed"
+                  [screenWidth]="screenWidth"></app-header>
+    </header>
+    <main>
+      <app-body [collapsed]="isSideNavCollapsed"
+                [screenWidth]="screenWidth"></app-body>
+    </main>
+      <footer>
+        <app-footer></app-footer>
+      </footer>
+  </div>
 </div>
 
