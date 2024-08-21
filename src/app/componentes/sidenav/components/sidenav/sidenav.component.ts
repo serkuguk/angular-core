@@ -1,17 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { navabarData } from '../../nav-data';
 import { Component, EventEmitter, HostListener, OnInit, Output, inject } from '@angular/core';
-import { ISideNavToggle } from '../../interfaces/side-nav-toggle.interface';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
-import { INavbarData } from '../../interfaces/nav-bar-data.interface';
-import { SublevelMenuComponent } from '@app/componentes';
-import { fadeInOut } from '../../utils/animation-helper';
+import {fadeInOut} from "@app/componentes/sidenav/utils/animation-helper";
+import {SublevelMenuComponent} from "@app/componentes/sidenav/components/sublevel-menu/sublevel-menu.component";
+import {INavbarData} from "@app/componentes/sidenav/interfaces/nav-bar-data.interface";
+import {ISideNavToggle} from "@app/componentes/sidenav/interfaces/side-nav-toggle.interface";
+import {navabarData} from "@app/componentes/sidenav/nav-data";
+
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, RouterModule, SublevelMenuComponent],
+  imports: [CommonModule,
+    SublevelMenuComponent,
+    RouterLink,
+    RouterLinkActive,
+    RouterModule
+  ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   animations: [

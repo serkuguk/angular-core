@@ -1,6 +1,6 @@
 import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection} from "@angular/core";
-import {provideRouter, withEnabledBlockingInitialNavigation} from "@angular/router";
+import {provideRouter, RouterModule, withEnabledBlockingInitialNavigation} from "@angular/router";
 import { authErrorInterceptor } from "@core/services/auth/auth-error-interceptor";
 import { authInterceptor } from "@core/services/auth/auth.interceptor";
 import { routes as appRotes} from "./app.routes";
@@ -14,15 +14,23 @@ import {environment} from "../environments/environment";
 import {loginFeature} from "@pages/auth/store/user.reducer";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.service";
-import { JwtModule } from '@auth0/angular-jwt';
+import {JwtModule} from '@auth0/angular-jwt';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthService} from "@pages/auth/services/auth.service";
-import {BrowserAnimationsModule, provideNoopAnimations} from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule, provideAnimations } from "@angular/platform-browser/animations";
+import {PlatformModule} from '@angular/cdk/platform';
+import {BrowserModule} from "@angular/platform-browser";
+import {TuiRootModule} from "@taiga-ui/core";
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        importProvidersFrom(BrowserModule),
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(PlatformModule),
+        importProvidersFrom(TuiRootModule),
         provideRouter(appRotes, withEnabledBlockingInitialNavigation()),
-        provideNoopAnimations(),
+        //importProvidersFrom(RouterModule.forRoot(appRotes)),
+        provideAnimations(),
         AuthTokenStorageService,
         AuthService,
         TranslateService,
@@ -63,7 +71,6 @@ export const appConfig: ApplicationConfig = {
           withInterceptorsFromDi()
         ),
         provideZoneChangeDetection({ eventCoalescing: true}),
-
         provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor]))
     ]
 }

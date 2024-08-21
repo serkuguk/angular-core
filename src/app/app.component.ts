@@ -3,19 +3,18 @@ import {TranslateService} from '@ngx-translate/core';
 import { ISideNavToggle } from './componentes/sidenav/interfaces/side-nav-toggle.interface';
 import { LoginComponent } from "@pages/auth/components/login/login.component";
 import { HeaderComponent } from "@app/componentes/header/header.component"
-import {BodyComponent, FooterComponent, SidenavComponent} from "@app/componentes";
-import {TuiRootModule} from "@taiga-ui/core";
+import {BodyComponent, FooterComponent } from "@app/componentes";
+import {SidenavComponent} from "@app/componentes/sidenav/components/sidenav/sidenav.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   providers: [],
-  imports: [LoginComponent,
-            TuiRootModule,
+  imports: [SidenavComponent,
+            LoginComponent,
             HeaderComponent,
             BodyComponent,
-            FooterComponent,
-            SidenavComponent],
+            FooterComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

@@ -23,7 +23,7 @@ import { Router, RouterLinkActive } from '@angular/router';
       })),
       transition('visible <=> hidden', [style({overflow: 'hidden'}),
         animate('{{transitionParams}}')]),
-      transition('void => *', animate(0))  
+      transition('void => *', animate(0))
     ])
   ]
 })

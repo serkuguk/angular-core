@@ -9,11 +9,11 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    loadComponent: () => import('./pages/auth/components/login/login.component').then(c => c.LoginComponent),
+    loadComponent: () => import('./pages/auth/components/login/login.component').then(m => m.LoginComponent),
   },
   {
     path: 'basic-example',
-    loadComponent: () => import('./pages/basic-example/components/basic-example/basic-example.component').then(c => c.BasicExampleComponent),
+    loadComponent: () => import('./pages/basic-example/components/basic-example/basic-example.component').then(m => m.BasicExampleComponent),
     canActivate: [authGuard]
   },
   {
