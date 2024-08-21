@@ -5,7 +5,7 @@ import { ISideNavToggle } from '../../interfaces/side-nav-toggle.interface';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { INavbarData } from '../../interfaces/nav-bar-data.interface';
-import { SublevelMenuComponent } from '../sublevel-menu/sublevel-menu.component';
+import { SublevelMenuComponent } from '@app/componentes';
 import { fadeInOut } from '../../utils/animation-helper';
 
 @Component({
@@ -18,7 +18,7 @@ import { fadeInOut } from '../../utils/animation-helper';
     fadeInOut,
     trigger('rotate', [
       transition(':enter', [
-        animate('1000ms', 
+        animate('1000ms',
           keyframes([
             style({transform: 'rotate(0deg)', offset: '0'}),
             style({transform: 'rotate(2turn)', offset: '1'}),
@@ -29,7 +29,7 @@ import { fadeInOut } from '../../utils/animation-helper';
   ]
 })
 export class SidenavComponent implements OnInit {
- 
+
   @Output() onToggleSideNav: EventEmitter<ISideNavToggle> = new EventEmitter();
 
   public collapsed: boolean = false;
@@ -37,7 +37,7 @@ export class SidenavComponent implements OnInit {
   public navData: any = navabarData;
   public multiple: boolean = false;
   public router: Router = inject(Router);
-  
+
   @HostListener('window:resize', ['$event'])
   public onResize(event: any) {
     this.screenWidth = window.innerWidth;

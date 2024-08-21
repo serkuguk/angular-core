@@ -17,9 +17,12 @@ import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.se
 import { JwtModule } from '@auth0/angular-jwt';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthService} from "@pages/auth/services/auth.service";
+import {BrowserAnimationsModule, provideNoopAnimations} from "@angular/platform-browser/animations";
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        provideRouter(appRotes, withEnabledBlockingInitialNavigation()),
+        provideNoopAnimations(),
         AuthTokenStorageService,
         AuthService,
         TranslateService,
@@ -60,7 +63,7 @@ export const appConfig: ApplicationConfig = {
           withInterceptorsFromDi()
         ),
         provideZoneChangeDetection({ eventCoalescing: true}),
-        provideRouter(appRotes, withEnabledBlockingInitialNavigation()),
+
         provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor]))
     ]
 }

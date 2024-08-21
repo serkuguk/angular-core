@@ -50,5 +50,4 @@ export class HeaderComponent implements OnInit {
   public userMenuToggle(): void {
       this.userOverlay = !this.userOverlay;
   }
-
 }

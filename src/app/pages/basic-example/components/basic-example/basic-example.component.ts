@@ -10,7 +10,6 @@ import {TuiAlertModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
   imports: [
     CommonModule,
     DynamicTableModule,
-    CommonModule,
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule

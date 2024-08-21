@@ -1,32 +1,32 @@
-<!--<div class="login-wrapper">-->
-<!--    <div class="login-container">-->
-<!--        <h2>NTT DATA</h2>-->
-<!--        <h3>{{'LOGIN.TITLE' | translate }}</h3>-->
-<!--        <form [formGroup]="loginForm">-->
-<!--            <app-form-field label="Input"-->
-<!--                        [required]="true"-->
-<!--                        [control]="loginForm.controls.username"-->
-<!--                        [showLabel]="false"-->
-<!--                        [isInline]="isInline">-->
-<!--                <app-input formControlName="username" -->
-<!--                           (changed)="outputData($event)"-->
-<!--                           [placeholder]="'LOGIN.USER' | translate"></app-input>-->
-<!--            </app-form-field>-->
-<!--            <app-form-field label="Input"-->
-<!--                        [required]="true"-->
-<!--                        [control]="loginForm.controls.password"-->
-<!--                        [showLabel]="false"-->
-<!--                        [isInline]="isInline">-->
-<!--                <app-input-password formControlName="password" -->
-<!--                           (changed)="outputData($event)"-->
-<!--                           [placeholder]="'LOGIN.PASSWORD' | translate"></app-input-password>-->
-<!--            </app-form-field>-->
+<div class="login-wrapper">
+    <div class="login-container">
+        <h2>NTT DATA</h2>
+        <h3>{{'LOGIN.TITLE' | translate }}</h3>
+        <form [formGroup]="loginForm">
+            <app-form-field label="Input"
+                        [required]="true"
+                        [control]="loginForm.controls.username"
+                        [showLabel]="false"
+                        [isInline]="isInline">
+                <app-input formControlName="username"
+                           (changed)="outputData($event)"
+                           [placeholder]="'LOGIN.USER' | translate"></app-input>
+            </app-form-field>
+            <app-form-field label="Input"
+                        [required]="true"
+                        [control]="loginForm.controls.password"
+                        [showLabel]="false"
+                        [isInline]="isInline">
+                <app-input-password formControlName="password"
+                           (changed)="outputData($event)"
+                           [placeholder]="'LOGIN.PASSWORD' | translate"></app-input-password>
+            </app-form-field>
 
-<!--            <app-button [icon]="'tuiIconSettings'"-->
-<!--                        [size]="'l'"-->
-<!--                        (click)="login()"-->
-<!--            >{{ 'BUTTON.LOGIN' | translate }}</app-button>  -->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
+            <app-button [icon]="'tuiIconSettings'"
+                        [size]="'l'"
+                        (click)="login()"
+            >{{ 'BUTTON.LOGIN' | translate }}</app-button>
+        </form>
+    </div>
+</div>
 

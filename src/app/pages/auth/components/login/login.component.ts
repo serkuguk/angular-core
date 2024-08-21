@@ -10,6 +10,11 @@ import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.service";
+import {ButtonModule} from "@app/shared";
+import {InputModule} from "@shared/components/controls/input/input.module";
+import {TranslateModule} from "@ngx-translate/core";
+import {InputPasswordModule} from "@shared/components/controls/input-pussword/input-password.module";
+import {FormFieldModule} from "@shared/components/controls/form-field/form-field.module";
 
 
 @Component({
@@ -19,14 +24,14 @@ import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.se
     AuthTokenStorageService
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    /*ReactiveFormsModule,
-   ormFieldModule,
+   CommonModule,
+   FormsModule,
+   ReactiveFormsModule,
+   FormFieldModule,
    InputModule,
    ButtonModule,
    TranslateModule,
-   InputPasswordModule*/
+   InputPasswordModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
