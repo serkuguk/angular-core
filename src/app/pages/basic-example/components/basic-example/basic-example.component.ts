@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {DynamicTableModule} from "@shared/components/dynamic-table";
-import {TuiAlertModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
+import { TuiRoot, TuiAlert, TuiDialog } from "@taiga-ui/core";
 
 @Component({
   selector: 'app-basic-example',
@@ -10,9 +10,9 @@ import {TuiAlertModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
   imports: [
     CommonModule,
     DynamicTableModule,
-    TuiRootModule,
-    TuiDialogModule,
-    TuiAlertModule
+    TuiRoot,
+    TuiDialog,
+    TuiAlert
   ],
   templateUrl: './basic-example.component.html',
   styleUrls: ['./basic-example.component.scss']

@@ -1,3 +1,5 @@
+import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
+import { TuiRoot } from "@taiga-ui/core";
 import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection} from "@angular/core";
 import {provideRouter, RouterModule, withEnabledBlockingInitialNavigation} from "@angular/router";
@@ -20,14 +22,12 @@ import {AuthService} from "@pages/auth/services/auth.service";
 import {BrowserAnimationsModule, provideAnimations } from "@angular/platform-browser/animations";
 import {PlatformModule} from '@angular/cdk/platform';
 import {BrowserModule} from "@angular/platform-browser";
-import {TuiRootModule} from "@taiga-ui/core";
-
 export const appConfig: ApplicationConfig = {
     providers: [
         importProvidersFrom(BrowserModule),
         importProvidersFrom(BrowserAnimationsModule),
         importProvidersFrom(PlatformModule),
-        importProvidersFrom(TuiRootModule),
+        importProvidersFrom(),
         provideRouter(appRotes, withEnabledBlockingInitialNavigation()),
         //importProvidersFrom(RouterModule.forRoot(appRotes)),
         provideAnimations(),
@@ -71,7 +71,8 @@ export const appConfig: ApplicationConfig = {
           withInterceptorsFromDi()
         ),
         provideZoneChangeDetection({ eventCoalescing: true}),
-        provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor]))
+        provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor])),
+        NG_EVENT_PLUGINS
     ]
 }
 

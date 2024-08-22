@@ -1,16 +1,17 @@
+import { TuiInputNumberModule } from "@taiga-ui/legacy";
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputNumberComponent } from './input-number.component';
-import { TuiInputNumberModule } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
-import { tuiNumberFormatProvider } from '@taiga-ui/core';
+import { tuiNumberFormatProvider, TuiNumberFormat } from '@taiga-ui/core';
 
 @NgModule({
     declarations: [InputNumberComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        TuiInputNumberModule
+        TuiInputNumberModule,
+        TuiNumberFormat
     ],
     exports: [
         InputNumberComponent
