@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { DynamicTableComponent } from './dynamic-table.component';
 
 @NgModule({
-  declarations: [DynamicTableComponent],
+  declarations: [],
   providers: [],
   imports: [
     CommonModule,
     ...TuiTable
   ],
-  exports:[DynamicTableComponent]
+  exports:[]
 })
 export class DynamicTableModule { }
