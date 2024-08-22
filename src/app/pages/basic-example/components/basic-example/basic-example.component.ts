@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {TuiAlertModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
 import {DynamicTableComponent} from "@shared/components/dynamic-table/dynamic-table.component";
-import { data as dataSource} from '../../config/config-table'
-
-import {DynamicTableModule} from "@shared/components/dynamic-table";
+import { data as dataSource, columns} from '../../config/config-table'
 import { TuiRoot, TuiAlert, TuiDialog } from "@taiga-ui/core";
 
 @Component({
@@ -13,10 +10,7 @@ import { TuiRoot, TuiAlert, TuiDialog } from "@taiga-ui/core";
   providers: [],
   imports: [
     CommonModule,
-    TuiRootModule,
-    TuiDialogModule,
-    TuiAlertModule
-    DynamicTableModule,
+    DynamicTableComponent,
     TuiRoot,
     TuiDialog,
     TuiAlert
@@ -27,9 +21,10 @@ import { TuiRoot, TuiAlert, TuiDialog } from "@taiga-ui/core";
 export class BasicExampleComponent implements OnInit {
 
   public dataSource: any[] = [];
+  public columns: any[] = [];
 
   ngOnInit(): void {
-    console.log(dataSource)
     this.dataSource = dataSource;
+    this.columns = columns;
   }
 }

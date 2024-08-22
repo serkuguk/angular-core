@@ -12,10 +12,12 @@
       }
     </tr>
   </thead>
-  <tbody>
-    @for (item of dataSource; track $index) {
+  <tbody *tuiLet="dataSource | tuiTableSort as sortedData"
+         [data]="sortedData" tuiTbody>
+    @for (item of sortedData; track $index) {
       <tr tuiTr>
-        @for (col of dataSource; track $index) {
+        @for (col of columns; track $index) {
+          {{'dd'}}
           <td *tuiCell="col" tuiTd>
             {{ item[col] }}
           </td>
@@ -23,5 +25,6 @@
       </tr>
     }
   </tbody>
+
 </table>
 
