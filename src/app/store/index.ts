@@ -1,4 +1,4 @@
-import { ActionReducerMap } from "@ngrx/store";
+/*import { ActionReducerMap } from "@ngrx/store";
 import * as fromUser from './user';
 
 export interface State {
@@ -11,4 +11,4 @@ export const reducers: ActionReducerMap<State, fromUser.All> = {
 
 export const effects = [
   fromUser.UserEffects
-];
+];*/

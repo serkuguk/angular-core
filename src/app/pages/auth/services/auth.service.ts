@@ -46,20 +46,15 @@ export class AuthService {
       )
   }
 
-  public init(user: LoginRequestInterface): Observable<any> {
-    return this.http.post<{username: string, password: string}>(`${environment.server_url}/auth/signout`, user).pipe(
-      tap((res: any) => {
-        this.token = null;
-        this.authTokenStorageService.logOut()
-      })
-    )
+  public init(): Observable<boolean> {
+    return of(this.isAuth)
   }
 
   public getUser(credentials: any):  Observable<any> {
     return of([])
   }
 
-  public get isAuth():  boolean {
+  public get isAuth(): boolean {
     if (!this.token)
       this.token = this.authTokenStorageService.getToken('access_token');
 

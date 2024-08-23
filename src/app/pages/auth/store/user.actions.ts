@@ -4,13 +4,12 @@ import {Types} from './actionTypes';
 
 // Init
 export const init = createAction(
-  Types.INIT,
-  props<{ username: string; password: string }>()
+  Types.INIT
 );
 
 export const initAuthorized = createAction(
   Types.INIT_AUTHORIZED,
-  props<{ user: User }>()
+  props<{ access_token: boolean }>()
 );
 
 export const initUnauthorized = createAction(

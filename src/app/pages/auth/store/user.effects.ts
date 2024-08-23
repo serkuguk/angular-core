@@ -1,6 +1,6 @@
 import {inject} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, exhaustMap, map, tap} from 'rxjs/operators';
+import {catchError, exhaustMap, map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
 
@@ -13,9 +13,9 @@ export const init = createEffect(
    authService = inject(AuthService)) => {
     return init$.pipe(
       ofType(fromUserActions.init),
-      exhaustMap((user) =>
-        authService.init(user).pipe(
-          map((user) => fromUserActions.initAuthorized(user)),
+      switchMap(() =>
+        authService.init().pipe(
+          map((auth) => fromUserActions.initAuthorized({access_token: auth})),
           catchError((error: { message: string }) =>
             of(fromUserActions.initUnauthorized({ error: error.message }))
           )
@@ -35,7 +35,7 @@ export const login = createEffect(
       ofType(fromUserActions.login),
       exhaustMap((credentials) =>
         authService.login(credentials).pipe(
-          map((user) => fromUserActions.loginSuccess({ user })),
+          map((user) => fromUserActions.loginSuccess({user})),
           tap(() => router.navigate(['/basic-example'])),
           catchError((error: { message: string }) =>
             of(fromUserActions.loginError({ error: error.message }))

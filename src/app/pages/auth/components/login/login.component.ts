@@ -3,7 +3,8 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {select, Store} from '@ngrx/store'
 import { markFormGroupTouched, regexErrors } from 'src/app/shared/utils';
 
-import * as fromRoot from '@app/store';
+//import * as fromRoot from '@app/store';
+import * as fromAuth from '@pages/auth';
 import * as fromLoginAction from '@pages/auth/store/user.actions';
 import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
   public loading$: Observable<boolean | null> | undefined;
 
   private fb = inject(FormBuilder);
-  private store: Store<fromRoot.State> = inject(Store);
+  private store: Store<fromAuth.State> = inject(Store);
 
   ngOnInit(): void {
     this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
   }
 
   outputData(event: any) {
-    console.log('OutPut Data', event);
+    //console.log('OutPut Data', event);
   }
 
   login(): void {
