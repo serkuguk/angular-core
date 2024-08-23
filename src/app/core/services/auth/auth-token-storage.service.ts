@@ -1,23 +1,26 @@
 import {inject, Injectable} from '@angular/core'
 import {environment} from 'src/environments/environment'
-import {Observable, of} from 'rxjs'
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthTokenStorageService {
 
-  jwtHelper: JwtHelperService = inject(JwtHelperService);
+  private jwtHelper: JwtHelperService = inject(JwtHelperService);
+  private router: Router = inject(Router);
 
-  public setToken(token: string): void {
-    localStorage.setItem('access_token', token);
+  public setToken(token: string | null): void {
+    if (typeof token === "string")
+      localStorage.setItem('access_token', token);
   }
 
-  public getToken(): string | null {
-    return localStorage.getItem('access_token');
+  public refreshToken(token: string | null): void {
+    if (typeof token === "string")
+      localStorage.setItem('refresh_token', token);
   }
 
-  public refreshAuthToken(token: string): void {
-    this.setToken(token);
+  public getToken(token: string): string | null {
+    return localStorage.getItem(token);
   }
 
   isAuthenticate(): boolean {
@@ -25,16 +28,8 @@ export class AuthTokenStorageService {
     return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
-  public saveUser(user: any): void {
-
-  }
-
-  public getUser(): Observable<string[]> {
-    return of([]);
-  }
-
   public logOut(): void {
     localStorage.clear();
-    //window.location.reload();
+    this.router.navigate(['/auth']);
   }
 }

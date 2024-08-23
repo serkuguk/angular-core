@@ -30,12 +30,12 @@ export const init = createEffect(
 export const login = createEffect(
   (login$ = inject(Actions),
    authService = inject(AuthService),
-   router = inject(Router)) => {  // Inject the Router service here
+   router = inject(Router)) => {
     return login$.pipe(
       ofType(fromUserActions.login),
       exhaustMap((credentials) =>
         authService.login(credentials).pipe(
-          map((user) => fromUserActions.loginSuccess({ user })),  // Pass the user data to the action
+          map((user) => fromUserActions.loginSuccess({ user })),
           tap(() => router.navigate(['/basic-example'])),
           catchError((error: { message: string }) =>
             of(fromUserActions.loginError({ error: error.message }))
@@ -57,7 +57,7 @@ export const logout = createEffect(
         authService.logout().pipe(
           map((user) => fromUserActions.logOutSuccess(user)),
           catchError((error: { message: string }) =>
-            of(fromUserActions.logOutSuccess({ error: error.message }))
+            of(fromUserActions.logOutError({ error: error.message }))
           )
         )
       )
@@ -76,7 +76,7 @@ export const updateUser = createEffect(
         authService.userUpdate(credentials).pipe(
           map((user) => fromUserActions.updateUserSuccess(user)),
           catchError((error: { message: string }) =>
-            of(fromUserActions.logOutSuccess({ error: error.message }))
+            of(fromUserActions.updateUserError({ error: error.message }))
           )
         )
       )
