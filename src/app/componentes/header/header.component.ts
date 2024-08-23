@@ -5,6 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { OverlayModule } from "@angular/cdk/overlay";
 import { CdkMenuModule } from "@angular/cdk/menu";
+import {Store} from "@ngrx/store";
+import * as fromRoot from "@app/store";
+import * as fromLoginAction from "@pages/auth/store/user.actions";
 
 @Component({
   selector: 'app-header',
@@ -30,6 +33,7 @@ export class HeaderComponent implements OnInit {
   public userOverlay: boolean = false;
 
   public translate = inject(TranslateService);
+  private store: Store<fromRoot.State> = inject(Store);
 
   ngOnInit(): void {
     this.translate.setDefaultLang('sp');
@@ -49,5 +53,17 @@ export class HeaderComponent implements OnInit {
 
   public userMenuToggle(): void {
       this.userOverlay = !this.userOverlay;
+  }
+
+  public logout(): void {
+    this.store.dispatch(fromLoginAction.logOut({user: null}));
+  }
+
+  public executeUserEvent(eventName: string): void {
+    const methodName = eventName as keyof this;
+
+    if (typeof this[methodName] === 'function') {
+      (this[methodName] as Function).apply(this);
+    }
   }
 }

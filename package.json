@@ -23,6 +23,7 @@
     "@maskito/angular": "3.0.1",
     "@maskito/core": "3.0.1",
     "@maskito/kit": "3.0.1",
+    "@maskito/phone": "^3.0.1",
     "@ng-web-apis/common": "4.2.1",
     "@ng-web-apis/intersection-observer": "4.2.1",
     "@ng-web-apis/mutation-observer": "4.2.1",
@@ -63,6 +64,7 @@
     "karma-coverage": "~2.2.1",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "libphonenumber-js": "^1.11.7",
     "typescript": "5.4.5"
   }
 }

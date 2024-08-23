@@ -29,7 +29,6 @@ export const appConfig: ApplicationConfig = {
         importProvidersFrom(PlatformModule),
         importProvidersFrom(),
         provideRouter(appRotes, withEnabledBlockingInitialNavigation()),
-        //importProvidersFrom(RouterModule.forRoot(appRotes)),
         provideAnimations(),
         AuthTokenStorageService,
         AuthService,
@@ -77,7 +76,7 @@ export const appConfig: ApplicationConfig = {
 }
 
 export function JwtTokenGetter() {
-  const token = inject(AuthTokenStorageService).getToken();
+  const token = inject(AuthTokenStorageService).getToken('access_token');
   if (!token) return "";
   return token;
 }

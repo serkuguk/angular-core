@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 import {CommonModule, NgForOf} from "@angular/common";
 import {TuiContext, TuiLet, TuiStringHandler} from "@taiga-ui/cdk";
 import {TuiTable, TuiTableCell, TuiTableHead, TuiTableTd, TuiTableTh, TuiTableTr} from "@taiga-ui/addon-table";
+import {TuiPagination} from "@taiga-ui/kit";
 
 
 @Component({
@@ -10,7 +11,8 @@ import {TuiTable, TuiTableCell, TuiTableHead, TuiTableTd, TuiTableTh, TuiTableTr
   imports: [
     CommonModule,
     TuiTable,
-    TuiLet
+    TuiLet,
+    TuiPagination
   ],
   templateUrl: './dynamic-table.component.html',
   styleUrls: ['./dynamic-table.component.scss'],
