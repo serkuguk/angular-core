@@ -4,6 +4,7 @@ import {catchError, Observable, of, tap, throwError} from "rxjs";
 import {environment} from "src/environments/environment";
 import {LoginRequestInterface} from "../types/login-request_interface";
 import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.service";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,8 @@ export class AuthService {
     return this.http.post<{username: string, password: string}>(`${environment.server_url}/auth/signin`, user).pipe(
       tap((res: any) => {
         this.saveToken(res)
-      })
+      }),
+      map(_ => this.getUser())
     )
   }
 
@@ -50,8 +52,9 @@ export class AuthService {
     return of(this.isAuth)
   }
 
-  public getUser(credentials: any):  Observable<any> {
-    return of([])
+  public getUser(): any {
+     let decodedToken = this.authTokenStorageService.decodeToken();
+     return {username: decodedToken.username, role: decodedToken.role};
   }
 
   public get isAuth(): boolean {

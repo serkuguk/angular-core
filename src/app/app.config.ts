@@ -3,10 +3,8 @@ import { TuiRoot } from "@taiga-ui/core";
 import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection} from "@angular/core";
 import {provideRouter, withEnabledBlockingInitialNavigation} from "@angular/router";
-import { authErrorInterceptor } from "@core/services/auth/auth-error-interceptor";
 import { authInterceptor } from "@core/services/auth/auth.interceptor";
 import { routes as appRotes} from "./app.routes";
-
 import { provideEffects } from "@ngrx/effects";
 import { provideStore } from '@ngrx/store';
 import { loginEffects } from '@pages/auth';
@@ -72,7 +70,7 @@ export const appConfig: ApplicationConfig = {
           withInterceptorsFromDi()
         ),
         provideZoneChangeDetection({ eventCoalescing: true}),
-        provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor])),
+        provideHttpClient(withInterceptors([authInterceptor])),
         NG_EVENT_PLUGINS
     ]
 }

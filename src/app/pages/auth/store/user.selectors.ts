@@ -3,6 +3,11 @@ import {USERS_FEATURE_KEY, UserState} from './user.reducer';
 
 export const getUserState = createFeatureSelector<UserState>(USERS_FEATURE_KEY);
 
+export const getToken = createSelector(
+  getUserState,
+  (state) => state.access_token
+);
+
 export const getUser = createSelector(
   getUserState,
   (state) => state.user
@@ -19,6 +24,7 @@ export const getIsAuthenticated = createSelector(
 )
 
 export const getRoleId = createSelector(
+  getUserState,
   getUser,
-  (user) => user && user.roleId
+  (state, user) => state.user && user?.role
 )

@@ -7,6 +7,7 @@
         @if (isAuthenticated$ | async) {
             <div class="header-container__right">
               <div class="head-user-avatar-container">
+                <div class="head-user-username">{{(userData$ | async)?.username}}</div>
                 <div class="head-user-avatar" (click)="userMenuToggle()">
                   <i class="fas fa-user-circle user-avatar"></i>
                 </div>
@@ -25,9 +26,9 @@
                     </li>
                   }
                 </ul>
-                <div class="header-container__langage">
-                  <button (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</button>
-                  <button (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</button>
+                <div class="header-container__language">
+                  <a (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</a>
+                  <a (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</a>
                 </div>
               </div>
             }

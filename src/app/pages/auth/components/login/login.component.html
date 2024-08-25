@@ -1,8 +1,11 @@
 <div class="login-wrapper">
     <div class="login-container">
-        <h2>NTT DATA</h2>
-        <h3>{{'LOGIN.TITLE' | translate }}</h3>
-        <form [formGroup]="loginForm">
+        <div class="login-container__title">
+          <h2>NTT DATA</h2>
+          <h3>{{'LOGIN.TITLE' | translate }}</h3>
+        </div>
+        <form class="login-container__form"
+              [formGroup]="loginForm">
             <app-form-field label="Input"
                         [required]="true"
                         [control]="loginForm.controls.username"

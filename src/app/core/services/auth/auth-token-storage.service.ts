@@ -23,13 +23,17 @@ export class AuthTokenStorageService {
     return localStorage.getItem(token);
   }
 
-  isAuthenticate(): boolean {
+  public isAuthenticate(): boolean {
     const token: string | null = localStorage.getItem('access_token');
     return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
+  public decodeToken(): any | null {
+    const token: string | null = localStorage.getItem('access_token');
+    return  token ? this.jwtHelper.decodeToken(token) : null;
+  }
+
   public logOut(): void {
     localStorage.clear();
-    this.router.navigate(['/auth']);
   }
 }

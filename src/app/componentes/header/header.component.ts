@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
   public positions = positions;
   public userOverlay: boolean = false;
   public isAuthenticated$: Observable<boolean | null> | undefined;
+  public userData$: Observable<any | null> | undefined;
   public translate = inject(TranslateService);
   private store: Store<fromAuth.State> = inject(Store);
 
@@ -42,6 +43,7 @@ export class HeaderComponent implements OnInit {
     this.translate.setDefaultLang('sp');
     this.selectedLanguage = this.languages[0];
     this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
+    this.userData$ = this.store.pipe(select(fromLoginSelectors.getUser));
   }
 
   public getHeadClass(): string {
@@ -61,6 +63,8 @@ export class HeaderComponent implements OnInit {
 
   public logout(): void {
     this.store.dispatch(fromLoginAction.logOut({user: null}));
+    this.store.dispatch(fromLoginAction.init());
+    this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
   }
 
   public executeUserEvent(eventName: string): void {

@@ -50,12 +50,14 @@ export const login = createEffect(
 //Logout
 export const logout = createEffect(
   (logout$ = inject(Actions),
-   authService = inject(AuthService)) => {
+    authService = inject(AuthService),
+    router = inject(Router)) => {
     return logout$.pipe(
       ofType(fromUserActions.logOut),
       exhaustMap(_ =>
         authService.logout().pipe(
           map((user) => fromUserActions.logOutSuccess(user)),
+          tap(() => router.navigate(['/auth'])),
           catchError((error: { message: string }) =>
             of(fromUserActions.logOutError({ error: error.message }))
           )

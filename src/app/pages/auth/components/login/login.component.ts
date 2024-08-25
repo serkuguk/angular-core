@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
+    this.store.dispatch(fromLoginAction.init());
 
     this.loginForm = this.fb.group({
         username: [null, {

@@ -8,6 +8,7 @@ export interface UserState {
     user: User | null;
     access_token: string | boolean | null;
     loading: boolean | null;
+    role: string | null;
     error: string | null;
 }
 
@@ -15,6 +16,7 @@ export const initialState: UserState = {
     user: null,
     access_token: null,
     loading: null,
+    role: null,
     error: null
 };
 
@@ -44,7 +46,7 @@ export const loginFeature = createFeature({
     ),
 
     on(UserLoginActions.loginSuccess,
-      (state, {user}) => ({ ...state, user: user, loading: false })
+      (state, {user}) => ({ ...state, user: user, loading: false, error: null })
     ),
 
     on(UserLoginActions.loginError,
