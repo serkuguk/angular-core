@@ -1,8 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {CommonModule} from "@angular/common";
+import {TuiButton} from "@taiga-ui/core";
 export type ButtonType = 'button' | 'submit';
 
 @Component({
     selector: 'app-button',
+    standalone: true,
+    imports: [
+      CommonModule,
+      TuiButton
+    ],
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss']
 })

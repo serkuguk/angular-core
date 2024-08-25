@@ -1,2 +1,2 @@
-export * from './layout.module';
+export * from './basic-layout/basic-layout.component';
 

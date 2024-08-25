@@ -1,9 +1,16 @@
 import { Component, forwardRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
+import {CommonModule} from "@angular/common";
+import {TuiCalendar} from "@taiga-ui/core";
 
 @Component({
     selector: 'app-date',
+    standalone: true,
+    imports: [
+      CommonModule,
+      TuiCalendar
+    ],
     templateUrl: './date.component.html',
     styleUrls: ['./date.component.scss'],
     providers: [

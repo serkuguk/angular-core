@@ -10,7 +10,7 @@ import {TuiPagination} from "@taiga-ui/kit";
   standalone: true,
   imports: [
     CommonModule,
-    TuiTable,
+    ...TuiTable,
     TuiLet,
     TuiPagination
   ],

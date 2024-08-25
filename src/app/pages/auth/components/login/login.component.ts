@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {select, Store} from '@ngrx/store'
 import { markFormGroupTouched, regexErrors } from 'src/app/shared/utils';
 
-//import * as fromRoot from '@app/store';
 import * as fromAuth from '@pages/auth';
 import * as fromLoginAction from '@pages/auth/store/user.actions';
 import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
@@ -11,11 +10,11 @@ import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
-import {ButtonModule} from "@app/shared";
-import {InputModule} from "@shared/components/controls/input/input.module";
+import {ButtonComponent} from "@app/shared";
 import {TranslateModule} from "@ngx-translate/core";
 import {InputPasswordModule} from "@shared/components/controls/input-pussword/input-password.module";
-import {FormFieldModule} from "@shared/components/controls/form-field/form-field.module";
+import {InputComponent} from "@shared/components/controls/input/input.component";
+import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 
 
 @Component({
@@ -28,9 +27,9 @@ import {FormFieldModule} from "@shared/components/controls/form-field/form-field
    CommonModule,
    FormsModule,
    ReactiveFormsModule,
-   FormFieldModule,
-   InputModule,
-   ButtonModule,
+   FormFieldComponent,
+   InputComponent,
+   ButtonComponent,
    TranslateModule,
    InputPasswordModule
   ],

@@ -1,11 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {CommonModule} from "@angular/common";
 
 /*import { ControlItem, Value } from '@app/models/frontend';
 export { ControlItem, Value } from '@app/models/frontend';*/
 
 @Component({
     selector: 'app-checkboxes',
+    standalone: true,
+    imports: [
+      CommonModule
+    ],
     templateUrl: './checkboxes.component.html',
     styleUrls: ['./checkboxes.component.scss'],
     providers: [
@@ -54,7 +59,7 @@ export class CheckboxesComponent implements OnInit, ControlValueAccessor {
     }
 
     private getSelected(value: any, checked: boolean): any[] {
-        const selected: any[] = this.value ? [...this.value] : [];
+        const selected: any = this.value || this.value === 0 ? [...this.value] : [];
 
         if (checked) {
             if (!selected.includes(value)) {
