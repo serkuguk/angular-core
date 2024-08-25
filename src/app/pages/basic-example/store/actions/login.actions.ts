@@ -1,6 +1,6 @@
 /*import {createAction, props} from '@ngrx/store'
-import {ActionTypes} from '@app/pages/auth/store/actionTypes'
-import {EmailPasswordCredentialsInterface} from '@app/pages/auth/types/email-password-credentials-interface'
+import {ActionTypes} from '@app/pages/interceptors/store/actionTypes'
+import {EmailPasswordCredentialsInterface} from '@app/pages/interceptors/types/email-password-credentials-interface'
 import firebase from 'firebase';
 import {UserInterface} from '@app/shared/types/backend/types/user-interface';
 

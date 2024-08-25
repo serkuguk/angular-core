@@ -1,11 +1,11 @@
 /*import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {loginActions, loginFailureActions, loginSuccessActions} from '@app/pages/auth/store/actions/login.actions';
+import {loginActions, loginFailureActions, loginSuccessActions} from '@app/pages/interceptors/store/actions/login.actions';
 import {catchError, filter, map, switchMap, take, tap} from 'rxjs/operators';
-import {UserService} from '@app/pages/auth/services/user.service';
+import {UserService} from '@app/pages/interceptors/services/user.service';
 import {from, Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
-import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireAuth} from '@angular/fire/interceptors';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {UserInterface} from '@app/shared/types/backend/types/user-interface';
 

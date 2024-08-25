@@ -1,15 +1,16 @@
 import { Routes } from '@angular/router';
-import { authGuard } from '@pages/auth/services/auth.guard';
+import {authGuard} from '@pages/auth/services/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'basic-example',
     pathMatch: 'full'
   },
   {
-    path: 'auth',
+    path: 'login',
     loadComponent: () => import('./pages/auth/components/login/login.component').then(m => m.LoginComponent),
+    //canMatch: [isAuthCanMach]
   },
   {
     path: 'basic-example',
@@ -18,7 +19,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    pathMatch: 'full',
-    redirectTo: 'auth'
+    loadComponent: () => import('./pages/notfound-page/notfound-page.component').then(m => m.NotfoundPageComponent)
   }
 ];

@@ -1,4 +1,4 @@
-//import {UserStateInterface} from '@app/pages/auth/types/user-state-interface';
+//import {UserStateInterface} from '@app/pages/interceptors/types/user-state-interface';
 
 export interface AppStateInterface {
     auth: any, //UserStateInterface,

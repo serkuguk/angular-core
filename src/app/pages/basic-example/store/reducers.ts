@@ -1,8 +1,8 @@
-/*import {UserStateInterface} from '@app/pages/auth/types/user-state-interface'
+/*import {UserStateInterface} from '@app/pages/interceptors/types/user-state-interface'
 import {Action, createReducer, on} from '@ngrx/store'
 import {loginActions,
         loginFailureActions,
-        loginSuccessActions} from '@app/pages/auth/store/actions/login.actions'
+        loginSuccessActions} from '@app/pages/interceptors/store/actions/login.actions'
 
 const initialBaseState: IBaseState = {
   entity: null,

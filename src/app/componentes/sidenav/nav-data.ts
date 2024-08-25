@@ -2,7 +2,7 @@ import { INavbarData } from "./interfaces/nav-bar-data.interface";
 
 export const navabarData: INavbarData[] = [
   {
-    routerLink: 'auth',
+    routerLink: 'dashboard',
     icon: 'fal fa-home',
     label: 'Dashboard'
   },

@@ -3,7 +3,7 @@ import {Injectable, inject} from "@angular/core";
 import {catchError, Observable, of, tap, throwError} from "rxjs";
 import {environment} from "src/environments/environment";
 import {LoginRequestInterface} from "../types/login-request_interface";
-import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.service";
+import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {map} from "rxjs/operators";
 
 @Injectable()

@@ -1,6 +1,6 @@
 import {inject} from '@angular/core'
 import {HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '@angular/common/http'
-import {AuthTokenStorageService} from './auth-token-storage.service';
+import {AuthTokenStorageService} from '../services/auth-token-storage.service';
 import {BehaviorSubject, catchError, switchMap, tap, throwError} from "rxjs";
 import {AuthService} from "@pages/auth/services/auth.service";
 import {filter} from "rxjs/operators";

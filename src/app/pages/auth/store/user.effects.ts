@@ -36,7 +36,7 @@ export const login = createEffect(
       exhaustMap((credentials) =>
         authService.login(credentials).pipe(
           map((user) => fromUserActions.loginSuccess({user})),
-          tap(() => router.navigate(['/basic-example'])),
+          tap(() => router.navigate([''])),
           catchError((error: { message: string }) =>
             of(fromUserActions.loginError({ error: error.message }))
           )
@@ -57,7 +57,7 @@ export const logout = createEffect(
       exhaustMap(_ =>
         authService.logout().pipe(
           map((user) => fromUserActions.logOutSuccess(user)),
-          tap(() => router.navigate(['/auth'])),
+          tap(() => router.navigate(['/login'])),
           catchError((error: { message: string }) =>
             of(fromUserActions.logOutError({ error: error.message }))
           )

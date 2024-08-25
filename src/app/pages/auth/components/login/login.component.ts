@@ -10,7 +10,7 @@ import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
-import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.service";
+import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {ButtonModule} from "@app/shared";
 import {InputModule} from "@shared/components/controls/input/input.module";
 import {TranslateModule} from "@ngx-translate/core";
