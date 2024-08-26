@@ -1,21 +1,25 @@
 import {Component, inject, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
 import { ISideNavToggle } from './componentes/sidenav/interfaces/side-nav-toggle.interface';
 import { LoginComponent } from "@pages/auth/components/login/login.component";
-import { HeaderComponent } from "@app/componentes/header/header.component"
-import {BodyComponent, FooterComponent } from "@app/componentes";
-import {SidenavComponent} from "@app/componentes/sidenav/components/sidenav/sidenav.component";
+import {AsyncPipe, JsonPipe} from "@angular/common";
+
+//Store
 import {select, Store} from "@ngrx/store";
 import * as fromAuth from "@pages/auth";
-import {Observable} from "rxjs";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
-import {AsyncPipe, JsonPipe} from "@angular/common";
 import * as fromLoginAction from "@pages/auth/store/user.actions";
+import {BodyComponent} from "@layouts/components/body/body.component";
+import {HeaderComponent } from "@layouts/components/header/header.component";
+import {FooterComponent} from "@layouts/components/footer/footer.component";
+import {SidenavComponent} from "@layouts/components/sidenav/components/sidenav/sidenav.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   providers: [],
-  imports: [SidenavComponent,
+  imports: [
+    SidenavComponent,
     LoginComponent,
     HeaderComponent,
     BodyComponent,
