@@ -1,0 +1,251 @@
+<tui-scrollbar
+  waIntersectionRoot
+  class="scrollbar"
+  [hidden]="true"
+>
+  <table
+    size="l"
+    tuiTable
+    class="table"
+    [columns]="columns"
+    [direction]="-1"
+    [sorter]="totalSorter"
+  >
+    <thead tuiThead>
+    <tr tuiThGroup>
+      <th
+        *tuiHead="'name'"
+        rowspan="2"
+        tuiTh
+        class="first"
+        [sorter]="null"
+        [sticky]="true"
+      >
+        Name
+      </th>
+      <th
+        *tuiHead="'price'"
+        rowspan="2"
+        tuiTh
+        class="number second"
+        [sticky]="true"
+      >
+        Price,&nbsp;$
+      </th>
+      <th
+        *tuiHead="'quantity'"
+        colspan="2"
+        tuiTh
+        [sorter]="null"
+      >
+        Purchase
+      </th>
+      <ng-container *tuiHead="'unit'" />
+      <th
+        *tuiHead="'date'"
+        rowspan="2"
+        tuiTh
+      >
+        Date
+      </th>
+      <th
+        *tuiHead="'total'"
+        rowspan="2"
+        tuiTh
+        class="number"
+        [sorter]="totalSorter"
+      >
+        Total
+      </th>
+    </tr>
+    <tr tuiThGroup>
+      <th
+        *tuiHead="'quantity'"
+        tuiTh
+        class="number border"
+      >
+        Quantity
+      </th>
+      <th
+        *tuiHead="'unit'"
+        tuiTh
+      >
+        Units
+      </th>
+    </tr>
+    </thead>
+
+    <tbody
+      *tuiLet="pythons | tuiTableSort as sortedPythons"
+      heading="Monty Python"
+      tuiTbody
+      [data]="sortedPythons"
+    >
+    <tr
+      *ngFor="let item of sortedPythons; trackBy: trackByIndex"
+      tuiTr
+    >
+      <th
+        *tuiCell="'name'"
+        tuiTd
+        [colSpan]="item.price > 1000 ? 2 : 0"
+      >
+        <tui-textarea
+          class="textarea"
+          [expandable]="true"
+          [ngModel]="item.name"
+          [ngModelOptions]="options"
+          (ngModelChange)="onValueChange($event, 'name', item, pythons)"
+        />
+      </th>
+      <ng-container *tuiCell="'price'">
+        <th
+          *ngIf="item.price <= 1000"
+          tuiTd
+          class="second"
+        >
+          <tui-input-number
+            class="number"
+            [ngModel]="item.price"
+            [ngModelOptions]="options"
+            [tuiValidator]="minPrice"
+            (ngModelChange)="onValueChange($event, 'price', item, pythons)"
+          />
+        </th>
+      </ng-container>
+      <td
+        *tuiCell="'quantity'"
+        tuiTd
+      >
+        <tui-input-number
+          decimal="never"
+          [ngModel]="item.quantity"
+          [ngModelOptions]="options"
+          (ngModelChange)="onValueChange($event, 'quantity', item, pythons)"
+        />
+      </td>
+      <td
+        *tuiCell="'unit'"
+        tuiTd
+      >
+        <tui-select
+          class="select"
+          [ngModel]="item.unit"
+          [ngModelOptions]="options"
+          (ngModelChange)="onValueChange($event, 'unit', item, pythons)"
+        >
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="units"
+          />
+        </tui-select>
+      </td>
+      <td
+        *tuiCell="'date'"
+        tuiTd
+      >
+        <tui-input-date
+          [ngModel]="item.date"
+          [ngModelOptions]="options"
+          (ngModelChange)="onValueChange($event, 'date', item, pythons)"
+        />
+      </td>
+      <td
+        *tuiCell="'total'"
+        tuiTd
+        class="number text"
+      >
+        {{ getTotal(item) | tuiFormatNumber | async }}
+      </td>
+    </tr>
+    </tbody>
+
+    <tbody
+      *tuiLet="starwars | tuiTableSort as sortedStarwars"
+      tuiTbody
+      [data]="sortedStarwars"
+      [heading]="template"
+    >
+    <tr
+      *ngFor="let item of sortedStarwars; trackBy: trackByIndex"
+      tuiTr
+    >
+      <th
+        *tuiCell="'name'"
+        tuiTd
+      >
+        <tui-textarea
+          class="textarea"
+          [expandable]="true"
+          [ngModel]="item.name"
+          [ngModelOptions]="options"
+          (ngModelChange)="onValueChange($event, 'name', item, starwars)"
+        />
+      </th>
+      <th
+        *tuiCell="'price'"
+        tuiTd
+        class="second"
+      >
+        <tui-input-number
+          [ngModel]="item.price"
+          [ngModelOptions]="options"
+          [tuiValidator]="minPrice"
+          (ngModelChange)="onValueChange($event, 'price', item, starwars)"
+        />
+      </th>
+      <td
+        *tuiCell="'quantity'"
+        tuiTd
+      >
+        <tui-input-number
+          decimal="never"
+          [ngModel]="item.quantity"
+          [ngModelOptions]="options"
+          (ngModelChange)="onValueChange($event, 'quantity', item, starwars)"
+        />
+      </td>
+      <td
+        *tuiCell="'unit'"
+        tuiTd
+      >
+        <tui-select
+          class="select"
+          [ngModel]="item.unit"
+          [ngModelOptions]="options"
+          (ngModelChange)="onValueChange($event, 'unit', item, starwars)"
+        >
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="units"
+          />
+        </tui-select>
+      </td>
+      <td
+        *tuiCell="'date'"
+        tuiTd
+      >
+        <tui-input-date
+          [ngModel]="item.date"
+          [ngModelOptions]="options"
+          (ngModelChange)="onValueChange($event, 'date', item, starwars)"
+        />
+      </td>
+      <td
+        *tuiCell="'total'"
+        tuiTd
+        class="number text"
+      >
+        {{ getTotal(item) | tuiFormatNumber | async }}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</tui-scrollbar>
+<ng-template #template>
+  <tui-icon
+    icon="@tui.star"
+    class="tui-space_right-3"
+  />
+  Star Wars
+</ng-template>

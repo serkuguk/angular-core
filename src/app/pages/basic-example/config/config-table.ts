@@ -1,4 +1,5 @@
-export const data = [
+//basic table
+export const basic_data = [
   {
     name: 'Alex Inkin',
     balance: 1323525,
@@ -13,4 +14,8 @@ export const data = [
   },
 ];
 
-export const columns = ['name', 'balance'];
+export const basic_columns = ['name', 'balance'];
+
+//Editable table
+export const editable_columns = ['name', 'price', 'quantity', 'unit', 'total'];
+

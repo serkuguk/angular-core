@@ -59,16 +59,13 @@ export class LoginComponent implements OnInit {
               ]
           }],
           password: [null, {
+            updateOn: 'blur',
               validators: [
                 Validators.required,
                 Validators.minLength(3)
               ]
           }]
-      })
-  }
-
-  outputData(event: any) {
-    //console.log('OutPut Data', event);
+    })
   }
 
   login(): void {

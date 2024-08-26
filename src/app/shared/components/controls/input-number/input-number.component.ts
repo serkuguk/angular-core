@@ -1,8 +1,18 @@
 import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from "@angular/common";
+import {TuiInputNumberModule} from "@taiga-ui/legacy";
+import {TuiNumberFormat} from "@taiga-ui/core";
 
 @Component({
     selector: 'app-input-number',
+    standalone: true,
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      TuiInputNumberModule,
+      TuiNumberFormat
+    ],
     templateUrl: './input-number.component.html',
     styleUrls: ['./input-number.component.scss'],
     providers: [

@@ -1,8 +1,17 @@
-<h3>Table</h3>
+<h3>Tables</h3>
+<div class="table-container">
+  <div class="table-container__item">
+    <h3>Basic Table</h3>
+    <basic-table
+      [columns]="basic_columns"
+      [dataSource]="dataSource"
+    ></basic-table>
+  </div>
 
-<div>
-  <dynamic-table
-    [columns]="columns"
-    [dataSource]="dataSource"
-  ></dynamic-table>
+  <div class="table-container__item">
+    <h3>Editable Table</h3>
+    <editable-table
+      [columns]="editable_columns"
+    ></editable-table>
+  </div>
 </div>

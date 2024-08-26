@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import { ISideNavToggle } from './componentes/sidenav/interfaces/side-nav-toggle.interface';
+import { ISideNavToggle } from '@layouts/components/sidenav/interfaces/side-nav-toggle.interface';
 import { LoginComponent } from "@pages/auth/components/login/login.component";
 import {AsyncPipe, JsonPipe} from "@angular/common";
 

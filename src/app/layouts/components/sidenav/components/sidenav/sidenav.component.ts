@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, OnInit, Output, inject } from '@angular/core';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
-import {fadeInOut} from "@app/componentes/sidenav/utils/animation-helper";
-import {SublevelMenuComponent} from "@app/componentes/sidenav/components/sublevel-menu/sublevel-menu.component";
-import {INavbarData} from "@app/componentes/sidenav/interfaces/nav-bar-data.interface";
-import {ISideNavToggle} from "@app/componentes/sidenav/interfaces/side-nav-toggle.interface";
-import {navabarData} from "@app/componentes/sidenav/nav-data";
+import {SublevelMenuComponent} from "@app/layouts";
+import {fadeInOut} from "@layouts/components/sidenav/utils/animation-helper";
+import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-toggle.interface";
+import {navabarData} from "@layouts/components/sidenav/nav-data";
+import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.interface";
+
 
 
 @Component({

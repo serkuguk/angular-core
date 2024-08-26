@@ -6,7 +6,7 @@ import {TuiPagination} from "@taiga-ui/kit";
 
 
 @Component({
-  selector: 'dynamic-table',
+  selector: 'basic-table',
   standalone: true,
   imports: [
     CommonModule,
@@ -14,8 +14,8 @@ import {TuiPagination} from "@taiga-ui/kit";
     TuiLet,
     TuiPagination
   ],
-  templateUrl: './dynamic-table.component.html',
-  styleUrls: ['./dynamic-table.component.scss'],
+  templateUrl: './basic-table.component.html',
+  styleUrls: ['./basic-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicTableComponent {
