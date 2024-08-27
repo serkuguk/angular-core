@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {TuiButton} from "@taiga-ui/core";
+import {TuiButton, TuiLoader, tuiLoaderOptionsProvider} from "@taiga-ui/core";
 export type ButtonType = 'button' | 'submit';
 
 @Component({

@@ -1,0 +1,11 @@
+.base-loader {
+  display: block;
+  margin: -1.25rem;
+  padding: 1.25rem;
+  background: var(--tui-background-neutral-2-pressed);
+  color: var(--tui-background-base);
+}
+
+.inline-flex {
+  display: inline-flex;
+}

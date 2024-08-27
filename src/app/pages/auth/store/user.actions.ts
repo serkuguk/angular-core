@@ -26,7 +26,7 @@ export const initError = createAction(
 // Login
 export const login = createAction(
   Types.LOGIN,
-  props<{ username: string, password: string }>()
+  props<{ username: string, password: string}>()
 );
 
 export const loginSuccess = createAction(

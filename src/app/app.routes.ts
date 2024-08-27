@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {authGuard} from '@pages/auth/services/auth.guard';
+import {LoginComponent} from "@pages/auth/components/login/login.component";
 
 export const routes: Routes = [
   {
@@ -9,8 +10,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./pages/auth/components/login/login.component').then(m => m.LoginComponent),
-    //canMatch: [isAuthCanMach]
+    component: LoginComponent
   },
   {
     path: 'basic-example',

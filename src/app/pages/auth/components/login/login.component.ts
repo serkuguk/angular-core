@@ -15,6 +15,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {InputPasswordModule} from "@shared/components/controls/input-pussword/input-password.module";
 import {InputComponent} from "@shared/components/controls/input/input.component";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
+import {LoaderComponent} from "@shared/components/loader/loader.component";
 
 
 @Component({
@@ -31,7 +32,8 @@ import {FormFieldComponent} from "@shared/components/controls/form-field/form-fi
    InputComponent,
    ButtonComponent,
    TranslateModule,
-   InputPasswordModule
+   InputPasswordModule,
+   LoaderComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -59,7 +61,6 @@ export class LoginComponent implements OnInit {
               ]
           }],
           password: [null, {
-            updateOn: 'blur',
               validators: [
                 Validators.required,
                 Validators.minLength(3)

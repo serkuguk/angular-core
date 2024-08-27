@@ -1,0 +1,11 @@
+<tui-loader
+  [showLoader]="showLoader"
+  [overlay]="overlay"
+  [inheritColor]="inheritColor"
+  [size]="size"
+  [class]="loaderClass"
+  [textContent]="textContent"
+>
+  <ng-content></ng-content>
+<!--  <ng-container *polymorpheusOutlet="textContent as text; context: ''">{{text}}</ng-container>-->
+</tui-loader>
