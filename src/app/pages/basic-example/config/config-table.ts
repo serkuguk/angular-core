@@ -19,3 +19,13 @@ export const basic_columns = ['name', 'balance'];
 //Editable table
 export const editable_columns = ['name', 'price', 'quantity', 'unit', 'total'];
 
+
+/*==================================Selectors=============================================================*/
+export const basic_select_items = [
+  'Luke Skywalker',
+  'Leia Organa Solo',
+  'Darth Vader',
+  'Han Solo',
+  'Obi-Wan Kenobi',
+  'Yoda',
+];
