@@ -1,5 +1,5 @@
 .sidenav {
-  background: #263238;
+  background-color: rgba(7, 14, 39, 1);
   transition: all .5s ease;
   position: fixed;
   z-index: 1;
@@ -54,7 +54,7 @@
         color: #fff;
       }
     }
-  }   
+  }
 }
 
 .sidenav-collapsed {
@@ -83,15 +83,15 @@
       text-decoration: none;
       border-radius: 0.625rem;
       transform: all .3s ease;
-  
+
       .sidenav-link-icon {
         font-style: 22px;
         width: 2rem;
         min-width: 2rem;
         margin: 0 0.5rem;
         text-align: center;
-      } 
-      
+      }
+
       .sidenav-link-text {
         margin-left: 1.5rem;
       }
