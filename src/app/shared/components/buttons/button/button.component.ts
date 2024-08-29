@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {TuiButton, TuiLoader, tuiLoaderOptionsProvider} from "@taiga-ui/core";
+import {character} from "libphonenumber-js/source/AsYouTypeFormatter.PatternParser";
 export type ButtonType = 'button' | 'submit';
 
 @Component({
@@ -17,7 +18,7 @@ export class ButtonComponent implements OnInit {
 
     @Input() type: ButtonType;
     @Input() disabled: boolean = false;
-    @Input() size: string = "l";
+    @Input() size: string | any = "l";
     @Input() icon?: string;
     @Input() iconRight?: string;
     @Output() click = new EventEmitter<void>();

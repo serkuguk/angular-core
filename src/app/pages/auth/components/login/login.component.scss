@@ -15,12 +15,13 @@
 
 .login-container {
   width: 30rem;
-  border: 0.1em solid rgba(174, 171, 243, 0.8);
+  border: 0.1em solid rgba(7, 14, 39, 0.4);
   border-radius: 0.3rem;
   padding: 2em;
 
   h2, h3 {
     text-align: center;
+    color: #070e27;
   }
 
   &__title {

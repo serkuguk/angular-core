@@ -8,8 +8,6 @@ import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-to
 import {navabarData} from "@layouts/components/sidenav/nav-data";
 import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.interface";
 
-
-
 @Component({
   selector: 'app-sidenav',
   standalone: true,
@@ -51,6 +49,14 @@ export class SidenavComponent implements OnInit {
     if (this.screenWidth <= 768) {
       this.collapsed = false;
       this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    }
+  }
+
+  @HostListener('window:click', ['$event'])
+  public onClose(event: any) {
+    if(this.collapsed) {
+      //this.collapsed = false;
+      //this.onToggleSideNav.emit({collapsed: false, screenWidth: 10});
     }
   }
 
