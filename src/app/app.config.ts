@@ -20,6 +20,7 @@ import {AuthService} from "@pages/auth/services/auth.service";
 import {BrowserAnimationsModule, provideAnimations } from "@angular/platform-browser/animations";
 import {PlatformModule} from '@angular/cdk/platform';
 import {BrowserModule} from "@angular/platform-browser";
+import {basicExampleFeature} from "@pages/basic-example/store/basic-example.reducer";
 
 
 export const appConfig: ApplicationConfig = {
@@ -35,10 +36,12 @@ export const appConfig: ApplicationConfig = {
         TranslateService,
         provideStore({
           router: routerReducer,
-          [loginFeature.name]: loginFeature.reducer
+          [loginFeature.name]: loginFeature.reducer,
+          [basicExampleFeature.name]: basicExampleFeature.reducer
         }),
         provideEffects(
-          loginEffects
+          loginEffects,
+
         ),
         provideRouterStore(),
         provideStoreDevtools({

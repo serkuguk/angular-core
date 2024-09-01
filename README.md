@@ -13,3 +13,7 @@ app/
 - shared/
   - shared abstract ui components (dump components)
 - store/
+
+
+#Icons
+https://lucide.dev/icons/ all icons for taigaUI

@@ -7,9 +7,23 @@ export const navabarData: INavbarData[] = [
     label: 'Dashboard'
   },
   {
-    routerLink: 'basic-example',
+    routerLink: 'basic-examples',
     icon: 'fal fa-box-open',
-    label: 'Examples'
+    label: 'Examples',
+    items: [
+      {
+        routerLink: 'basic-examples/tables',
+        label: 'Tables',
+      },
+      {
+        routerLink: 'basic-examples/buttons',
+        label: 'Buttons',
+      },
+      {
+        routerLink: 'basic-examples/selects',
+        label: 'Selectors',
+      }
+    ]
   },
   {
     routerLink: 'statistics',

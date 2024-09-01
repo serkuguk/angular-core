@@ -13,7 +13,7 @@ import {EditableTableComponent} from "@shared/components/tables/editable-table/e
 import {SelectComponent} from "@shared/components/controls/select/select.component";
 
 @Component({
-  selector: 'app-basic-example',
+  selector: 'app-tables',
   standalone: true,
   providers: [],
   imports: [
@@ -25,10 +25,10 @@ import {SelectComponent} from "@shared/components/controls/select/select.compone
     TuiDialog,
     TuiAlert
   ],
-  templateUrl: './basic-example.component.html',
-  styleUrls: ['./basic-example.component.scss']
+  templateUrl: './tables.component.html',
+  styleUrls: ['./tables.component.scss']
 })
-export class BasicExampleComponent implements OnInit {
+export class TablesComponent implements OnInit {
 
   public dataSource: any[] = [];
   public basic_columns: any[] = [];

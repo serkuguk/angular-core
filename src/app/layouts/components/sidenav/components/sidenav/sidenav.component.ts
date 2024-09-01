@@ -52,14 +52,6 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  @HostListener('window:click', ['$event'])
-  public onClose(event: any) {
-    if(this.collapsed) {
-      //this.collapsed = false;
-      //this.onToggleSideNav.emit({collapsed: false, screenWidth: 10});
-    }
-  }
-
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
   }

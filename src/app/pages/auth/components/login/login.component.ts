@@ -1,5 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import {select, Store} from '@ngrx/store'
 import { markFormGroupTouched, regexErrors } from 'src/app/shared/utils';
 
@@ -16,7 +24,7 @@ import {InputPasswordModule} from "@shared/components/controls/input-pussword/in
 import {InputComponent} from "@shared/components/controls/input/input.component";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {LoaderComponent} from "@shared/components/loader/loader.component";
-
+import {passwordValidators, passwordWithParamsValidators} from "@pages/auth/validators/authValidator";
 
 @Component({
   selector: 'app-login',
@@ -63,7 +71,9 @@ export class LoginComponent implements OnInit {
           password: [null, {
               validators: [
                 Validators.required,
-                Validators.minLength(3)
+                Validators.minLength(3),
+                //passwordValidators,
+                //passwordWithParamsValidators('secret')
               ]
           }]
     })
