@@ -13,8 +13,8 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'basic-examples',
-    loadComponent: () => import('@pages/basic-example/components/basic-layout-example/basic-layout-example.component').then(m => m.BasicLayoutExampleComponent),
+    path: 'dashboard',
+    loadComponent: () => import('@pages/basic-example/components/tables/tables.component').then(m => m.TablesComponent),
     canActivate: [authGuard]
   },
   {

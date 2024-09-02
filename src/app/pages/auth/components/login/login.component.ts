@@ -1,11 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  ValidatorFn,
   Validators
 } from '@angular/forms';
 import {select, Store} from '@ngrx/store'
@@ -61,21 +59,22 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(fromLoginAction.init());
 
     this.loginForm = this.fb.group({
-        username: [null, {
-          updateOn: 'blur',
-              validators: [
-                Validators.required,
-                Validators.minLength(3)
-              ]
-          }],
-          password: [null, {
-              validators: [
-                Validators.required,
-                Validators.minLength(3),
-                //passwordValidators,
-                //passwordWithParamsValidators('secret')
-              ]
-          }]
+        username: ['', {
+            updateOn: 'blur',
+            validators: [
+              Validators.required,
+              Validators.minLength(3),
+              //passwordValidators,
+              passwordWithParamsValidators('secret')
+            ]
+        }],
+        password: ['', {
+          validators: [
+            Validators.required,
+            Validators.minLength(3),
+            passwordWithParamsValidators('secret')
+          ]
+        }]
     })
   }
 

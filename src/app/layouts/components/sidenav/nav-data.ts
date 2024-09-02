@@ -4,24 +4,24 @@ export const navabarData: INavbarData[] = [
   {
     routerLink: 'dashboard',
     icon: 'fal fa-home',
-    label: 'Dashboard'
+    label: 'DASHBOARD'
   },
   {
     routerLink: 'basic-examples',
     icon: 'fal fa-box-open',
-    label: 'Examples',
+    label: 'EXAMPLES',
     items: [
       {
         routerLink: 'basic-examples/tables',
-        label: 'Tables',
+        label: 'TABLES',
       },
       {
         routerLink: 'basic-examples/buttons',
-        label: 'Buttons',
+        label: 'BUTTONS',
       },
       {
         routerLink: 'basic-examples/selects',
-        label: 'Selectors',
+        label: 'DROPDOWNS',
       }
     ]
   },

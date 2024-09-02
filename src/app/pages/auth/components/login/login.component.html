@@ -6,21 +6,21 @@
         </div>
         <form class="login-container__form"
               [formGroup]="loginForm">
-            <app-form-field label="Input"
+            <app-form-field label="Username"
                         [required]="true"
                         [control]="loginForm.controls.username"
                         [showLabel]="false"
                         [isInline]="isInline">
                 <app-input formControlName="username"
-                           [placeholder]="'LOGIN.USER' | translate"></app-input>
+                           [placeholder]="'PAGES.LOGIN.USER' | translate"></app-input>
             </app-form-field>
-            <app-form-field label="Input"
+            <app-form-field label="Password"
                         [required]="true"
                         [control]="loginForm.controls.password"
                         [showLabel]="false"
                         [isInline]="isInline">
                 <app-input-password formControlName="password"
-                           [placeholder]="'LOGIN.PASSWORD' | translate"></app-input-password>
+                           [placeholder]="'PAGES.LOGIN.PASSWORD' | translate"></app-input-password>
             </app-form-field>
             <app-loader [showLoader]="(loading$ | async)"
                         [loaderClass]="'inline-flex'"

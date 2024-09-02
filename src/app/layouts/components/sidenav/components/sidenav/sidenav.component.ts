@@ -7,6 +7,7 @@ import {fadeInOut} from "@layouts/components/sidenav/utils/animation-helper";
 import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-toggle.interface";
 import {navabarData} from "@layouts/components/sidenav/nav-data";
 import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.interface";
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-sidenav',
@@ -15,7 +16,8 @@ import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.i
     SublevelMenuComponent,
     RouterLink,
     RouterLinkActive,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',

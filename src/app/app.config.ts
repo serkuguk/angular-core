@@ -61,14 +61,15 @@ export const appConfig: ApplicationConfig = {
           }),
         ),
         importProvidersFrom(
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          },
-          defaultLanguage: 'sp'
-        })),
+          TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+              useFactory: HttpLoaderFactory,
+              deps: [HttpClient]
+            },
+            defaultLanguage: 'sp'
+          })
+        ),
         provideHttpClient(
           withInterceptorsFromDi()
         ),

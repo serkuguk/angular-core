@@ -1,12 +1,21 @@
 {
-  "HOME" : {
-    "TITLE": "Bien benido a NTT DATA",
-    "WELCOME": "Gracias {{name}}"
+  "PAGES" : {
+    "HOME" : {
+      "TITLE": "Bien benido a NTT DATA",
+      "WELCOME": "Gracias {{name}}"
+    },
+    "LOGIN" :  {
+      "TITLE": "Formulario de inicio",
+      "USER" : "Ususario",
+      "PASSWORD": "Contraseña"
+    }
   },
-  "LOGIN" :  {
-    "TITLE": "Formulario de inicio",
-    "USER" : "Ususario",
-    "PASSWORD": "Contraseña"
+  "SIDENAV": {
+    "DASHBOARD" : "Panel",
+    "EXAMPLES" : "Ejemplos"
+  },
+  "SIDENAV_SUB" : {
+    "TABLES" : "Table"
   },
   "BUTTON" : {
     "LANG": {

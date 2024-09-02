@@ -1,0 +1,16 @@
+<div class="overlay overlay-user overlay-fall">
+  <ul>
+    @for(item of userItems; track $index) {
+      <li>
+        <a (click)="executeUserEvent(item.userEvent)">
+          <i class="icon" [ngClass]="item.icon"></i>
+          <span>{{item.label}}</span>
+        </a>
+      </li>
+    }
+  </ul>
+  <div class="header-container__language">
+    <a (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</a>
+    <a (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</a>
+  </div>
+</div>
