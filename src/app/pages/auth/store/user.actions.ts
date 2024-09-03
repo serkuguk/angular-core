@@ -4,13 +4,12 @@ import {Types} from './actionTypes';
 
 // Init
 export const init = createAction(
-  Types.INIT,
-  props<{ username: string; password: string }>()
+  Types.INIT
 );
 
 export const initAuthorized = createAction(
   Types.INIT_AUTHORIZED,
-  props<{ user: User }>()
+  props<{ access_token: boolean }>()
 );
 
 export const initUnauthorized = createAction(
@@ -27,7 +26,7 @@ export const initError = createAction(
 // Login
 export const login = createAction(
   Types.LOGIN,
-  props<{ username: string, password: string }>()
+  props<{ username: string, password: string}>()
 );
 
 export const loginSuccess = createAction(
@@ -37,7 +36,7 @@ export const loginSuccess = createAction(
 
 export const loginError = createAction(
   Types.LOGIN_ERROR,
-  props<{ error: string }>()
+  props<{ error: any }>()
 );
 
 
@@ -49,7 +48,7 @@ export const logOut = createAction(
 
 export const logOutSuccess = createAction(
   Types.LOGOUT_SUCCESS,
-  props<{ error: string }>()
+  props<{ user: null }>()
 );
 
 export const logOutError = createAction(

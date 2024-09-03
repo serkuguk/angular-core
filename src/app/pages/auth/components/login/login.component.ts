@@ -1,21 +1,28 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import {select, Store} from '@ngrx/store'
 import { markFormGroupTouched, regexErrors } from 'src/app/shared/utils';
 
-import * as fromRoot from '@app/store';
+import * as fromAuth from '@pages/auth';
 import * as fromLoginAction from '@pages/auth/store/user.actions';
 import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
-import {AuthTokenStorageService} from "@core/services/auth/auth-token-storage.service";
-import {ButtonModule} from "@app/shared";
-import {InputModule} from "@shared/components/controls/input/input.module";
+import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
+import {ButtonComponent} from "@shared/components/buttons/button/button.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {InputPasswordModule} from "@shared/components/controls/input-pussword/input-password.module";
-import {FormFieldModule} from "@shared/components/controls/form-field/form-field.module";
-
+import {InputComponent} from "@shared/components/controls/input/input.component";
+import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
+import {LoaderComponent} from "@shared/components/loader/loader.component";
+import {passwordValidators, passwordWithParamsValidators} from "@pages/auth/validators/authValidator";
 
 @Component({
   selector: 'app-login',
@@ -27,11 +34,12 @@ import {FormFieldModule} from "@shared/components/controls/form-field/form-field
    CommonModule,
    FormsModule,
    ReactiveFormsModule,
-   FormFieldModule,
-   InputModule,
-   ButtonModule,
+   FormFieldComponent,
+   InputComponent,
+   ButtonComponent,
    TranslateModule,
-   InputPasswordModule
+   InputPasswordModule,
+   LoaderComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -42,37 +50,39 @@ export class LoginComponent implements OnInit {
   public isInline: boolean = false;
   public regexErrors = regexErrors
   public loading$: Observable<boolean | null> | undefined;
+  public loadingError$: Observable<string | null> | undefined;
 
   private fb = inject(FormBuilder);
-  private store: Store<fromRoot.State> = inject(Store);
+  private store: Store<fromAuth.State> = inject(Store);
 
   ngOnInit(): void {
     this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
+    this.store.dispatch(fromLoginAction.init());
 
     this.loginForm = this.fb.group({
-        username: [null, {
-          updateOn: 'blur',
-              validators: [
-                Validators.required,
-                Validators.minLength(3)
-              ]
-          }],
-          password: [null, {
-              validators: [
-                Validators.required,
-                Validators.minLength(3)
-              ]
-          }]
-      })
-  }
-
-  outputData(event: any) {
-    console.log('OutPut Data', event);
+        username: ['', {
+            updateOn: 'blur',
+            validators: [
+              Validators.required,
+              Validators.minLength(3),
+              //passwordValidators,
+              //passwordWithParamsValidators('secret')
+            ]
+        }],
+        password: ['', {
+          validators: [
+            Validators.required,
+            Validators.minLength(3),
+            passwordWithParamsValidators('secret')
+          ]
+        }]
+    })
   }
 
   login(): void {
     if (this.loginForm.valid) {
       this.store.dispatch(fromLoginAction.login(this.loginForm.value));
+      this.loadingError$ = this.store.pipe(select(fromLoginSelectors.getLoadingError));
     } else {
       markFormGroupTouched(this.loginForm);
     }

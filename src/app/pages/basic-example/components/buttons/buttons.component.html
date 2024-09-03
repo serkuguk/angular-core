@@ -1,0 +1,19 @@
+<h3>Buttons</h3>
+
+<div class="table-container">
+  <div class="table-container__item">
+    <app-loader [showLoader]="true"
+                [loaderClass]="'inline-flex'"
+                [size]="'s'">
+      <app-button [iconStart]="'@tui.user'"
+                  [size]="'l'"
+      >{{ 'BUTTON.LOGIN' | translate }}</app-button>
+    </app-loader>
+  </div>
+
+  <div class="table-container__item">
+      <app-button [iconEnd]="'@tui.settings'"
+                  [size]="'l'"
+      >{{ 'BUTTON.LOGIN' | translate }}</app-button>
+  </div>
+</div>

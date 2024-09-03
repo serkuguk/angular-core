@@ -1,0 +1,24 @@
+//.body {
+//  width: calc(100% - 5rem);
+//  margin-top: 92px;
+//  margin-left: 5rem;
+//  z-index: 0;
+//  position: relative;
+//  top: 0;
+//  transform: all .5s ease;
+//  padding: 3rem;
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//  min-height: calc(100vh - 200px);
+//}
+
+.body-trimmed {
+  width: calc(100% - 16.5625rem);
+  margin-left: 16.5625rem;
+}
+
+.body-md-screen {
+  width: calc(100% - 5rem);
+  margin-left: 5rem;
+}

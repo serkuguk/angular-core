@@ -1,32 +1,38 @@
 <div class="login-wrapper">
     <div class="login-container">
-        <h2>NTT DATA</h2>
-        <h3>{{'LOGIN.TITLE' | translate }}</h3>
-        <form [formGroup]="loginForm">
-            <app-form-field label="Input"
+        <div class="login-container__title">
+          <h2>NTT DATA</h2>
+          <h3>{{'PAGES.LOGIN.TITLE' | translate }}</h3>
+        </div>
+        <form class="login-container__form"
+              [formGroup]="loginForm">
+            <app-form-field label="Username"
                         [required]="true"
                         [control]="loginForm.controls.username"
                         [showLabel]="false"
                         [isInline]="isInline">
                 <app-input formControlName="username"
-                           (changed)="outputData($event)"
-                           [placeholder]="'LOGIN.USER' | translate"></app-input>
+                           [placeholder]="'PAGES.LOGIN.USER' | translate"></app-input>
             </app-form-field>
-            <app-form-field label="Input"
+            <app-form-field label="Password"
                         [required]="true"
                         [control]="loginForm.controls.password"
                         [showLabel]="false"
                         [isInline]="isInline">
                 <app-input-password formControlName="password"
-                           (changed)="outputData($event)"
-                           [placeholder]="'LOGIN.PASSWORD' | translate"></app-input-password>
+                           [placeholder]="'PAGES.LOGIN.PASSWORD' | translate"></app-input-password>
             </app-form-field>
-
-            <app-button [icon]="'tuiIconSettings'"
-                        [size]="'l'"
-                        (click)="login()"
-            >{{ 'BUTTON.LOGIN' | translate }}</app-button>
+            <div class="login-error">
+              <span>{{(loadingError$ | async)}}</span>
+            </div>
+            <app-loader [showLoader]="(loading$ | async)"
+                        [loaderClass]="'inline-flex'"
+                        [size]="'s'">
+              <app-button [iconStart]="'@tui.user'"
+                          [size]="'l'"
+                          (click)="login()"
+              >{{ 'BUTTON.LOGIN' | translate }}</app-button>
+            </app-loader>
         </form>
     </div>
 </div>
-

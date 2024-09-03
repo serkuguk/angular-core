@@ -6,8 +6,9 @@ export const USERS_FEATURE_KEY = 'users';
 
 export interface UserState {
     user: User | null;
-    access_token: string | null;
+    access_token: string | boolean | null;
     loading: boolean | null;
+    role: string | null;
     error: string | null;
 }
 
@@ -15,6 +16,7 @@ export const initialState: UserState = {
     user: null,
     access_token: null,
     loading: null,
+    role: null,
     error: null
 };
 
@@ -23,11 +25,11 @@ export const loginFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(UserLoginActions.init,
-      state => ({ ...state, loading: true })
+      state => ({ ...state})
     ),
 
     on(UserLoginActions.initAuthorized,
-      state => ({ ...state, user: state.user })
+      (state, {access_token}) => ({...state, access_token: access_token})
     ),
 
     on(UserLoginActions.initUnauthorized,
@@ -35,20 +37,20 @@ export const loginFeature = createFeature({
     ),
 
     on(UserLoginActions.initError,
-      state => ({ ...state, loading: false, error: state.error })
+      (state, {error}) => ({ ...state, loading: false, error: error })
     ),
 
     //Login
     on(UserLoginActions.login,
-      state => ({ ...state, loading: true })
+      (state) => ({ ...state, loading: true })
     ),
 
     on(UserLoginActions.loginSuccess,
-      state => ({ ...state, user: state.user, access_token: state.access_token, loading: false })
+      (state, {user}) => ({ ...state, user: user, loading: false, error: null })
     ),
 
     on(UserLoginActions.loginError,
-      state => ({ ...state,  error: state.error, loading: false })
+      (state, {error}) => ({ ...state,  error: error.message, loading: false })
     ),
 
     //Logout
@@ -57,7 +59,7 @@ export const loginFeature = createFeature({
     ),
 
     on(UserLoginActions.logOutSuccess,
-      state => ({ ...state })
+      state => ({ ...state, error: state.error, loading: false })
     ),
 
     on(UserLoginActions.logOutError,

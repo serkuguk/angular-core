@@ -26,6 +26,8 @@
       "@app/*": ["./src/app/*"],
       "@pages/*": ["./src/app/pages/*"],
       "@core/*": ["./src/app/core/*"],
+      "@layouts/*": ["./src/app/layouts/*"],
+      "@features/*": ["./src/app/features/*"],
       "@components/*": ["./src/app/components/*"],
       "@shared/*": ["./src/app/shared/*"]
     },

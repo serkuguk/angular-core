@@ -1,5 +1,7 @@
 <div class="global-wrapper">
-  <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+  @if (isAuthenticated$ | async) {
+    <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+  }
   <div class="global-container">
     <header>
       <app-header [collapsed]="isSideNavCollapsed"
@@ -9,9 +11,10 @@
       <app-body [collapsed]="isSideNavCollapsed"
                 [screenWidth]="screenWidth"></app-body>
     </main>
-      <footer>
-        <app-footer></app-footer>
-      </footer>
+    <footer>
+      <app-footer [collapsed]="isSideNavCollapsed"
+                  [screenWidth]="screenWidth"></app-footer>
+    </footer>
   </div>
 </div>
 

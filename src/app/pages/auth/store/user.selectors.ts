@@ -1,7 +1,12 @@
 import {createFeatureSelector, createSelector} from "@ngrx/store";
-import { UserState } from './user.reducer';
+import {USERS_FEATURE_KEY, UserState} from './user.reducer';
 
-export const getUserState = createFeatureSelector<UserState>('user');
+export const getUserState = createFeatureSelector<UserState>(USERS_FEATURE_KEY);
+
+export const getToken = createSelector(
+  getUserState,
+  (state) => state.access_token
+);
 
 export const getUser = createSelector(
   getUserState,
@@ -10,15 +15,21 @@ export const getUser = createSelector(
 
 export const getLoading = createSelector(
   getUserState,
-  (state) => state.loading
+  (state: UserState) => state.loading
+)
+
+export const getLoadingError = createSelector(
+  getUserState,
+  (state: UserState) => state.error
 )
 
 export const getIsAuthenticated = createSelector(
   getUserState,
-  (state) => !!state.access_token
+  (state: UserState) => !!state.access_token
 )
 
 export const getRoleId = createSelector(
+  getUserState,
   getUser,
-  (user) => user && user.roleId
+  (state, user) => state.user && user?.role
 )

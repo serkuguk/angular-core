@@ -1,8 +1,16 @@
 import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from "@angular/common";
+import {TuiInputModule} from "@taiga-ui/legacy";
 
 @Component({
     selector: 'app-input',
+    standalone: true,
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      TuiInputModule
+    ],
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.scss'],
     providers: [

@@ -1,10 +1,16 @@
-import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-//import { IMessagesService } from '@shared/interfaces/messages-service.interfase';
+import {CommonModule} from "@angular/common";
+import {ButtonComponent} from "@app/shared";
+
 
 @Component({
   selector: 'basic-layout',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ButtonComponent
+  ],
   templateUrl: './basic-layout.component.html',
   styleUrls: ['./basic-layout.component.scss']
 })
@@ -14,11 +20,11 @@ export class BasicLayoutComponent implements OnInit {
   @Input() canSave?: boolean = false;
   @Input() notification?: string = '';
   @Input() formGroup: FormGroup | undefined;
-  @Input() 
+  @Input()
   set messages(message: any) {
     this.messagesService = message;
   }
- 
+
   @Output() clearButton = new EventEmitter();
   @Output() addNewButton = new EventEmitter();
   @Output() editButton = new EventEmitter();

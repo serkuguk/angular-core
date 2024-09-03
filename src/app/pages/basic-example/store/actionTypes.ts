@@ -1,14 +1,17 @@
-export enum ActionTypes {
+export enum Types {
+  TABLES_INIT = '[Tables] Get data: Start',
+  TABLES_SUCCESS = '[Tables] Get data: Success',
+  TABLES_ERROR = '[Tables] Get data: Error',
 
-  SIGN_IN_EMAIL = '[User] Sign In with email: Start',
-  SIGN_IN_EMAIL_SUCCESS = '[User] Sign In with email: Success',
-  SIGN_IN_EMAIL_FAILURE = '[User] Sign In with email: Failure',
+  LOGIN = '[User] Login: Start',
+  LOGIN_SUCCESS = '[User] Login: Success',
+  LOGIN_ERROR = '[User] Login: Error',
 
-  SIGN_UP_EMAIL = '[User] Sign Up with email: Start',
-  SIGN_UP_EMAIL_SUCCESS = '[User] Sign Up with email: Success',
-  SIGN_UP_EMAIL_FAILURE = '[User] Sign Up with email: Failure',
+  LOGOUT = '[User] Logout: Start',
+  LOGOUT_SUCCESS = '[User] Logout: Success',
+  LOGOUT_ERROR = '[User] Logout: Error',
 
-  SIGN_OUT = '[User] Sign Out: Start',
-  SIGN_OUT_SUCCESS = '[User] Sign Out: Success',
-  SIGN_OUT_FAILURE = '[User] Sign Out: Failure'
+  UPDATE = '[User] Update: Start',
+  UPDATE_SUCCESS = '[User] Update: Success',
+  UPDATE_ERROR = '[User] Update: Error'
 }

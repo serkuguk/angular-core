@@ -1,17 +1,16 @@
-@import "styles/colors";
+//@import '@taiga-ui/core/styles/taiga-ui-local.less';
 
 .select {
-    line-height: 36px;
-    padding: 0 15px 0 15px;
+  width: 100%;
+}
 
-    &_disabled {
-        background: rgba(0, 0, 0, .05);
-        border: 1px solid rgba(0, 0, 0, .15);
-    }
+.scroll {
+  //.scrollbar-hidden();
+  height: 200px;
 }
 
 :host-context(.form-field_error) {
     .select {
-      border: 1px solid $error;
+      border: 1px solid red//$error;
     }
 }
