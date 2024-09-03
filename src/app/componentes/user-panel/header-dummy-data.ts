@@ -14,22 +14,22 @@ export const languages = [
 export const userItems = [
   {
     icon: 'far fa-user',
-    label: 'Profile',
+    label: 'PROFILE',
     userEvent: 'profile'
   },
   {
     icon: 'far fa-cog',
-    label: 'Settings',
+    label: 'SETTINGS',
     userEvent: 'settings'
   },
   {
     icon: 'far fa-unlock-alt',
-    label: 'Lock screen',
+    label: 'LOCK_SCREEN',
     userEvent: 'profile'
   },
   {
     icon: 'far fa-power-off',
-    label: 'Logout',
+    label: 'LOGOUT',
     userEvent: 'logout'
   },
 ];

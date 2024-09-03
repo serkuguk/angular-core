@@ -12,10 +12,32 @@
   },
   "SIDENAV": {
     "DASHBOARD" : "Dashboard",
-    "EXAMPLES" : "Examples"
+    "EXAMPLES" : "Examples",
+    "STATISTIC" : "Statistics",
+    "COUPONS" : "Coupons",
+    "PAGES" : "Pages",
+    "MEDIA" : "Media",
+    "SETTINGS" : "Settings"
   },
   "SIDENAV_SUB" : {
-    "TABLES" : "Table"
+    "TABLES" : "Table",
+    "BUTTONS" : "Buttons",
+    "DROPDOWNS" : "Dropdowns",
+    "CHARTS" : "Charts",
+    "FORMS" : "Forms",
+    "LIST_COUPONS" : "List Coupons",
+    "CREATE_COUPONS" : "Create Coupons",
+    "SETTINGS_LEVEL_1.1" : "Settings Level 1.1",
+    "SETTINGS_LEVEL_ONE_2.1" : "Settings Level One 2.1",
+    "SETTINGS_LEVEL_TWO_2.1" : "Settings Level Two 2.1",
+    "SETTINGS_LEVEL_2.2" : "Settings Level 2.2",
+    "SETTINGS_LEVEL_2.3" : "Settings Level 2.3"
+  },
+  "USER_PANEL" : {
+    "PROFILE" : "Profile",
+    "SETTINGS" : "Settings",
+    "LOCK_SCREEN" : "Lock Screen",
+    "LOGOUT" : "Logout"
   },
   "BUTTON" : {
     "LANG": {

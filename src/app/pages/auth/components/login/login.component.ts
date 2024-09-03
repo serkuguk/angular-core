@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
               Validators.required,
               Validators.minLength(3),
               //passwordValidators,
-              passwordWithParamsValidators('secret')
+              //passwordWithParamsValidators('secret')
             ]
         }],
         password: ['', {

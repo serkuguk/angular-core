@@ -1,16 +1,29 @@
-<div class="overlay overlay-user overlay-fall">
-  <ul>
-    @for(item of userItems; track $index) {
-      <li>
-        <a (click)="executeUserEvent(item.userEvent)">
-          <i class="icon" [ngClass]="item.icon"></i>
-          <span>{{item.label}}</span>
-        </a>
-      </li>
-    }
-  </ul>
-  <div class="header-container__language">
-    <a (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</a>
-    <a (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</a>
+<div class="user-panel-wrapper">
+  <div class="user-panel-wrapper__right user-panel">
+    <div class="user-panel-avatar-container">
+      <div class="user-panel-username">{{(userData$ | async)?.username}}</div>
+      <div class="user-panel-avatar" (click)="userMenuToggle()">
+        <i class="fas fa-user-circle user-avatar"></i>
+      </div>
+    </div>
   </div>
+
+  @if (userOverlay) {
+    <div class="overlay overlay-user overlay-fall">
+      <ul>
+        @for(item of userItems; track $index) {
+          <li>
+            <a (click)="executeUserEvent(item.userEvent)">
+              <i class="icon" [ngClass]="item.icon"></i>
+              <span translate>{{'USER_PANEL.' + item.label}}</span>
+            </a>
+          </li>
+        }
+      </ul>
+      <div class="language">
+        <a (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</a>
+        <a (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</a>
+      </div>
+    </div>
+  }
 </div>

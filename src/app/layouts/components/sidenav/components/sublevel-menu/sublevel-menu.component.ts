@@ -4,11 +4,15 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { CommonModule } from '@angular/common';
 import { fadeInOut } from '../../utils/animation-helper';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-sublevel-menu',
   standalone: true,
-  imports: [CommonModule, RouterLinkActive, RouterLink],
+  imports: [CommonModule,
+    RouterLinkActive,
+    RouterLink,
+    TranslateModule],
   templateUrl: './sublevel-menu.component.html',
   styleUrl: './sublevel-menu.component.scss',
   animations: [

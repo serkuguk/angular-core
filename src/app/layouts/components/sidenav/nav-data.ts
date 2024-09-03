@@ -22,67 +22,75 @@ export const navabarData: INavbarData[] = [
       {
         routerLink: 'basic-examples/selects',
         label: 'DROPDOWNS',
+      },
+      {
+        routerLink: 'basic-examples/selects',
+        label: 'CHARTS',
+      },
+      {
+        routerLink: 'basic-examples/selects',
+        label: 'FORMS',
       }
     ]
   },
   {
     routerLink: 'statistics',
     icon: 'fal fa-chart-bar',
-    label: 'Statistics'
+    label: 'STATISTIC'
   },
   {
-    routerLink: 'coupens',
+    routerLink: 'coupons',
     icon: 'fal fa-tags',
-    label: 'Coupens',
+    label: 'COUPONS',
     items: [
       {
-        routerLink: 'coupens/list',
-        label: 'List Coupens',
+        routerLink: 'coupons/list',
+        label: 'LIST_COUPONS',
       },
       {
-        routerLink: 'coupens/crate',
-        label: 'Create Coupens',
+        routerLink: 'coupons/crate',
+        label: 'CREATE_COUPONS',
       }
     ]
   },
   {
     routerLink: 'pages',
     icon: 'fal fa-file',
-    label: 'Pages'
+    label: 'PAGES'
   },
   {
     routerLink: 'medita',
     icon: 'fal fa-camera',
-    label: 'Media'
+    label: 'MEDIA'
   },
   {
     routerLink: 'settings',
     icon: 'fal fa-cog',
-    label: 'Settings',
+    label: 'SETTINGS',
     items: [
       {
         routerLink: 'settings/lever1.1',
-        label: 'Level 1.1',
+        label: 'SETTINGS_LEVEL_1.1',
         items: [
+            {
+              routerLink: 'settings/lever2.1',
+              label: 'SETTINGS_LEVEL_ONE_2.1',
+            },
+            {
+              routerLink: 'settings/lever2.1',
+              label: 'SETTINGS_LEVEL_TWO_2.1',
+              items: [
                 {
-                  routerLink: 'settings/lever2.1',
-                  label: 'Level 2.1',
+                  routerLink: 'settings/lever2.2',
+                  label: 'SETTINGS_LEVEL_2.2',
                 },
                 {
-                  routerLink: 'settings/lever2.1',
-                  label: 'Level 2.1',
-                  items: [
-                    {
-                      routerLink: 'settings/lever2.2',
-                      label: 'Level 2.2',
-                    },
-                    {
-                      routerLink: 'settings/lever2.3',
-                      label: 'Level 2.3',
-                    }
-                   ]
+                  routerLink: 'settings/lever2.3',
+                  label: 'SETTINGS_LEVEL_2.3',
                 }
                ]
+            }
+        ]
       }
     ]
   }

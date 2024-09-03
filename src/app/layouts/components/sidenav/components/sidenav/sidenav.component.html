@@ -39,7 +39,7 @@
             >
               <i class="sidenav-link-icon" [class]="data.icon"></i>
               @if (collapsed) {
-                <span class="sidenav-link-text" @fadeInOut>{{data.label}}</span>
+                <span class="sidenav-link-text" @fadeInOut translate>{{'SIDENAV.' + data.label}}</span>
               }
             </a>
           }

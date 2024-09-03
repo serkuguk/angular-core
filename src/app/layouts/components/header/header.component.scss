@@ -33,45 +33,6 @@
         align-self: center;
       }
     }
-
-    &__right {
-      display: flex;
-      align-items: center;
-      position: relative;
-
-      .head-user-avatar-container {
-        margin-left: 20px;
-        display: flex;
-        gap: 1em;
-
-        .head-user-username {
-          font-size: 1rem;
-          color: #ffffff;
-        }
-
-        .head-user-avatar {
-          position: relative;
-
-          .user-avatar {
-            margin-bottom: -4px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px 0 rgb(35 35 35 / 15%);
-            cursor: pointer;
-            color: #ffffff;
-          }
-        }
-      }
-    }
-
-    &__language {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      width: 100%;
-      a {
-        cursor: pointer;
-      }
-    }
   }
 }
 
@@ -83,37 +44,4 @@
 .head-md-screen {
   //width: calc(100% - 5rem);
   //margin-left: 5rem;
-}
-
-.overlay-user {
-  position: fixed;
-  top: 3rem;
-  right: 0;
-  z-index: 1000;
-  background: white;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  padding: 1rem;
-
-  ul {
-    padding: 0.5rem 0;
-    list-style: none;
-    width: 10rem;
-
-    li {
-      padding: 0.35rem 1.5rem;
-      font-size: 14px;
-      font-weight: 400;
-      color: #495057;
-      cursor: pointer;
-
-      .icon {
-        margin-right: 0.6rem;
-      }
-    }
-
-    li:hover {
-      background: #eff2f3;
-    }
-  }
 }
