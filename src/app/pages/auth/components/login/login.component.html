@@ -22,6 +22,9 @@
                 <app-input-password formControlName="password"
                            [placeholder]="'PAGES.LOGIN.PASSWORD' | translate"></app-input-password>
             </app-form-field>
+            <div class="login-error">
+              <span>{{(loadingError$ | async)}}</span>
+            </div>
             <app-loader [showLoader]="(loading$ | async)"
                         [loaderClass]="'inline-flex'"
                         [size]="'s'">

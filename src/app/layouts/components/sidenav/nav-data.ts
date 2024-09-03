@@ -24,11 +24,11 @@ export const navabarData: INavbarData[] = [
         label: 'DROPDOWNS',
       },
       {
-        routerLink: 'basic-examples/selects',
+        routerLink: 'basic-examples/charts',
         label: 'CHARTS',
       },
       {
-        routerLink: 'basic-examples/selects',
+        routerLink: 'basic-examples/forms',
         label: 'FORMS',
       }
     ]

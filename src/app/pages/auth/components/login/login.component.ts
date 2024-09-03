@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
   public isInline: boolean = false;
   public regexErrors = regexErrors
   public loading$: Observable<boolean | null> | undefined;
+  public loadingError$: Observable<string | null> | undefined;
 
   private fb = inject(FormBuilder);
   private store: Store<fromAuth.State> = inject(Store);
@@ -81,6 +82,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     if (this.loginForm.valid) {
       this.store.dispatch(fromLoginAction.login(this.loginForm.value));
+      this.loadingError$ = this.store.pipe(select(fromLoginSelectors.getLoadingError));
     } else {
       markFormGroupTouched(this.loginForm);
     }

@@ -36,7 +36,7 @@ export const loginSuccess = createAction(
 
 export const loginError = createAction(
   Types.LOGIN_ERROR,
-  props<{ error: string }>()
+  props<{ error: any }>()
 );
 
 

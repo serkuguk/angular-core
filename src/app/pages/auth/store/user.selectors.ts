@@ -18,6 +18,11 @@ export const getLoading = createSelector(
   (state: UserState) => state.loading
 )
 
+export const getLoadingError = createSelector(
+  getUserState,
+  (state: UserState) => state.error
+)
+
 export const getIsAuthenticated = createSelector(
   getUserState,
   (state: UserState) => !!state.access_token

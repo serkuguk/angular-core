@@ -37,8 +37,8 @@ export const login = createEffect(
         authService.login(credentials).pipe(
           map((user) => fromUserActions.loginSuccess({user})),
           tap(() => router.navigate([''])),
-          catchError((error: { message: string }) =>
-            of(fromUserActions.loginError({ error: error.message }))
+          catchError((req) =>
+            of(fromUserActions.loginError(req))
           )
         )
       )

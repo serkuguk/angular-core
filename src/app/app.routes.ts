@@ -15,26 +15,31 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('@pages/basic-example/components/tables/tables.component').then(m => m.TablesComponent),
+    loadComponent: () => import('@pages/basic-example/components/tables/tables.component').then(c => c.TablesComponent),
     canActivate: [loggedGuard]
   },
   {
     path: 'basic-examples/tables',
-    loadComponent: () => import('@pages/basic-example/components/tables/tables.component').then(m => m.TablesComponent),
+    loadComponent: () => import('@pages/basic-example/components/tables/tables.component').then(c => c.TablesComponent),
     canActivate: [loggedGuard]
   },
   {
     path: 'basic-examples/buttons',
-    loadComponent: () => import('@pages/basic-example/components/buttons/buttons.component').then(m => m.ButtonsComponent),
+    loadComponent: () => import('@pages/basic-example/components/buttons/buttons.component').then(c => c.ButtonsComponent),
     canActivate: [loggedGuard]
   },
   {
     path: 'basic-examples/selects',
-    loadComponent: () => import('@pages/basic-example/components/selectors/selectors.component').then(m => m.SelectorsComponent),
+    loadComponent: () => import('@pages/basic-example/components/selectors/selectors.component').then(c => c.SelectorsComponent),
+    canActivate: [loggedGuard]
+  },
+  {
+    path: 'basic-examples/charts',
+    loadComponent: () => import('@pages/basic-example/components/charts/charts.component').then(c => c.ChartsComponent),
     canActivate: [loggedGuard]
   },
   {
     path: '**',
-    loadComponent: () => import('./pages/notfound-page/notfound-page.component').then(m => m.NotfoundPageComponent)
+    loadComponent: () => import('./pages/notfound-page/notfound-page.component').then(c => c.NotfoundPageComponent)
   }
 ];

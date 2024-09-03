@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import {LineChartsComponent} from "@shared/components/charts/line-charts/line-charts.component";
 
 @Component({
   selector: 'app-charts',
   standalone: true,
-  imports: [],
+  imports: [LineChartsComponent],
   templateUrl: './charts.component.html',
   styleUrl: './charts.component.scss'
 })

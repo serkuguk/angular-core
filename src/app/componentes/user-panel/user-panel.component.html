@@ -21,8 +21,22 @@
         }
       </ul>
       <div class="language">
-        <a (click)="translate.use('sp')">{{ 'BUTTON.LANG.SP' | translate }}</a>
-        <a (click)="translate.use('en')">{{ 'BUTTON.LANG.EN' | translate }}</a>
+        <a (click)="translate.use('sp')">
+          <img
+            [alt]="(countriesNames$ | async)?.[countryES]"
+            [src]="countryES | tuiFlag"
+            [style.border-radius.%]="50"
+            [style.width.%]="50"
+          />
+        </a>
+        <a (click)="translate.use('en')">
+          <img
+            [alt]="(countriesNames$ | async)?.[countryEN]"
+            [src]="countryEN | tuiFlag"
+            [style.border-radius.%]="50"
+            [style.width.%]="50"
+          />
+        </a>
       </div>
     </div>
   }

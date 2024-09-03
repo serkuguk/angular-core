@@ -50,7 +50,7 @@ export const loginFeature = createFeature({
     ),
 
     on(UserLoginActions.loginError,
-      state => ({ ...state,  error: state.error, loading: false })
+      (state, {error}) => ({ ...state,  error: error.message, loading: false })
     ),
 
     //Logout
