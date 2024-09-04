@@ -37,6 +37,7 @@ export const appConfig: ApplicationConfig = {
         AuthTokenStorageService,
         AuthService,
         TranslateService,
+        NG_EVENT_PLUGINS,
         provideStore({
           router: routerReducer,
           [loginFeature.name]: loginFeature.reducer,

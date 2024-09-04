@@ -3,7 +3,13 @@
     <div class="user-panel-avatar-container">
       <div class="user-panel-username">{{(userData$ | async)?.username}}</div>
       <div class="user-panel-avatar" (click)="userMenuToggle()">
-        <i class="fas fa-user-circle user-avatar"></i>
+        <app-avatar
+          [appearance]="'appearance'"
+          [icon]="'@tui.user'"
+          [size]="'s'"
+          [class]="'text'"
+          [customStyle]="'AI'"
+        ></app-avatar>
       </div>
     </div>
   </div>
