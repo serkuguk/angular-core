@@ -14,6 +14,7 @@ import {HeaderComponent } from "@layouts/components/header/header.component";
 import {FooterComponent} from "@layouts/components/footer/footer.component";
 import {SidenavComponent} from "@layouts/components/sidenav/components/sidenav/sidenav.component";
 import {TuiRoot} from "@taiga-ui/core";
+import {ShowPanelDirective} from "@core/directives/show-panel.directive";
 
 @Component({
   selector: 'app-root',

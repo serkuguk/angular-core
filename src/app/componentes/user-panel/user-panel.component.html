@@ -14,8 +14,8 @@
     </div>
   </div>
 
-  @if (userOverlay) {
-    <div class="overlay overlay-user overlay-fall">
+  @if (showPanel()) {
+    <div class="overlay overlay-user overlay-fall" appShowPanel>
       <ul>
         @for(item of userItems; track $index) {
           <li>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, OnInit, signal} from '@angular/core';
 import { languages, positions, userItems } from './header-dummy-data';
 import {AsyncPipe, NgClass, NgOptimizedImage} from "@angular/common";
 import * as fromLoginAction from "@pages/auth/store/user.actions";
@@ -13,6 +13,7 @@ import {TUI_COUNTRIES, TuiAvatar} from '@taiga-ui/kit';
 //Stor
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
 import {AvatarComponent} from "@shared/components/avatar/avatar.component";
+import {ShowPanelDirective} from "@core/directives/show-panel.directive";
 
 @Component({
   selector: 'app-user-panel',
@@ -24,7 +25,8 @@ import {AvatarComponent} from "@shared/components/avatar/avatar.component";
     TuiFlagPipe,
     NgOptimizedImage,
     AvatarComponent,
-    TuiAvatar
+    TuiAvatar,
+    ShowPanelDirective
   ],
   templateUrl: './user-panel.component.html',
   styleUrl: './user-panel.component.scss',
@@ -41,17 +43,24 @@ export class UserPanelComponent implements OnInit {
   public selectedLanguage: any;
   public languages = languages;
   public userItems = userItems;
-  public userOverlay: boolean = false;
+  public showPanel = signal<boolean>(false);
+  private clickOutsideDirective = inject(ShowPanelDirective);
 
   ngOnInit(): void {
     this.translate.setDefaultLang('sp');
     this.selectedLanguage = this.languages[0];
     this.userData$ = this.store.pipe(select(fromLoginSelectors.getUser));
-    this.userOverlay = false;
+
+    effect(() => {
+      const isClickedOutside = this.clickOutsideDirective.clickOutsideSignal();
+      if (isClickedOutside && this.showPanel()) {
+        this.showPanel.set(false);
+      }
+    })
   }
 
   public userMenuToggle(): void {
-    this.userOverlay = !this.userOverlay;
+    this.showPanel.update((currentValue) => !currentValue);
   }
 
   public executeUserEvent(eventName: string): void {
