@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, OnInit, Output, inject } from '@angular/core';
+import {Component, EventEmitter, HostListener, OnInit, Output, inject, signal, ElementRef, output} from '@angular/core';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import {SublevelMenuComponent} from "@app/layouts";
@@ -37,35 +37,47 @@ import {TranslateModule} from "@ngx-translate/core";
 })
 export class SidenavComponent implements OnInit {
 
-  @Output() onToggleSideNav: EventEmitter<ISideNavToggle> = new EventEmitter();
+  public onToggleSideNav = output<ISideNavToggle>();
 
-  public collapsed: boolean = false;
-  public screenWidth: number = 0;
+  public collapsed = signal<boolean>(false);
+
+  public screenWidth = signal<number>(0);
   public navData: any = navabarData;
   public multiple: boolean = false;
-  public router: Router = inject(Router);
 
-  @HostListener('window:resize', ['$event'])
-  public onResize(event: any) {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 768) {
-      this.collapsed = false;
-      this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+  public router: Router = inject(Router);
+  private elementRef = inject(ElementRef);
+
+  @HostListener('body:resize', ['$event.target'])
+  public onResize(event: any) { console.log('event', event);
+    this.screenWidth.set(window.innerWidth);
+    if (this.screenWidth() <= 768) {
+      this.collapsed.set(false);
+      this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  public onClosePanelExternalClick(event: MouseEvent): void {
+    const clickedOutside = this.elementRef.nativeElement.contains(event.target as HTMLElement);
+    if (!clickedOutside && this.collapsed()) {
+      this.collapsed.set(false);
+      this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
     }
   }
 
   ngOnInit(): void {
-    this.screenWidth = window.innerWidth;
+    this.screenWidth.set(window.innerWidth);
   }
 
   public toggleCollapse(): void {
-    this.collapsed = !this.collapsed;
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    this.collapsed.update((collapsed) => !collapsed);
+    this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
   }
 
   public closeSidenav(): void {
-    this.collapsed = false;
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+    this.collapsed.set(false);
+    this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
   }
 
   public getActiveClass(item: INavbarData): string {

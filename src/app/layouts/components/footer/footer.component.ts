@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, inject, input, OnInit} from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -11,15 +11,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   providers: [TranslateService]
 })
 export class FooterComponent implements OnInit {
-
-  @Input() collapsed: boolean = false;
-  @Input() screenWidth: number = 0;
+  collapsed = input<boolean>(false);
+  screenWidth = input<number>(0);
 
   public getFooterClass(): string {
     let styleClass = '';
-    if (this.collapsed && this.screenWidth > 768) {
+    if (this.collapsed() && this.screenWidth() > 768) {
       styleClass = 'footer-treemed';
-    } else if (this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
+    } else if (this.collapsed() && this.screenWidth() <= 768 && this.screenWidth() > 0) {
       styleClass = 'footer-md-screen';
     }
     return styleClass;
@@ -28,6 +27,5 @@ export class FooterComponent implements OnInit {
   public translate = inject(TranslateService);
 
   ngOnInit(): void {
-    this.translate.setDefaultLang('sp');
   }
 }

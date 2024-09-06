@@ -1,17 +1,18 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
-import { languages, positions, userItems } from './header-dummy-data';
+import {ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, OnInit, signal} from '@angular/core';
+import { languages, userItems } from './header-dummy-data';
 import {AsyncPipe, NgClass, NgOptimizedImage} from "@angular/common";
-import * as fromLoginAction from "@pages/auth/store/user.actions";
-import {select, Store} from "@ngrx/store";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import * as fromAuth from "@pages/auth";
 import {Observable} from "rxjs";
 import {TuiFlagPipe} from '@taiga-ui/core';
 import type {TuiCountryIsoCode} from '@taiga-ui/i18n';
-import {TUI_COUNTRIES} from '@taiga-ui/kit';
+import {TUI_COUNTRIES, TuiAvatar} from '@taiga-ui/kit';
 
 //Stor
+import {select, Store} from "@ngrx/store";
+import * as fromLoginAction from "@pages/auth/store/user.actions";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
+import {AvatarComponent} from "@shared/components/avatar/avatar.component";
 
 @Component({
   selector: 'app-user-panel',
@@ -21,7 +22,9 @@ import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
     TranslateModule,
     AsyncPipe,
     TuiFlagPipe,
-    NgOptimizedImage
+    NgOptimizedImage,
+    AvatarComponent,
+    TuiAvatar
   ],
   templateUrl: './user-panel.component.html',
   styleUrl: './user-panel.component.scss',
@@ -38,7 +41,8 @@ export class UserPanelComponent implements OnInit {
   public selectedLanguage: any;
   public languages = languages;
   public userItems = userItems;
-  public userOverlay: boolean = false;
+  public showPanel = signal<boolean>(false);
+  private elementRef = inject(ElementRef);
 
   ngOnInit(): void {
     this.translate.setDefaultLang('sp');
@@ -47,7 +51,15 @@ export class UserPanelComponent implements OnInit {
   }
 
   public userMenuToggle(): void {
-    this.userOverlay = !this.userOverlay;
+    this.showPanel.update((currentValue) => !currentValue);
+  }
+
+  @HostListener('document:click', ['$event'])
+  public onClosePanelExternalClick(event: MouseEvent): void {
+    const clickedOutside = this.elementRef.nativeElement.contains(event.target as HTMLElement);
+    if (!clickedOutside && this.showPanel()) {
+      this.showPanel.set(false);
+    }
   }
 
   public executeUserEvent(eventName: string): void {
