@@ -1,9 +1,9 @@
-<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
+<div class="sidenav" [ngClass]="collapsed() ? 'sidenav-collapsed' : ''">
   <div class="logo-container">
     <button (click)="toggleCollapse()" class="logo">
       <img src="..\assets\img\logo\nttD.png" alt="">
     </button>
-    @if (collapsed) {
+    @if (collapsed()) {
       <div @fadeInOut class="logo-text">{{'NTTDATA'}}</div>
 
       <button (click)="closeSidenav()"  class="btn-close" @rotate>
@@ -19,10 +19,10 @@
           @if (data.items && data.items.length > 0) {
             <a (click)="hundleClick(data)" [ngClass]="getActiveClass(data)" class="sidenav-nav-link">
               <i class="sidenav-link-icon" [class]="data.icon"></i>
-              @if (collapsed) {
+              @if (collapsed()) {
                 <span class="sidenav-link-text" @fadeInOut translate>{{'SIDENAV.' + data.label}}</span>
               }
-              @if (data.items && collapsed) {
+              @if (data.items && collapsed()) {
                 <i class="menu-collapse-icon"
                   [ngClass]="!data.expanded ?
                       'fal fa-angle-right':
@@ -48,7 +48,7 @@
             <div>
               <app-sublevel-menu
                 [data]="data"
-                [collapsed]="collapsed"
+                [collapsed]="collapsed()"
                 [multiple]="multiple"
                 [expanded]="data.expanded"
               ></app-sublevel-menu>

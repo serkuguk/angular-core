@@ -5,16 +5,16 @@
     }
     <div class="global-container">
       <header>
-        <app-header [collapsed]="isSideNavCollapsed"
-                    [screenWidth]="screenWidth"></app-header>
+        <app-header [collapsed]="isSideNavCollapsed()"
+                    [screenWidth]="screenWidth()"></app-header>
       </header>
       <main>
-        <app-body [collapsed]="isSideNavCollapsed"
-                  [screenWidth]="screenWidth"></app-body>
+        <app-body [collapsed]="isSideNavCollapsed()"
+                  [screenWidth]="screenWidth()"></app-body>
       </main>
       <footer>
-        <app-footer [collapsed]="isSideNavCollapsed"
-                    [screenWidth]="screenWidth"></app-footer>
+        <app-footer [collapsed]="isSideNavCollapsed()"
+                    [screenWidth]="screenWidth()"></app-footer>
       </footer>
     </div>
   </div>

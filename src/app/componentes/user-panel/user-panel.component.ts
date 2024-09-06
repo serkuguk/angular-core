@@ -1,8 +1,6 @@
-import {ChangeDetectionStrategy, Component, effect, inject, OnInit, signal} from '@angular/core';
-import { languages, positions, userItems } from './header-dummy-data';
+import {ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, OnInit, signal} from '@angular/core';
+import { languages, userItems } from './header-dummy-data';
 import {AsyncPipe, NgClass, NgOptimizedImage} from "@angular/common";
-import * as fromLoginAction from "@pages/auth/store/user.actions";
-import {select, Store} from "@ngrx/store";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import * as fromAuth from "@pages/auth";
 import {Observable} from "rxjs";
@@ -11,9 +9,10 @@ import type {TuiCountryIsoCode} from '@taiga-ui/i18n';
 import {TUI_COUNTRIES, TuiAvatar} from '@taiga-ui/kit';
 
 //Stor
+import {select, Store} from "@ngrx/store";
+import * as fromLoginAction from "@pages/auth/store/user.actions";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
 import {AvatarComponent} from "@shared/components/avatar/avatar.component";
-import {ShowPanelDirective} from "@core/directives/show-panel.directive";
 
 @Component({
   selector: 'app-user-panel',
@@ -25,8 +24,7 @@ import {ShowPanelDirective} from "@core/directives/show-panel.directive";
     TuiFlagPipe,
     NgOptimizedImage,
     AvatarComponent,
-    TuiAvatar,
-    ShowPanelDirective
+    TuiAvatar
   ],
   templateUrl: './user-panel.component.html',
   styleUrl: './user-panel.component.scss',
@@ -44,23 +42,24 @@ export class UserPanelComponent implements OnInit {
   public languages = languages;
   public userItems = userItems;
   public showPanel = signal<boolean>(false);
-  private clickOutsideDirective = inject(ShowPanelDirective);
+  private elementRef = inject(ElementRef);
 
   ngOnInit(): void {
     this.translate.setDefaultLang('sp');
     this.selectedLanguage = this.languages[0];
     this.userData$ = this.store.pipe(select(fromLoginSelectors.getUser));
-
-    effect(() => {
-      const isClickedOutside = this.clickOutsideDirective.clickOutsideSignal();
-      if (isClickedOutside && this.showPanel()) {
-        this.showPanel.set(false);
-      }
-    })
   }
 
   public userMenuToggle(): void {
     this.showPanel.update((currentValue) => !currentValue);
+  }
+
+  @HostListener('document:click', ['$event'])
+  public onClosePanelExternalClick(event: MouseEvent): void {
+    const clickedOutside = this.elementRef.nativeElement.contains(event.target as HTMLElement);
+    if (!clickedOutside && this.showPanel()) {
+      this.showPanel.set(false);
+    }
   }
 
   public executeUserEvent(eventName: string): void {

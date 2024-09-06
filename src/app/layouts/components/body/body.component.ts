@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import {Component, input} from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -10,15 +10,14 @@ import { RouterModule } from '@angular/router';
   styleUrl: './body.component.scss'
 })
 export class BodyComponent {
-
-  @Input() collapsed: boolean = false;
-  @Input() screenWidth: number = 0;
+  collapsed = input<boolean>(false);
+  screenWidth = input<number>(0);
 
   public getBoddyClass(): string {
     let styleClass = '';
-    if (this.collapsed && this.screenWidth > 768) {
+    if (this.collapsed() && this.screenWidth() > 768) {
       styleClass = 'body-treemed';
-    } else if (this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
+    } else if (this.collapsed() && this.screenWidth() <= 768 && this.screenWidth() > 0) {
       styleClass = 'body-md-screen';
     }
     return styleClass;
