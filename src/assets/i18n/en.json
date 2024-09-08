@@ -45,5 +45,12 @@
       "SP": "Spanish"
     },
     "LOGIN": "Sign In"
+  },
+  "FORMS" : {
+    "HEADER_TITLE": "Shipping Information",
+    "TYPE": {
+      "PERSON": "Individual",
+      "LEGAL": "Legal entity"
+    }
   }
 }
