@@ -1,1 +1,148 @@
-<p>forms works!</p>
+<h3>Forms</h3>
+
+<div class="forms-container">
+  <div class="forms-container__item">
+    <h3>Dinamic Form</h3>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+      <h4>{{'FORMS.HEADER_TITLE' | translate}}</h4>
+
+      <app-form-field label="Type"
+                      [required]="true"
+                      [control]="form.controls.type"
+                      [showLabel]="false"
+                      [isInline]="isInline">
+        <select class="tt-input" formControlName="type">
+          <option [value]="'PERSON'">Individual</option>
+          <option [value]="'LEGAL'">Legal entity</option>
+        </select>
+      </app-form-field>
+      <app-form-field label="Name"
+                      [required]="true"
+                      [control]="form.controls.name"
+                      [showLabel]="false"
+                      [isInline]="isInline">
+        <app-input formControlName="name"
+                   [placeholder]="'PAGES.LOGIN.USER' | translate"></app-input>
+      </app-form-field>
+
+      @if (form.controls.type.value === 'LEGAL') {
+        <app-form-field label="Inn"
+                        [required]="true"
+                        [control]="form.controls.inn"
+                        [showLabel]="false"
+                        [isInline]="isInline">
+          <app-input formControlName="inn"
+                     [placeholder]="'Enter INN' | translate"></app-input>
+        </app-form-field>
+      } @else {
+        <app-form-field label="Last Name"
+                        [required]="true"
+                        [control]="form.controls.lastName"
+                        [showLabel]="false"
+                        [isInline]="isInline">
+          <app-input formControlName="lastName"
+                     [placeholder]="'Enter Last Name' | translate"></app-input>
+        </app-form-field>
+      }
+
+      <div style="display: flex; justify-content: space-between">
+        <h4 class="h6 mb16">Delivery period</h4>
+      </div>
+
+      <div class="two-columns" formGroupName="dateRange">
+        <label class="tt-control-label mb16">
+          From
+          <input
+            formControlName="from"
+            class="tt-input"
+            type="date"
+          />
+<!-- <app-date></app-date>-->
+        </label>
+
+        <label class="tt-control-label mb16">
+          To
+          <input
+            formControlName="to"
+            class="tt-input"
+            type="date"
+          />
+        </label>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between">
+          <h4 class="h6 mb16">Delivery address</h4>
+          <button class="btn" style="width: 50px" (click)="addAddress()">+</button>
+        </div>
+
+        @for (group of form.controls.addresses.controls; track group; let i = $index) {
+          <div class="form-grid" [formGroup]="group">
+            <label class="tt-control-label">
+              City
+              <input
+                formControlName="city"
+                class="tt-input"
+                type="text"
+                placeholder="City"
+              />
+            </label>
+
+            <label class="tt-control-label">
+              Street
+              <input
+                formControlName="street"
+                class="tt-input"
+                type="text"
+                placeholder="Street"
+              />
+            </label>
+
+            <label class="tt-control-label">
+              Home
+              <input
+                formControlName="building"
+                class="tt-input"
+                type="text"
+                placeholder="Home"
+              />
+            </label>
+
+            <label class="tt-control-label">
+              Apartment
+              <input
+                formControlName="apartment"
+                class="tt-input"
+                type="text"
+                placeholder="Apartment"
+              />
+            </label>
+
+            <button
+              class="btn"
+              style="grid-column-start: 1; grid-column-end: 3"
+              (click)="deleteAddress(i)"
+            >Remove
+            </button>
+          </div>
+        }
+      </div>
+
+      <div [formGroup]="form.controls.feature">
+        <h4 class="h6 mb16">Additionally</h4>
+
+        <div style="display: grid; grid-gap: 16px;">
+          @for (control of form.controls.feature.controls | keyvalue: sort; track control; let i = $index) {
+            <label>
+              {{ features[i].label }}
+              <input type="checkbox" [formControlName]="control.key">
+            </label>
+          }
+        </div>
+      </div>
+
+      <button class="btn btn-shadow mt20" type="submit">Confirm</button>
+    </form>
+  </div>
+</div>

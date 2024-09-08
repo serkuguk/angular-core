@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import {loggedGuard, redirectLoggedInGuard} from '@pages/auth/services/auth.guard';
 import {LoginComponent} from "@pages/auth/components/login/login.component";
+import {FormsComponent} from "@pages/basic-example/components/forms/forms.component";
 
 export const routes: Routes = [
   {
@@ -36,6 +37,11 @@ export const routes: Routes = [
   {
     path: 'basic-examples/charts',
     loadComponent: () => import('@pages/basic-example/components/charts/charts.component').then(c => c.ChartsComponent),
+    canActivate: [loggedGuard]
+  },
+  {
+    path: 'basic-examples/forms',
+    loadComponent: () => import('@pages/basic-example/components/forms/forms.component').then(c => c.FormsComponent),
     canActivate: [loggedGuard]
   },
   {

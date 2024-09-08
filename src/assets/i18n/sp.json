@@ -45,5 +45,12 @@
       "SP": "Español"
     },
     "LOGIN": "Accesso"
+  },
+  "FORMS" : {
+    "HEADER_TITLE": "Información de envío",
+    "TYPE": {
+      "PERSON": "Individual",
+      "LEGAL": "Entidad legal"
+    }
   }
 }
