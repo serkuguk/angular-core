@@ -1,15 +1,14 @@
 <tui-input
 	[formControl]="control"
-	tuiTextfieldSize="textfieldSize"
+	tuiTextfieldSize="m"
 >
   {{placeholder}}
-	<input 
+	<input
 		type="text"
-		tuiTextfieldLegacy 
-		class="app-input" 
-		(keyup)="onKeyup($event.target.value)" 
+		tuiTextfieldLegacy
+		class="app-input"
+		(keyup)="onKeyup($event.target.value)"
 		(blur)="onBlur()"
 		[value]="value"
 	/>
 </tui-input>
-    

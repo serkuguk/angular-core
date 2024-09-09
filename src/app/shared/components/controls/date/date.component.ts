@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, forwardRef, OnInit, Input, Output, EventEmitter, input, output} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 import {CommonModule} from "@angular/common";
@@ -21,22 +21,17 @@ import {TuiCalendar} from "@taiga-ui/core";
         }
     ]
 })
-export class DateComponent implements OnInit, ControlValueAccessor {
+export class DateComponent implements ControlValueAccessor {
 
-    @Input() placeholder?: string;
-    @Input() min?: Date;
-    @Input() max?: Date;
+    public placeholder = input<string>();
+    public min = input<Date>();
+    public max = input<Date>();
 
-    @Output() changed = new EventEmitter<TuiDay | null>();
-    @Output() closed = new EventEmitter<void>();
+    public changed = output<TuiDay | null>();
+    public closed = output<void>();
 
     value: TuiDay | null = null;
     isDisabled?: boolean;
-
-    constructor() { }
-
-    ngOnInit(): void {
-    }
 
     private propagateChange: any = () => { };
     private propagateTouched: any = () => { };

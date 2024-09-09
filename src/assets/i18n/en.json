@@ -47,6 +47,10 @@
     "LOGIN": "Sign In"
   },
   "FORMS" : {
+    "FORM_TYPE" : {
+      "DYNAMIC": "Dynamic Form",
+      "BASIC": ""
+    },
     "HEADER_TITLE": "Shipping Information",
     "TYPE": {
       "PERSON": "Individual",

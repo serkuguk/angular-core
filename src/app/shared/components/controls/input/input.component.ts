@@ -2,15 +2,17 @@ import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetec
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from "@angular/common";
 import {TuiInputModule} from "@taiga-ui/legacy";
+import {TuiTextfieldOptionsDirective} from "@taiga-ui/core";
 
 @Component({
     selector: 'app-input',
     standalone: true,
-    imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      TuiInputModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TuiInputModule,
+    TuiTextfieldOptionsDirective
+  ],
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.scss'],
     providers: [
@@ -30,8 +32,6 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     control = new FormControl();
 
     value: string | undefined;
-
-    constructor() { }
 
     ngOnInit(): void {
     }
