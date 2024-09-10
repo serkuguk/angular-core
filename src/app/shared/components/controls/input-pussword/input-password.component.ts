@@ -1,32 +1,54 @@
-import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
+import {
+  Component,
+  forwardRef,
+  ChangeDetectionStrategy,
+  input, output
+} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, FormsModule} from '@angular/forms';
+import {CommonModule} from "@angular/common";
+import {TuiSizeL, TuiSizeS, TuiTextfield} from "@taiga-ui/core";
+import {TUI_PASSWORD_TEXTS, TuiInputPassword, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
+import {of} from "rxjs";
 
 @Component({
     selector: 'app-input-password',
+    standalone: true,
     templateUrl: './input-password.component.html',
     styleUrls: ['./input-password.component.scss'],
+    imports: [
+      CommonModule,
+      FormsModule,
+      TuiInputPassword,
+      TuiTextfield
+    ],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => InputPasswordComponent),
             multi: true
-        }
+        },
+        tuiInputPasswordOptionsProvider({
+                                          icons: {
+                                            hide: '@tui.eye-off',
+                                            show: '@tui.eye'
+                                          },
+                                        }),
+        {
+          provide: TUI_PASSWORD_TEXTS,
+          useValue: of(['', '']),
+        },
+
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputPasswordComponent implements OnInit, ControlValueAccessor {
-    @Input() placeholder?: string;
-    @Input() textfieldSize?: string = 'm';
-    @Output() changed = new EventEmitter<string>();
+export class InputPasswordComponent implements ControlValueAccessor {
+  public placeholder = input<string>();
+  public textfieldSize = input<TuiSizeL | TuiSizeS>('l');
+  public changed = output<string>();
 
     control = new FormControl();
 
     value: string | undefined;
-
-    constructor() { }
-
-    ngOnInit(): void {
-    }
 
     private propagateChange: any = () => { };
     private propagateTouched: any = () => { };

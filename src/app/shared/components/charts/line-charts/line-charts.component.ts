@@ -26,6 +26,6 @@ export class LineChartsComponent {
   readonly stringify = String;
 
   readonly hintContent = ({
-                                      $implicit,
-                                    }: TuiContext<readonly TuiPoint[]>): number => $implicit[0]?.[1] ?? 0;
+    $implicit,
+  }: TuiContext<readonly TuiPoint[]>): number => $implicit[0]?.[1] ?? 0;
 }

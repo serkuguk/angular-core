@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, input} from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import {CommonModule} from "@angular/common";
 
@@ -11,27 +11,19 @@ import {CommonModule} from "@angular/common";
     templateUrl: './form-field.component.html',
     styleUrls: ['./form-field.component.scss']
 })
-export class FormFieldComponent implements OnInit {
-    @Input() label?: string;
-    @Input() required?: boolean;
-    @Input() isInline: boolean;
-    @Input() showLabel!: boolean;
-    @Input() control!: AbstractControl;
-    @Input() patternError?: string;
-
-    constructor() {
-        this.isInline = true;
-    }
-
-    ngOnInit(): void {
-    }
+export class FormFieldComponent {
+    public label = input<string>();
+    public required = input<boolean>();
+    public isInline = input<boolean>(true);
+    public showLabel = input<boolean>();
+    public control = input<AbstractControl>();
+    public patternError = input<string>();
 
     hasError(): boolean {
-        return this.control && this.control.invalid && this.control.touched;
+        return false //this.control() && this.control.get().invalid && this.control().touched;
     }
 
     get errorKey() {
-        return this.control && this.control.errors && Object.keys(this.control.errors)[0];
+        return this.control() //&& this.control().errors && Object.keys(this.control().errors)[0];
     }
-
 }

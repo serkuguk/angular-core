@@ -1,15 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import {CommonModule} from "@angular/common";
-
-/*import { ControlItem, Value } from '@app/models/frontend';
-export { ControlItem, Value } from '@app/models/frontend';*/
+import {Component, Input, Output, EventEmitter, forwardRef, input, output} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule, NgForOf} from "@angular/common";
+import {TuiCheckbox} from "@taiga-ui/kit";
+import {TuiPlatform} from "@taiga-ui/cdk";
 
 @Component({
     selector: 'app-checkboxes',
     standalone: true,
     imports: [
-      CommonModule
+        CommonModule,
+        NgForOf,
+        FormsModule,
+        ReactiveFormsModule,
+        TuiCheckbox,
+        TuiPlatform
     ],
     templateUrl: './checkboxes.component.html',
     styleUrls: ['./checkboxes.component.scss'],
@@ -21,17 +25,13 @@ export { ControlItem, Value } from '@app/models/frontend';*/
         }
     ]
 })
-export class CheckboxesComponent implements OnInit, ControlValueAccessor {
-    @Input() items!: any[];
-    @Output() changed = new EventEmitter<any[]>();
+export class CheckboxesComponent implements ControlValueAccessor {
+
+    public items = input.required<any[]>();
+    public changed = output<any[]>();
 
     value: any[] = [];
     isDisabled?: boolean;
-
-    constructor() { }
-
-    ngOnInit(): void {
-    }
 
     private propagateChange: any = () => { };
 
@@ -44,6 +44,7 @@ export class CheckboxesComponent implements OnInit, ControlValueAccessor {
     }
 
     registerOnTouched(fn: any): void {
+      // TODO document why this method 'registerOnTouched' is empty
     }
 
     setDisabledState(isDisabled: boolean): void {
@@ -77,4 +78,7 @@ export class CheckboxesComponent implements OnInit, ControlValueAccessor {
         return this.value && this.value.includes(value);
     }
 
+    getSize(first: any) {
+        return undefined;
+    }
 }

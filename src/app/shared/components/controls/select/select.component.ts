@@ -3,11 +3,10 @@ import {
   Component,
   forwardRef,
   input,
-  OnInit,
   output
 } from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
-import {TuiDataList, TuiScrollable, TuiScrollbar} from '@taiga-ui/core';
+import {TuiDataList, TuiScrollable, TuiScrollbar, TuiSizeL, TuiSizeS, TuiVerticalDirection} from '@taiga-ui/core';
 import {TuiDataListWrapper} from '@taiga-ui/kit';
 import {TuiSelectModule, TuiTextfieldControllerModule} from '@taiga-ui/legacy';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
@@ -43,19 +42,18 @@ import {TranslateModule} from "@ngx-translate/core";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectComponent implements OnInit, ControlValueAccessor {
+export class SelectComponent implements ControlValueAccessor {
 
   public items = input<any>([]);
   public title = input<string>('Select');
-  public direction = input<string>('bottom');
+  public direction = input<TuiVerticalDirection>('bottom');
+  public tuiTextfieldSize = input<TuiSizeL | TuiSizeS>('m');
   public placeholder = input<string>('Choose your hero');
   public changed = output<any>();
 
   protected control = new FormControl<string | null>(null);
   value: any;
   isDisabled?: boolean;
-
-  ngOnInit() {}
 
   private propagateChange: any = () => { };
 
@@ -69,6 +67,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   registerOnTouched(fn: any): void {
+    // TODO add funcionalidad
   }
 
   setDisabledState(isDisabled: boolean): void {

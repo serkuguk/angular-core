@@ -1,14 +1,12 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, distinctUntilChanged, startWith, map, filter } from 'rxjs/operators';
 
-import { ControlItem, Value } from '@app/models/frontend';
-export { ControlItem, Value } from '@app/models/frontend';
-
 @Component({
     selector: 'app-autocomplete',
+    standalone: true,
     templateUrl: './autocomplete.component.html',
     styleUrls: ['./autocomplete.component.scss'],
     providers: [
@@ -19,19 +17,16 @@ export { ControlItem, Value } from '@app/models/frontend';
         }
     ]
 })
-export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class AutocompleteComponent implements OnInit, ControlValueAccessor {
 
-    @Input() items!: ControlItem[];
+    @Input() items!: any[];
     @Input() placeholder?: string;
 
-    @Output() changed = new EventEmitter<Value>();
+    @Output() changed = new EventEmitter<any>();
 
     formControl = new FormControl();
-    options$: Observable<ControlItem[]>;
-
+    options$: Observable<any[]> | undefined;
     private destroy = new Subject<any>();
-
-    constructor() { }
 
     ngOnInit(): void {
         this.options$ = this.formControl.valueChanges.pipe(
@@ -51,12 +46,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
         });
     }
 
-    ngOnDestroy(): void {
-        this.destroy.next();
-        this.destroy.complete();
-    }
-
-    private filter(value: string): ControlItem[] {
+    private filter(value: string): any[] {
         const filterValue = value.toLowerCase();
         return this.items.filter(item => item.label.toLowerCase().includes(filterValue));
     }
@@ -64,7 +54,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     private propagateChange: any = () => { };
     private propagateTouched: any = () => { };
 
-    writeValue(value: Value): void {
+    writeValue(value: any): void {
         const selectedOption = this.items.find(item => item.value === value);
         this.formControl.setValue(selectedOption);
     }
@@ -85,7 +75,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
         }
     }
 
-    displayFn(item?: ControlItem): string | undefined {
+    displayFn(item?: any): string | undefined {
         return item ? item.label : undefined;
     }
 

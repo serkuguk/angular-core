@@ -1,10 +1,9 @@
 <button class="app-button tui-space_right-3 tui-space_bottom-3"
-        [type]="type"
-        [iconStart]="iconStart"
-        [iconEnd]="iconEnd"
-        [size]="size"
+        [type]="type()"
+        [iconStart]="iconStart()"
+        [iconEnd]="iconEnd()"
+        [size]="size()"
         tuiButton
-        (click)="onClick()"
-        [disabled]="disabled">
+        [disabled]="disabled()">
     <ng-content></ng-content>
 </button>

@@ -1,7 +1,7 @@
 <div class="select">
   <tui-select
-    tuiTextfieldSize="m"
     class="tui-space_vertical-4"
+    [tuiTextfieldSize]="tuiTextfieldSize()"
     [formControl]="control"
     [tuiTextfieldLabelOutside]="true"
     [tuiDropdownDirection]="direction()"
@@ -16,24 +16,4 @@
       [items]="items()"
     />
   </tui-select>
-
-<!--  <tui-select [(ngModel)]="value">-->
-<!--    {{title}}-->
-<!--    <cdk-virtual-scroll-viewport-->
-<!--      *tuiDataList-->
-<!--      tuiScrollable-->
-<!--      class="scroll"-->
-<!--      [itemSize]="44"-->
-<!--    >-->
-<!--      <tui-data-list>-->
-<!--        <button-->
-<!--          *cdkVirtualFor="let item of items()"-->
-<!--          tuiOption-->
-<!--          [value]="item"-->
-<!--        >-->
-<!--          {{ item }}-->
-<!--        </button>-->
-<!--      </tui-data-list>-->
-<!--    </cdk-virtual-scroll-viewport>-->
-<!--  </tui-select>-->
 </div>

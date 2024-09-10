@@ -1,8 +1,8 @@
-<div class="form-field" [class.form-field_error]="hasError()" [class.form-field_inline]="isInline">
-    @if (showLabel) {
+<div class="form-field" [class.form-field_error]="hasError()" [class.form-field_inline]="isInline()">
+    @if (showLabel()) {
      <label class="form-field__label">
-        {{ label }}
-        @if (required) {<span class="form-field__req">*</span>}
+        {{ label() }}
+        @if (required()) {<span class="form-field__req">*</span>}
      </label>
     }
 
@@ -10,13 +10,13 @@
         <ng-content></ng-content>
 
         <div class="form-field__error">
-            @if(control && errorKey) {
+            @if(control() && errorKey) {
                 @switch(errorKey) {
                     @case("min") {
-                        <span>Minimum {{control?.errors[errorKey].min}}</span>
+                        <span>Minimum {{control()?.errors[errorKey].min}}</span>
                     }
                     @case("max") {
-                        <span>Maximum {{control?.errors[errorKey].max}}</span>
+                        <span>Maximum {{control()?.errors[errorKey].max}}</span>
                     }
                     @case("required") {
                         <span>This field is required</span>
@@ -25,24 +25,24 @@
                         <span>This field is required</span>
                     }
                     @case("minlength") {
-                        <span>At least {{control?.errors[errorKey].requiredLength}} characters</span>
+                        <span>At least {{control()?.errors[errorKey].requiredLength}} characters</span>
                     }
                     @case("maxlength") {
-                        <span>No more than {{control?.errors[errorKey].requiredLength}}characters</span>
+                        <span>No more than {{control()?.errors[errorKey].requiredLength}} characters</span>
                     }
                     @case("startsWith") {
-                      <span>{{control?.errors[errorKey]}} Test</span>
+                      <span>{{control()?.errors[errorKey]}} Test</span>
                     }
                     @case("startsWithParam") {
-                      <span>{{control?.errors[errorKey].message}} Test</span>
+                      <span>{{control()?.errors[errorKey].message}} Test</span>
                     }
                     @default {
                         @if ("pattern") {
                             <span>
-                                @if (patternError) {
-                                    <span>{{patternError}}</span>
+                                @if (patternError()) {
+                                    <span>{{patternError()}}</span>
                                 }
-                                @if (!patternError) {
+                                @if (!patternError()) {
                                     <span>Pattern does not match</span>
                                 }
                             </span>

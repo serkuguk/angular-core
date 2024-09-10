@@ -1,8 +1,8 @@
 <tui-input
 	[formControl]="control"
-	tuiTextfieldSize="m"
+	[tuiTextfieldSize]="textfieldSize()"
 >
-  {{placeholder}}
+  {{placeholder()}}
 	<input
 		type="text"
 		tuiTextfieldLegacy

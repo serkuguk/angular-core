@@ -3,6 +3,8 @@ import {TuiAutoColorPipe, TuiFallbackSrcPipe, TuiIconPipe, TuiTitle} from "@taig
 import {AsyncPipe, CommonModule} from "@angular/common";
 import {TuiAvatar, TuiFade} from "@taiga-ui/kit";
 
+type SizeType = "m" | "s" | "xs" | "l" | "xl" | "xxl";
+
 @Component({
   selector: 'app-avatar',
   standalone: true,
@@ -20,7 +22,7 @@ import {TuiAvatar, TuiFade} from "@taiga-ui/kit";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarComponent {
-  public size = input<any>('s');
+  public size = input<SizeType>('s');
   public appearance = input<any>();
   public icon = input<string>();
   public class = input<string>();
