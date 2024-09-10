@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, forwardRef, ChangeDetectionStrategy} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 
 import { Subject, Observable } from 'rxjs';
@@ -15,7 +15,8 @@ import { takeUntil, distinctUntilChanged, startWith, map, filter } from 'rxjs/op
             useExisting: forwardRef(() => AutocompleteComponent),
             multi: true
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutocompleteComponent implements OnInit, ControlValueAccessor {
 

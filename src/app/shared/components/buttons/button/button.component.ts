@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {TuiButton} from "@taiga-ui/core";
 
@@ -13,7 +13,8 @@ export type SizeType = "m" | "l" | "xl" | "s" | "xs";
       TuiButton
     ],
     templateUrl: './button.component.html',
-    styleUrls: ['./button.component.scss']
+    styleUrls: ['./button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
     public size = input<SizeType>('l');

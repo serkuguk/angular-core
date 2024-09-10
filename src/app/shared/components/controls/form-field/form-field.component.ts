@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, input} from '@angular/core';
+import {Component, OnInit, Input, input, ChangeDetectionStrategy} from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import {CommonModule} from "@angular/common";
 
@@ -9,7 +9,8 @@ import {CommonModule} from "@angular/common";
       CommonModule
     ],
     templateUrl: './form-field.component.html',
-    styleUrls: ['./form-field.component.scss']
+    styleUrls: ['./form-field.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormFieldComponent {
     public label = input<string>();

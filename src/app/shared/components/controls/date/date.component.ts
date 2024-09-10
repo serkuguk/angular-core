@@ -1,4 +1,14 @@
-import {Component, forwardRef, OnInit, Input, Output, EventEmitter, input, output} from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  input,
+  output,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 import {CommonModule} from "@angular/common";
@@ -19,7 +29,8 @@ import {TuiCalendar} from "@taiga-ui/core";
             useExisting: forwardRef(() => DateComponent),
             multi: true
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateComponent implements ControlValueAccessor {
 

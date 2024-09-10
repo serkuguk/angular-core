@@ -1,4 +1,13 @@
-import {Component, Input, Output, EventEmitter, forwardRef, input, output} from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  input,
+  output,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule, NgForOf} from "@angular/common";
 import {TuiCheckbox} from "@taiga-ui/kit";
@@ -23,7 +32,8 @@ import {TuiPlatform} from "@taiga-ui/cdk";
             useExisting: forwardRef(() => CheckboxesComponent),
             multi: true
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxesComponent implements ControlValueAccessor {
 

@@ -1,4 +1,4 @@
-import {Component, HostListener, inject, input, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostListener, inject, input, OnInit, signal} from '@angular/core';
 import {Observable} from "rxjs";
 import { ISideNavToggle } from '@layouts/components/sidenav/interfaces/side-nav-toggle.interface';
 import { LoginComponent } from "@pages/auth/components/login/login.component";
@@ -29,7 +29,8 @@ import {TuiRoot} from "@taiga-ui/core";
     AsyncPipe,
     JsonPipe],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   public isSideNavCollapsed = signal<boolean>(false);

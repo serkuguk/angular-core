@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {LineChartsComponent} from "@shared/components/charts/line-charts/line-charts.component";
 
 @Component({
@@ -6,7 +6,8 @@ import {LineChartsComponent} from "@shared/components/charts/line-charts/line-ch
   standalone: true,
   imports: [LineChartsComponent],
   templateUrl: './charts.component.html',
-  styleUrl: './charts.component.scss'
+  styleUrl: './charts.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChartsComponent {
 

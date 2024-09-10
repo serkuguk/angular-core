@@ -6,9 +6,8 @@ import {
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, FormsModule} from '@angular/forms';
 import {CommonModule} from "@angular/common";
-import {TuiSizeL, TuiSizeS, TuiTextfield} from "@taiga-ui/core";
-import {TUI_PASSWORD_TEXTS, TuiInputPassword, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
-import {of} from "rxjs";
+import {TuiIcon, TuiSizeL, TuiSizeS, TuiTextfield} from "@taiga-ui/core";
+import {TuiCopy, TuiPassword} from '@taiga-ui/kit';
 
 @Component({
     selector: 'app-input-password',
@@ -18,7 +17,9 @@ import {of} from "rxjs";
     imports: [
       CommonModule,
       FormsModule,
-      TuiInputPassword,
+      TuiCopy,
+      TuiIcon,
+      TuiPassword,
       TuiTextfield
     ],
     providers: [
@@ -26,23 +27,14 @@ import {of} from "rxjs";
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => InputPasswordComponent),
             multi: true
-        },
-        tuiInputPasswordOptionsProvider({
-                                          icons: {
-                                            hide: '@tui.eye-off',
-                                            show: '@tui.eye'
-                                          },
-                                        }),
-        {
-          provide: TUI_PASSWORD_TEXTS,
-          useValue: of(['', '']),
-        },
-
+        }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputPasswordComponent implements ControlValueAccessor {
   public placeholder = input<string>();
+  public label = input<boolean>(false);
+  public labelText = input<string>('Label Text');
   public textfieldSize = input<TuiSizeL | TuiSizeS>('l');
   public changed = output<string>();
 
@@ -52,6 +44,7 @@ export class InputPasswordComponent implements ControlValueAccessor {
 
     private propagateChange: any = () => { };
     private propagateTouched: any = () => { };
+
 
     writeValue(value: string): void {
         this.control.setValue(value);

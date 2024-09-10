@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 import {NameValidator} from "@pages/basic-example/components/forms/validators/name.validator";
@@ -34,7 +34,8 @@ export enum ReceiverType {
     ButtonComponent
   ],
   templateUrl: './forms.component.html',
-  styleUrl: './forms.component.scss'
+  styleUrl: './forms.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormsComponent {
 
