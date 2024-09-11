@@ -13,28 +13,25 @@
             @if(control() && errorKey) {
                 @switch(errorKey) {
                     @case("min") {
-                        <span>Minimum {{control()?.errors[errorKey].min}}</span>
+                        <span>Minimum {{control()?.errors?.[errorKey].min}}</span>
                     }
                     @case("max") {
-                        <span>Maximum {{control()?.errors[errorKey].max}}</span>
+                        <span>Maximum {{control()?.errors?.[errorKey].max}}</span>
                     }
                     @case("required") {
                         <span>This field is required</span>
                     }
-                    @case("requiredTrue") {
-                        <span>This field is required</span>
-                    }
                     @case("minlength") {
-                        <span>At least {{control()?.errors[errorKey].requiredLength}} characters</span>
+                        <span>At least {{control()?.errors?.[errorKey].requiredLength}} characters</span>
                     }
                     @case("maxlength") {
-                        <span>No more than {{control()?.errors[errorKey].requiredLength}} characters</span>
+                        <span>No more than {{control()?.errors?.[errorKey].requiredLength}} characters</span>
                     }
                     @case("startsWith") {
-                      <span>{{control()?.errors[errorKey]}} Test</span>
+                      <span>{{control()?.errors?.[errorKey]}} Test</span>
                     }
                     @case("startsWithParam") {
-                      <span>{{control()?.errors[errorKey].message}} Test</span>
+                      <span>{{control()?.errors?.[errorKey].message}} Test</span>
                     }
                     @default {
                         @if ("pattern") {

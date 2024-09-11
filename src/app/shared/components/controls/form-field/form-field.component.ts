@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, input, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, Input, input, ChangeDetectionStrategy, ChangeDetectorRef, inject} from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import {CommonModule} from "@angular/common";
 
@@ -9,8 +9,7 @@ import {CommonModule} from "@angular/common";
       CommonModule
     ],
     templateUrl: './form-field.component.html',
-    styleUrls: ['./form-field.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./form-field.component.scss']
 })
 export class FormFieldComponent {
     public label = input<string>();
@@ -21,10 +20,12 @@ export class FormFieldComponent {
     public patternError = input<string>();
 
     hasError(): boolean {
-        return false //this.control() && this.control.get().invalid && this.control().touched;
+      const control = this.control();
+      return !!control && control.invalid && control.touched;
     }
 
     get errorKey() {
-        return this.control() //&& this.control().errors && Object.keys(this.control().errors)[0];
+      const control = this.control();
+      return (control && control?.errors && Object.keys(control.errors)[0]) ? Object.keys(control.errors)[0] : null;
     }
 }
