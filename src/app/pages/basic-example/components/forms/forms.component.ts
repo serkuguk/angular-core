@@ -107,6 +107,7 @@ export class FormsComponent {
   onSubmit(event: SubmitEvent) {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
+    console.log('date ', this.form.controls.dateRange.controls)
     if (this.form.invalid) return;
   }
 

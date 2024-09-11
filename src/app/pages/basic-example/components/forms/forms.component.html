@@ -54,7 +54,7 @@
                           [control]="form.controls.dateRange"
                           [showLabel]="false"
                           [isInline]="isInline">
-              <app-date formControlName="from"></app-date>
+              <app-date formControlName="from" [placeholder]="'Date From'"></app-date>
           </app-form-field>
 
           <app-form-field label="To"
@@ -62,7 +62,7 @@
                           [control]="form.controls.dateRange"
                           [showLabel]="false"
                           [isInline]="isInline">
-            <app-date formControlName="to"></app-date>
+            <app-date formControlName="to" [placeholder]="'Date To'"></app-date>
           </app-form-field>
       </div>
 

@@ -1,25 +1,29 @@
 import {
   Component,
   forwardRef,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
   input,
   output,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, ReactiveFormsModule} from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
-import {CommonModule} from "@angular/common";
-import {TuiCalendar} from "@taiga-ui/core";
+import {AsyncPipe, CommonModule} from "@angular/common";
+import {TuiError} from "@taiga-ui/core";
+import {TuiInputDateModule, TuiTextfieldControllerModule, TuiUnfinishedValidator} from "@taiga-ui/legacy";
+import {TuiFieldErrorPipe} from "@taiga-ui/kit";
 
 @Component({
     selector: 'app-date',
     standalone: true,
     imports: [
       CommonModule,
-      TuiCalendar
+      AsyncPipe,
+      ReactiveFormsModule,
+      TuiError,
+      TuiFieldErrorPipe,
+      TuiInputDateModule,
+      TuiTextfieldControllerModule,
+      TuiUnfinishedValidator
     ],
     templateUrl: './date.component.html',
     styleUrls: ['./date.component.scss'],

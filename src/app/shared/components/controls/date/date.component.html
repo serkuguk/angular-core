@@ -1,6 +1,16 @@
 <div class="date">
-    <tui-calendar
-    [value]="value"
-    (dayClick)="onChanged($event)"></tui-calendar>
-    <div *ngIf="value">Chosen date: {{ value }}</div>
+  <tui-input-date
+    formControlName="testValue"
+    tuiUnfinishedValidator="Finish filling the field"
+    [tuiTextfieldSize]="'l'"
+    class="tui-space_vertical-4"
+    [tuiTextfieldLabelOutside]="false"
+    (change)="onChanged($event.target)"
+  >
+    {{placeholder()}}
+  </tui-input-date>
+  <tui-error
+    formControlName="testValue"
+    [error]="[] | tuiFieldError | async"
+  />
 </div>
