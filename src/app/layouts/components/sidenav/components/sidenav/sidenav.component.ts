@@ -38,15 +38,19 @@ import {TranslateModule} from "@ngx-translate/core";
 export class SidenavComponent implements OnInit {
 
   public onToggleSideNav = output<ISideNavToggle>();
-
   public collapsed = signal<boolean>(false);
-
   public screenWidth = signal<number>(0);
   public navData: any = navabarData;
   public multiple: boolean = false;
 
   public router: Router = inject(Router);
   private elementRef = inject(ElementRef);
+
+  //Floating menu
+  public isSubMenuVisible: boolean = false;
+  public hoveredMenuItem: any = null;
+  public submenuPosition = { top: '0px', left: '0px' };
+  private hideTimeout: any = null;
 
   @HostListener('body:resize', ['$event.target'])
   public onResize(event: any) { console.log('event', event);
@@ -69,6 +73,39 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {
     this.screenWidth.set(window.innerWidth);
   }
+
+
+  //Floating mene
+  public showSubMenu(menuItem: any, event: MouseEvent): void {
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout); // Отменяем таймер скрытия, если пользователь вернулся на элемент
+    }
+
+    this.isSubMenuVisible = true;
+    this.hoveredMenuItem = menuItem;
+
+    // Вычисляем позицию всплывающего меню
+    const target = event.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    this.submenuPosition = {
+      top: `${rect.top}px`,
+      left: `${rect.right + 15}px`
+    };
+  }
+
+  public hideSubMenu(event: MouseEvent): void {
+    this.hideTimeout = setTimeout(() => {
+      this.isSubMenuVisible = false;
+      this.hoveredMenuItem = null;
+    }, 200);
+  }
+
+  public keepSubMenuOpen(): void {
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+    }
+  }
+
 
   public toggleCollapse(): void {
     this.collapsed.update((collapsed) => !collapsed);
