@@ -182,6 +182,13 @@
   padding: 10px;
   z-index: 1000;
   transition: opacity 0.3s;
+  border-radius: 0.5rem;
+}
+
+.floating-submenu {
+  ::ng-deep app-sublevel-menu .sublevel-nav {
+    margin-left: -10px;
+  }
 }
 
 .sidenav-collapsed .floating-submenu {

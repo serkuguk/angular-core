@@ -74,7 +74,6 @@ export class SidenavComponent implements OnInit {
     this.screenWidth.set(window.innerWidth);
   }
 
-
   //Floating mene
   public showSubMenu(menuItem: any, event: MouseEvent): void {
     if (this.hideTimeout) {
@@ -89,7 +88,7 @@ export class SidenavComponent implements OnInit {
     const rect = target.getBoundingClientRect();
     this.submenuPosition = {
       top: `${rect.top}px`,
-      left: `${rect.right + 15}px`
+      left: `${rect.right + 19}px`
     };
   }
 
