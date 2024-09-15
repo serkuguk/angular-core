@@ -1,144 +1,148 @@
-<h3>Forms</h3>
+<h2>Forms</h2>
 
 <div class="forms-container">
   <h1>{{'FORMS.FORM_TYPE.DYNAMIC' | translate}}</h1>
-  <h4>{{'FORMS.HEADER_TITLE' | translate}}</h4>
+
+  <div class="delivery-form">
+    <h3>{{'FORMS.HEADER_TITLE' | translate}}</h3>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
 
-        <app-form-field label="Type"
-                        [required]="true"
-                        [control]="form.controls.type"
-                        [showLabel]="false"
-                        [isInline]="isInline">
-                  <app-select formControlName="type"
-                    [items]="type()"
-                  ></app-select>
-        </app-form-field>
-
-        <app-form-field label="Name"
-                        [required]="true"
-                        [control]="form.controls.name"
-                        [showLabel]="false"
-                        [isInline]="isInline">
-          <app-input formControlName="name"
-                     [placeholder]="'PAGES.LOGIN.USER' | translate"></app-input>
-        </app-form-field>
-
-      @if (form.controls.type.value === 'LEGAL') {
-        <app-form-field label="Inn"
-                        [required]="true"
-                        [control]="form.controls.inn"
-                        [showLabel]="false"
-                        [isInline]="isInline">
-          <app-input formControlName="inn"
-                     [placeholder]="'Enter INN' | translate"></app-input>
-        </app-form-field>
-      } @else {
-        <app-form-field label="Last Name"
-                        [required]="true"
-                        [control]="form.controls.lastName"
-                        [showLabel]="false"
-                        [isInline]="isInline">
-          <app-input formControlName="lastName"
-                     [placeholder]="'Enter Last Name' | translate"></app-input>
-        </app-form-field>
-      }
-
-      <div style="display: flex; justify-content: space-between">
-        <h4 class="h6 mb16">Delivery period</h4>
-      </div>
-
-      <div class="forms-container__date-range" formGroupName="dateRange">
-          <app-form-field label="From"
+          <app-form-field label="Type"
                           [required]="true"
-                          [control]="form.controls.dateRange"
+                          [control]="form.controls.type"
                           [showLabel]="false"
                           [isInline]="isInline">
-              <app-date formControlName="from" [placeholder]="'Date From'"></app-date>
+                    <app-select formControlName="type"
+                      [items]="type()"
+                    ></app-select>
           </app-form-field>
 
-          <app-form-field label="To"
+          <app-form-field label="Name"
                           [required]="true"
-                          [control]="form.controls.dateRange"
+                          [control]="form.controls.name"
                           [showLabel]="false"
                           [isInline]="isInline">
-            <app-date formControlName="to" [placeholder]="'Date To'"></app-date>
+            <app-input formControlName="name"
+                       [placeholder]="'PAGES.LOGIN.USER' | translate"></app-input>
           </app-form-field>
-      </div>
 
-      <div>
-        <div style="display: flex; justify-content: space-between">
-          <h4 class="h6 mb16">Delivery address</h4>
-          <app-button [iconStart]="'@tui.plus'"
-                      [size]="'m'"
-                      (click)="addAddress()"
-          ></app-button>
-        </div>
-
-        @for (group of form.controls.addresses.controls; track group; let i = $index) {
-          <div class="form-grid" [formGroup]="group">
-
-              <app-form-field label="Name"
-                              [required]="true"
-                              [control]="group.controls.city"
-                              [showLabel]="false"
-                              [isInline]="isInline">
-                <app-input formControlName="city"
-                           [placeholder]="'City' | translate"></app-input>
-              </app-form-field>
-
-              <app-form-field label="Name"
-                              [required]="true"
-                              [control]="group.controls.street"
-                              [showLabel]="false"
-                              [isInline]="isInline">
-                <app-input formControlName="street"
-                           [placeholder]="'Street' | translate"></app-input>
-              </app-form-field>
-
-              <app-form-field label="Name"
-                              [required]="true"
-                              [control]="group.controls.building"
-                              [showLabel]="false"
-                              [isInline]="isInline">
-                <app-input formControlName="building"
-                           [placeholder]="'Home' | translate"></app-input>
-              </app-form-field>
-
-              <app-form-field label="Name"
-                              [required]="true"
-                              [control]="group.controls.apartment"
-                              [showLabel]="false"
-                              [isInline]="isInline">
-                <app-input formControlName="apartment"
-                           [placeholder]="'Apartment' | translate"></app-input>
-              </app-form-field>
-
-              <app-button [iconStart]="'@tui.trash'"
-                          [size]="'m'"
-                          (click)="deleteAddress(i)"
-              ></app-button>
-          </div>
-        }
-      </div>
-
-      <div [formGroup]="form.controls.feature">
-        <h4 class="h6 mb16">Additionally</h4>
-
-        <div style="display: grid; grid-gap: 16px;">
-          @for (control of form.controls.feature.controls | keyvalue: sort; track control; let i = $index) {
-            <label>
-              {{ features[i].label }}
-              <input type="checkbox" [formControlName]="control.key">
-            </label>
+          @if (form.controls.type.value === 'LEGAL') {
+            <app-form-field label="Inn"
+                            [required]="true"
+                            [control]="form.controls.inn"
+                            [showLabel]="false"
+                            [isInline]="isInline">
+              <app-input formControlName="inn"
+                         [placeholder]="'Enter INN' | translate"></app-input>
+            </app-form-field>
+          } @else {
+            <app-form-field label="Last Name"
+                            [required]="true"
+                            [control]="form.controls.lastName"
+                            [showLabel]="false"
+                            [isInline]="isInline">
+              <app-input formControlName="lastName"
+                         [placeholder]="'Enter Last Name' | translate"></app-input>
+            </app-form-field>
           }
-        </div>
-      </div>
 
-      <app-button [type]="'submit'"
-                  [iconStart]="'@tui.check'"
-                  [size]="'l'"
-      >{{ 'Confirm' | translate }}</app-button>
+          <div class="delivery-title">
+            <h4 class="h6 mb16">Delivery period</h4>
+          </div>
 
-    </form>
+          <div class="forms-container__date-range" formGroupName="dateRange">
+              <app-form-field label="From" class="range-item"
+                              [required]="true"
+                              [control]="form.controls.dateRange"
+                              [showLabel]="false"
+                              [isInline]="isInline">
+                  <app-date formControlName="from" [placeholder]="'Date From'"></app-date>
+              </app-form-field>
+
+              <app-form-field label="To" class="range-item"
+                              [required]="true"
+                              [control]="form.controls.dateRange"
+                              [showLabel]="false"
+                              [isInline]="isInline">
+                <app-date formControlName="to" [placeholder]="'Date To'"></app-date>
+              </app-form-field>
+          </div>
+
+          <div>
+            <div class="delivery-title">
+              <h4 class="h6 mb16">Delivery address</h4>
+              <app-button [iconStart]="'@tui.plus'"
+                          [size]="'m'"
+                          (click)="addAddress()"
+              ></app-button>
+            </div>
+
+            @for (group of form.controls.addresses.controls; track group; let i = $index) {
+              <div class="form-grid" [formGroup]="group">
+
+                  <app-form-field label="Name"
+                                  [required]="true"
+                                  [control]="group.controls.city"
+                                  [showLabel]="false"
+                                  [isInline]="isInline">
+                    <app-input formControlName="city"
+                               [placeholder]="'City' | translate"></app-input>
+                  </app-form-field>
+
+                  <app-form-field label="Name"
+                                  [required]="true"
+                                  [control]="group.controls.street"
+                                  [showLabel]="false"
+                                  [isInline]="isInline">
+                    <app-input formControlName="street"
+                               [placeholder]="'Street' | translate"></app-input>
+                  </app-form-field>
+
+                  <app-form-field label="Name"
+                                  [required]="true"
+                                  [control]="group.controls.building"
+                                  [showLabel]="false"
+                                  [isInline]="isInline">
+                    <app-input formControlName="building"
+                               [placeholder]="'Home' | translate"></app-input>
+                  </app-form-field>
+
+                  <app-form-field label="Name"
+                                  [required]="true"
+                                  [control]="group.controls.apartment"
+                                  [showLabel]="false"
+                                  [isInline]="isInline">
+                    <app-input formControlName="apartment"
+                               [placeholder]="'Apartment' | translate"></app-input>
+                  </app-form-field>
+
+                  <app-button [iconStart]="'@tui.trash'"
+                              [size]="'m'"
+                              (click)="deleteAddress(i)"
+                  ></app-button>
+              </div>
+            }
+          </div>
+
+          <div [formGroup]="form.controls.feature">
+            <h4 class="h6 mb16">Additionally</h4>
+
+            <div style="display: grid; grid-gap: 16px;">
+              @for (control of form.controls.feature.controls | keyvalue: sort; track control; let i = $index) {
+                <label>
+                  {{ features[i].label }}
+                  <input type="checkbox" [formControlName]="control.key">
+                </label>
+              }
+            </div>
+          </div>
+
+          <app-button [type]="'submit'"
+                      [iconStart]="'@tui.check'"
+                      [size]="'l'"
+          >{{ 'Confirm' | translate }}</app-button>
+
+      </form>
+  </div>
 </div>
