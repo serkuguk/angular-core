@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {SelectComponent} from "@shared/components/controls/select/select.component";
 
@@ -11,7 +11,8 @@ import {SelectComponent} from "@shared/components/controls/select/select.compone
     SelectComponent
   ],
   templateUrl: './selectors.component.html',
-  styleUrls: ['./selectors.component.scss']
+  styleUrls: ['./selectors.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectorsComponent implements OnInit {
 

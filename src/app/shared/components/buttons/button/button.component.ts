@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {TuiButton, TuiLoader, tuiLoaderOptionsProvider} from "@taiga-ui/core";
-import {character} from "libphonenumber-js/source/AsYouTypeFormatter.PatternParser";
+import {TuiButton} from "@taiga-ui/core";
+
 export type ButtonType = 'button' | 'submit';
+export type SizeType = "m" | "l" | "xl" | "s" | "xs";
 
 @Component({
     selector: 'app-button',
@@ -12,26 +13,13 @@ export type ButtonType = 'button' | 'submit';
       TuiButton
     ],
     templateUrl: './button.component.html',
-    styleUrls: ['./button.component.scss']
+    styleUrls: ['./button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent implements OnInit {
-
-    @Input() type: ButtonType;
-    @Input() disabled: boolean = false;
-    @Input() size: string | any = "l";
-    @Input() iconStart?: string;
-    @Input() iconEnd?: string;
-    @Output() click = new EventEmitter<void>();
-
-    constructor() {
-        this.type = 'button';
-    }
-
-    ngOnInit(): void {
-    }
-
-    onClick(): void {
-       this.click.emit();
-    }
-
+export class ButtonComponent {
+    public size = input<SizeType>('l');
+    public type = input<ButtonType>('button');
+    public disabled = input<boolean>(false);
+    public iconStart = input<string>();
+    public iconEnd = input<string>();
 }

@@ -11,19 +11,24 @@ import {select, Store} from "@ngrx/store";
 import * as fromAuth from "@pages/auth";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
 import {UserPanelComponent} from "@app/componentes/user-panel/user-panel.component";
+import {TuiFlagPipe} from "@taiga-ui/core";
+import type {TuiCountryIsoCode} from "@taiga-ui/i18n";
+import {TUI_COUNTRIES} from "@taiga-ui/kit";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  imports: [
-    CommonModule,
-    TranslateModule,
-    ReactiveFormsModule,
-    OverlayModule,
-    CdkMenuModule,
-    UserPanelComponent],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        OverlayModule,
+        CdkMenuModule,
+        UserPanelComponent,
+        TuiFlagPipe
+    ],
   providers: [TranslateService]
 })
 export class HeaderComponent implements OnInit {
@@ -33,6 +38,9 @@ export class HeaderComponent implements OnInit {
   public isAuthenticated$: Observable<boolean | null> | undefined;
   public translate = inject(TranslateService);
   private store: Store<fromAuth.State> = inject(Store);
+  public countryES: TuiCountryIsoCode = 'ES';
+  public countryEN: TuiCountryIsoCode = 'FK';
+  public countriesNames$:any = inject(TUI_COUNTRIES);
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));

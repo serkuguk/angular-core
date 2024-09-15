@@ -1,8 +1,17 @@
-import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  forwardRef,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  input, output
+} from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from "@angular/common";
 import {TuiInputNumberModule} from "@taiga-ui/legacy";
-import {TuiNumberFormat} from "@taiga-ui/core";
+import {TuiNumberFormat, TuiSizeL, TuiSizeS} from "@taiga-ui/core";
 
 @Component({
     selector: 'app-input-number',
@@ -24,19 +33,15 @@ import {TuiNumberFormat} from "@taiga-ui/core";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputNumberComponent implements OnInit, ControlValueAccessor {
-    @Input() placeholder?: string;
-    @Input() textfieldSize?: string = 'm';
+export class InputNumberComponent implements ControlValueAccessor {
     @Input() formControlName?: string;
-    @Output() changed = new EventEmitter<string>();
+
+    public placeholder = input<string>();
+    public textfieldSize = input<TuiSizeL | TuiSizeS>('m');
+    public changed = output<string>();
 
     value: string | undefined;
     isDisabled: boolean | undefined;
-
-    constructor() { }
-
-    ngOnInit(): void {
-    }
 
     private propagateChange: any = () => { };
     private propagateTouched: any = () => { };

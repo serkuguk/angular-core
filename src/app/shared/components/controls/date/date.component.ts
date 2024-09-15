@@ -1,15 +1,29 @@
-import { Component, forwardRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {
+  Component,
+  forwardRef,
+  input,
+  output,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, ReactiveFormsModule} from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
-import {CommonModule} from "@angular/common";
-import {TuiCalendar} from "@taiga-ui/core";
+import {AsyncPipe, CommonModule} from "@angular/common";
+import {TuiError} from "@taiga-ui/core";
+import {TuiInputDateModule, TuiTextfieldControllerModule, TuiUnfinishedValidator} from "@taiga-ui/legacy";
+import {TuiFieldErrorPipe} from "@taiga-ui/kit";
 
 @Component({
     selector: 'app-date',
     standalone: true,
     imports: [
       CommonModule,
-      TuiCalendar
+      AsyncPipe,
+      ReactiveFormsModule,
+      TuiError,
+      TuiFieldErrorPipe,
+      TuiInputDateModule,
+      TuiTextfieldControllerModule,
+      TuiUnfinishedValidator
     ],
     templateUrl: './date.component.html',
     styleUrls: ['./date.component.scss'],
@@ -19,24 +33,20 @@ import {TuiCalendar} from "@taiga-ui/core";
             useExisting: forwardRef(() => DateComponent),
             multi: true
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateComponent implements OnInit, ControlValueAccessor {
+export class DateComponent implements ControlValueAccessor {
 
-    @Input() placeholder?: string;
-    @Input() min?: Date;
-    @Input() max?: Date;
+    public placeholder = input<string>();
+    public min = input<Date>();
+    public max = input<Date>();
 
-    @Output() changed = new EventEmitter<TuiDay | null>();
-    @Output() closed = new EventEmitter<void>();
+    public changed = output<TuiDay | null>();
+    public closed = output<void>();
 
     value: TuiDay | null = null;
     isDisabled?: boolean;
-
-    constructor() { }
-
-    ngOnInit(): void {
-    }
 
     private propagateChange: any = () => { };
     private propagateTouched: any = () => { };

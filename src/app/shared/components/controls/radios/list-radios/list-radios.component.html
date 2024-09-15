@@ -1,0 +1,19 @@
+<div class="radios">
+  <tui-radio-list
+    formControlName="vertical"
+    [itemContent]="content"
+    [items]="objects"
+    [disabledItemHandler]="handler"
+    [style.flex-direction]="'row'"
+    [style.width]="'max-content'"
+  />
+  <ng-template
+    #content
+    let-data
+  >
+    <span tuiTitle>
+        {{ data.name }}
+      <span tuiSubtitle>{{ data.description }}</span>
+    </span>
+  </ng-template>
+</div>

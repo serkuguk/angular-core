@@ -1,9 +1,17 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
-import {TuiDataList, TuiScrollable, TuiScrollbar, TuiTextfieldOptionsDirective} from '@taiga-ui/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  input,
+  output
+} from '@angular/core';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
+import {TuiDataList, TuiScrollable, TuiScrollbar, TuiSizeL, TuiSizeS, TuiVerticalDirection} from '@taiga-ui/core';
 import {TuiDataListWrapper} from '@taiga-ui/kit';
-import {TuiSelectModule} from '@taiga-ui/legacy';
+import {TuiSelectModule, TuiTextfieldControllerModule} from '@taiga-ui/legacy';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
+import {AsyncPipe} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-select',
@@ -11,13 +19,17 @@ import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} fr
   exportAs: "defaultSelector",
   imports: [
     TuiSelectModule,
-    FormsModule,
     CdkVirtualScrollViewport,
     TuiDataList,
     TuiScrollbar,
     CdkFixedSizeVirtualScroll,
     CdkVirtualForOf,
     TuiScrollable,
+    TuiTextfieldControllerModule,
+    ReactiveFormsModule,
+    TuiDataListWrapper,
+    AsyncPipe,
+    TranslateModule,
   ],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
@@ -28,32 +40,34 @@ import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} fr
       multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectComponent implements OnInit, ControlValueAccessor {
+export class SelectComponent implements ControlValueAccessor {
 
-  @Input() items: any[] = [];
-  @Input() title: string = 'Select';
-  @Input() placeholder: string = 'Choose your hero';
-  @Output() changed = new EventEmitter<any>();
+  public items = input<any>([]);
+  public title = input<string>('Select');
+  public direction = input<TuiVerticalDirection>('bottom');
+  public tuiTextfieldSize = input<TuiSizeL | TuiSizeS>('m');
+  public placeholder = input<string>('Choose your hero');
+  public changed = output<any>();
 
-  protected testValue = new FormControl<string | null>(null);
+  protected control = new FormControl<string | null>(null);
   value: any;
   isDisabled?: boolean;
-
-  ngOnInit() {}
 
   private propagateChange: any = () => { };
 
   writeValue(value: any): void {
-    this.value = value;
+    this.control.setValue(value);
   }
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
+    this.control.valueChanges.subscribe(this.propagateChange);
   }
 
   registerOnTouched(fn: any): void {
+    // TODO add funcionalidad
   }
 
   setDisabledState(isDisabled: boolean): void {

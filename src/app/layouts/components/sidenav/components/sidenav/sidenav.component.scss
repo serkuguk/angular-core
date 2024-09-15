@@ -169,3 +169,39 @@
   scrollbar-width: thin;
   scrollbar-color: #556268;
 }
+
+
+/*Floating menu*/
+
+.floating-submenu {
+  width: max-content;
+  position: absolute;
+  top: 0;
+  left: 60px;
+  background-color: rgba(7, 14, 39, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  z-index: 1000;
+  transition: opacity 0.3s;
+  border-radius: 0.5rem;
+
+  &__title {
+    color: #f3f3f3;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+  }
+}
+
+.floating-submenu {
+  ::ng-deep .sublevel-nav ul {
+    //margin-left: -10px;
+  }
+}
+
+.sidenav-collapsed .floating-submenu {
+  left: 80px;
+}
+
+.sidenav-nav-item {
+  position: relative;
+}

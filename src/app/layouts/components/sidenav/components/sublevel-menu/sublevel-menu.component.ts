@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import { INavbarData } from '../../interfaces/nav-bar-data.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
@@ -33,16 +33,16 @@ import {TranslateModule} from "@ngx-translate/core";
 })
 export class SublevelMenuComponent {
 
-  @Input() data: INavbarData = {
+  public data = input<INavbarData>({
     routerLink: '',
     icon: '',
     label: '',
     items: []
-  }
-  @Input() collapsed: boolean = false;
-  @Input() animating: boolean | undefined;
-  @Input() expanded: boolean | undefined;
-  @Input() multiple: boolean = false;
+  });
+  public collapsed = input<boolean>(false);
+  public animating = input<boolean>(false);
+  public expanded = input<boolean>(false);
+  public multiple = input<boolean>(false);
 
   public router: Router = inject(Router);
 
@@ -56,9 +56,10 @@ export class SublevelMenuComponent {
   }
 
   public shrinkItems(item: INavbarData): void {
-    if (!this.multiple) {
-      if (this.data.items && this.data.items.length > 0) {
-        for(let modelItem of this.data.items) {
+    if (!this.multiple()) {
+      const data = this.data();
+      if (data.items && data.items.length > 0) {
+        for(let modelItem of data.items) {
           if (item !== modelItem && modelItem.expanded) {
             modelItem.expanded = false;
           }

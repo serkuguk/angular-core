@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {basic_data as dataSource,
   basic_columns,
@@ -26,7 +26,8 @@ import {SelectComponent} from "@shared/components/controls/select/select.compone
     TuiAlert
   ],
   templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.scss']
+  styleUrls: ['./tables.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TablesComponent implements OnInit {
 

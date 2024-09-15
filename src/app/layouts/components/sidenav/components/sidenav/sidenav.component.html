@@ -15,13 +15,17 @@
   <div class="scrollwrap scrollwrap_delayed">
     <ul class="sidenav-nav">
       @for (data of navData; track $index) {
-        <li class="sidenav-nav-item">
+        <li class="sidenav-nav-item"
+            (mouseenter)="showSubMenu(data, $event)"
+            (mouseleave)="hideSubMenu()">
           @if (data.items && data.items.length > 0) {
             <a (click)="hundleClick(data)" [ngClass]="getActiveClass(data)" class="sidenav-nav-link">
               <i class="sidenav-link-icon" [class]="data.icon"></i>
+
               @if (collapsed()) {
                 <span class="sidenav-link-text" @fadeInOut translate>{{'SIDENAV.' + data.label}}</span>
               }
+
               @if (data.items && collapsed()) {
                 <i class="menu-collapse-icon"
                   [ngClass]="!data.expanded ?
@@ -35,17 +39,19 @@
             <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
                                         routerLinkActive="active"
                                         [routerLinkActiveOptions]="{exact: true}"
+                                        [tuiHint]="!collapsed() ? data.label : ''"
+                                        tuiHintDirection="right"
                                         (click)="shrinkItems(data)"
             >
               <i class="sidenav-link-icon" [class]="data.icon"></i>
-              @if (collapsed) {
+              @if (collapsed()) {
                 <span class="sidenav-link-text" @fadeInOut translate>{{'SIDENAV.' + data.label}}</span>
               }
             </a>
           }
 
-          @if (collapsed && data.items && data.items.length > 0) {
-            <div>
+          @if (collapsed() && data.items && data.items.length > 0) {
+            <div class="sub-menu">
               <app-sublevel-menu
                 [data]="data"
                 [collapsed]="collapsed()"
@@ -55,6 +61,22 @@
             </div>
           }
         </li>
+
+        @if (!collapsed() && isSubMenuVisible && hoveredMenuItem === data && data.items) {
+          <div class="floating-submenu"
+               [ngStyle]="submenuPosition"
+               (mouseenter)="keepSubMenuOpen()"
+               (mouseleave)="hideSubMenu($event)"
+          >
+            <span class="floating-submenu__title" translate>{{'SIDENAV.' + data.label}}</span>
+            <app-sublevel-menu
+              [data]="data"
+              [collapsed]="!collapsed()"
+              [multiple]="multiple"
+              [expanded]="true"
+            ></app-sublevel-menu>
+          </div>
+        }
       }
     </ul>
   </div>

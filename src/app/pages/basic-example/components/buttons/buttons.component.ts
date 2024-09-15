@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {basic_data as dataSource,
   basic_columns,
@@ -28,7 +28,8 @@ import {Observable} from "rxjs";
     TranslateModule
   ],
   templateUrl: './buttons.component.html',
-  styleUrls: ['./buttons.component.scss']
+  styleUrls: ['./buttons.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonsComponent implements OnInit {
 

@@ -47,6 +47,10 @@
     "LOGIN": "Accesso"
   },
   "FORMS" : {
+    "FORM_TYPE" : {
+      "DYNAMIC": "Forma dinámica",
+      "BASIC": ""
+    },
     "HEADER_TITLE": "Información de envío",
     "TYPE": {
       "PERSON": "Individual",

@@ -1,10 +1,27 @@
-import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
+import {
+  Component,
+  forwardRef,
+  ChangeDetectionStrategy,
+  input, output
+} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, FormsModule} from '@angular/forms';
+import {CommonModule} from "@angular/common";
+import {TuiIcon, TuiSizeL, TuiSizeS, TuiTextfield} from "@taiga-ui/core";
+import {TuiCopy, TuiPassword} from '@taiga-ui/kit';
 
 @Component({
     selector: 'app-input-password',
+    standalone: true,
     templateUrl: './input-password.component.html',
     styleUrls: ['./input-password.component.scss'],
+    imports: [
+      CommonModule,
+      FormsModule,
+      TuiCopy,
+      TuiIcon,
+      TuiPassword,
+      TuiTextfield
+    ],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -14,22 +31,20 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/f
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputPasswordComponent implements OnInit, ControlValueAccessor {
-    @Input() placeholder?: string;
-    @Input() textfieldSize?: string = 'm';
-    @Output() changed = new EventEmitter<string>();
+export class InputPasswordComponent implements ControlValueAccessor {
+  public placeholder = input<string>();
+  public label = input<boolean>(false);
+  public labelText = input<string>('Label Text');
+  public textfieldSize = input<TuiSizeL | TuiSizeS>('l');
+  public changed = output<string>();
 
     control = new FormControl();
 
     value: string | undefined;
 
-    constructor() { }
-
-    ngOnInit(): void {
-    }
-
     private propagateChange: any = () => { };
     private propagateTouched: any = () => { };
+
 
     writeValue(value: string): void {
         this.control.setValue(value);

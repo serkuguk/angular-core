@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 import {NameValidator} from "@pages/basic-example/components/forms/validators/name.validator";
@@ -10,6 +10,8 @@ import {FormFieldComponent} from "@shared/components/controls/form-field/form-fi
 import {InputComponent} from "@shared/components/controls/input/input.component";
 import {DateComponent} from "@shared/components/controls/date/date.component";
 import {KeyValuePipe} from "@angular/common";
+import {SelectComponent} from "@shared/components/controls/select/select.component";
+import {ButtonComponent} from "@shared/components/buttons";
 
 export enum ReceiverType {
   PERSON = 'PERSON',
@@ -27,14 +29,18 @@ export enum ReceiverType {
     FormFieldComponent,
     InputComponent,
     DateComponent,
-    KeyValuePipe
+    KeyValuePipe,
+    SelectComponent,
+    ButtonComponent
   ],
   templateUrl: './forms.component.html',
-  styleUrl: './forms.component.scss'
+  styleUrl: './forms.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormsComponent {
 
   public readonly isInline: boolean = true;
+  public readonly type = signal<any[]>(['PERSON', 'LEGAL']);
   nameValidator = inject(NameValidator);
 
   /*constructor() {
@@ -101,6 +107,7 @@ export class FormsComponent {
   onSubmit(event: SubmitEvent) {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
+    console.log('date ', this.form.controls.dateRange.controls)
     if (this.form.invalid) return;
   }
 

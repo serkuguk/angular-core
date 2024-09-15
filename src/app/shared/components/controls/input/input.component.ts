@@ -1,16 +1,24 @@
-import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  forwardRef,
+  ChangeDetectionStrategy,
+  output, input
+} from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from "@angular/common";
 import {TuiInputModule} from "@taiga-ui/legacy";
+import {TuiSizeL, TuiSizeS, TuiTextfieldOptionsDirective} from "@taiga-ui/core";
 
 @Component({
     selector: 'app-input',
     standalone: true,
-    imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      TuiInputModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TuiInputModule,
+    TuiTextfieldOptionsDirective
+  ],
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.scss'],
     providers: [
@@ -23,15 +31,12 @@ import {TuiInputModule} from "@taiga-ui/legacy";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
-    @Input() placeholder?: string;
-    @Input() textfieldSize?: string = 'm';
-    @Output() changed = new EventEmitter<string>();
+     public placeholder = input<string>();
+     public textfieldSize = input<TuiSizeL | TuiSizeS>('m');
+     public changed = output<string>();
 
     control = new FormControl();
-
     value: string | undefined;
-
-    constructor() { }
 
     ngOnInit(): void {
     }

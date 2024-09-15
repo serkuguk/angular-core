@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {Component, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,11 +18,11 @@ import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {ButtonComponent} from "@shared/components/buttons/button/button.component";
 import {TranslateModule} from "@ngx-translate/core";
-import {InputPasswordModule} from "@shared/components/controls/input-pussword/input-password.module";
 import {InputComponent} from "@shared/components/controls/input/input.component";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {LoaderComponent} from "@shared/components/loader/loader.component";
 import {passwordValidators, passwordWithParamsValidators} from "@pages/auth/validators/authValidator";
+import {InputPasswordComponent} from "@shared/components/controls/input-pussword/input-password.component";
 
 @Component({
   selector: 'app-login',
@@ -31,18 +31,19 @@ import {passwordValidators, passwordWithParamsValidators} from "@pages/auth/vali
     AuthTokenStorageService
   ],
   imports: [
-   CommonModule,
-   FormsModule,
-   ReactiveFormsModule,
-   FormFieldComponent,
-   InputComponent,
-   ButtonComponent,
-   TranslateModule,
-   InputPasswordModule,
-   LoaderComponent
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FormFieldComponent,
+    InputComponent,
+    ButtonComponent,
+    TranslateModule,
+    LoaderComponent,
+    InputPasswordComponent
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
 
