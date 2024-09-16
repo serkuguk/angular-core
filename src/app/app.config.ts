@@ -1,5 +1,4 @@
 import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
-import { TuiRoot } from "@taiga-ui/core";
 import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection} from "@angular/core";
 import {provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation} from "@angular/router";
@@ -8,6 +7,7 @@ import { routes as appRotes} from "./app.routes";
 import { provideEffects } from "@ngrx/effects";
 import { provideStore } from '@ngrx/store';
 import { loginEffects } from '@pages/auth';
+import { basicExampleEffects } from '@pages/basic-example';
 import {provideRouterStore, routerReducer} from "@ngrx/router-store";
 import {provideStoreDevtools} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
@@ -22,10 +22,13 @@ import {PlatformModule} from '@angular/cdk/platform';
 import {BrowserModule} from "@angular/platform-browser";
 import {basicExampleFeature} from "@pages/basic-example/store/basic-example.reducer";
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
+import {ENV} from "@core/tokens/environment.token";
+import {TablesService} from "@pages/basic-example/components/tables/services/tables.service";
 
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        {provide: ENV, useValue: environment},
         importProvidersFrom(BrowserModule),
         importProvidersFrom(BrowserAnimationsModule),
         importProvidersFrom(PlatformModule),
@@ -36,6 +39,7 @@ export const appConfig: ApplicationConfig = {
         provideAnimationsAsync(),
         AuthTokenStorageService,
         AuthService,
+        TablesService,
         TranslateService,
         NG_EVENT_PLUGINS,
         provideStore({
@@ -45,7 +49,7 @@ export const appConfig: ApplicationConfig = {
         }),
         provideEffects(
           loginEffects,
-
+          basicExampleEffects
         ),
         provideRouterStore(),
         provideStoreDevtools({

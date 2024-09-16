@@ -8,7 +8,7 @@ export const tablesInit = createAction(
 
 export const tablesSuccess = createAction(
   Types.TABLES_SUCCESS,
-  props<{ access_token: any }>()
+  props<{ basicData: any }>()
 );
 
 export const tablesError = createAction(

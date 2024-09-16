@@ -19,7 +19,7 @@
                         <span>Maximum {{control()?.errors?.[errorKey].max}}</span>
                     }
                     @case("required") {
-                        <span>This field is required</span>
+                        <span>{{'ERRORS.FIELD_REQUIRED' | translate}}</span>
                     }
                     @case("minlength") {
                         <span>At least {{control()?.errors?.[errorKey].requiredLength}} characters</span>

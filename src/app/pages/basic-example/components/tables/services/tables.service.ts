@@ -1,20 +1,20 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, tap} from "rxjs";
-import {environment} from "../../../../../../environments/environment";
-import {map} from "rxjs/operators";
+import {EnvironmentInterface} from "@core/interfaces/environment.interface";
+import {ENV} from "@core/tokens/environment.token";
 
 @Injectable()
 export class TablesService {
 
   private http: HttpClient = inject(HttpClient);
-  //private links = @Inject('ENV') environment any;
+  private env = inject<EnvironmentInterface>(ENV);
 
   public getBasicTableData(): Observable<any> {
-    return this.http.post(`${environment.server_url}/basic-example/basic-table`, null)
+    return this.http.post(`${this.env.server_url}/basic-example/basic-table`, null)
   }
 
   public getDinamicTableData(): Observable<any> {
-    return this.http.post(`${environment.server_url}/basic-example/basic-table`, null)
+    return this.http.post(`${this.env.server_url}/basic-example/basic-table`, null)
   }
 }

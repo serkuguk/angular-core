@@ -1,13 +1,15 @@
 import {Component, OnInit, Input, input, ChangeDetectionStrategy, ChangeDetectorRef, inject} from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import {CommonModule} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-form-field',
     standalone: true,
-    imports: [
-      CommonModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule
+  ],
     templateUrl: './form-field.component.html',
     styleUrls: ['./form-field.component.scss']
 })

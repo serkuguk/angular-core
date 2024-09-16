@@ -1,23 +1,24 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable, inject} from "@angular/core";
 import {catchError, Observable, of, tap, throwError} from "rxjs";
-import {environment} from "src/environments/environment";
 import {LoginRequestInterface} from "../types/login-request_interface";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {map} from "rxjs/operators";
+import {ENV} from "@core/tokens/environment.token";
+import {EnvironmentInterface} from "@core/interfaces/environment.interface";
 
 @Injectable()
 export class AuthService {
 
   private http: HttpClient = inject(HttpClient);
   private authTokenStorageService: AuthTokenStorageService = inject(AuthTokenStorageService);
-  //private links = @Inject('ENV') environment any;
+  private env = inject<EnvironmentInterface>(ENV);
 
   private token: string | null = null;
   private refreshToken: string | null = null;
 
   public login(user: LoginRequestInterface): Observable<any> {
-    return this.http.post<{username: string, password: string}>(`${environment.server_url}/auth/signin`, user).pipe(
+    return this.http.post<{username: string, password: string}>(`${this.env.server_url}/auth/signin`, user).pipe(
       tap((res: any) => {
         this.saveToken(res)
       }),
@@ -26,7 +27,7 @@ export class AuthService {
   }
 
   public logout(): Observable<any> {
-    return this.http.post(`${environment.server_url}/auth/signout`, null).pipe(
+    return this.http.post(`${this.env.server_url}/auth/signout`, null).pipe(
       tap(_ => {
         this.token = null;
         this.refreshToken = null
@@ -36,7 +37,7 @@ export class AuthService {
   }
 
   public refreshAccessToken(): Observable<any> {
-    return this.http.post(`${environment.server_url}/auth/refresh_token`,
+    return this.http.post(`${this.env.server_url}/auth/refresh_token`,
       {refresh_token: this.refreshToken})
       .pipe(
         tap((res: any) => this.saveToken(res)),
@@ -69,6 +70,7 @@ export class AuthService {
   }
 
   public saveToken(res: any): void {
+      console.log('res', res)
     this.token = res.access_token;
     this.refreshToken = res.refresh_token;
     this.authTokenStorageService.setToken(this.token);

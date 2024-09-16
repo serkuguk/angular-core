@@ -131,7 +131,7 @@
             <div style="display: grid; grid-gap: 16px;">
               @for (control of form.controls.feature.controls | keyvalue: sort; track control; let i = $index) {
                 <label>
-                  {{ features[i].label }}
+                  label
                   <input type="checkbox" [formControlName]="control.key">
                 </label>
               }

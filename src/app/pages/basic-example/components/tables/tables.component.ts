@@ -6,11 +6,17 @@ import {basic_data as dataSource,
   basic_select_items} from '../../config/config-table'
 import { TuiRoot, TuiAlert, TuiDialog } from "@taiga-ui/core";
 import * as fromLoginAction from "@pages/auth/store/user.actions";
-import {Store} from "@ngrx/store";
+import * as basicExampleAction from "@pages/basic-example/store/basic-example.actions";
+import * as basicExampleSelector from "@pages/basic-example/store/basic-example.selectors";
+
+import {select, Store} from "@ngrx/store";
 import * as fromAuth from "@pages/auth";
 import {DynamicTableComponent} from "@shared/components/tables/basic-table/basic-table.component";
 import {EditableTableComponent} from "@shared/components/tables/editable-table/editable-table.component";
 import {SelectComponent} from "@shared/components/controls/select/select.component";
+import {Observable} from "rxjs";
+import {BasicDataInterface} from "@core/models/backend/basick-examples/tables.interface";
+import {TablesService} from "@pages/basic-example/components/tables/services/tables.service";
 
 @Component({
   selector: 'app-tables',
@@ -35,7 +41,8 @@ export class TablesComponent implements OnInit {
   public basic_columns: any[] = [];
   public editable_columns: any[] = [];
   public basic_select_items: any[] = [];
-  private store: Store<fromAuth.State> = inject(Store);
+  public basicTableData$: Observable<BasicDataInterface[] | null> | undefined;
+  private store: Store = inject(Store);
 
   ngOnInit(): void {
     this.dataSource = dataSource;
@@ -44,5 +51,8 @@ export class TablesComponent implements OnInit {
     this.basic_select_items = basic_select_items;
 
     this.store.dispatch(fromLoginAction.init());
+    this.store.dispatch(basicExampleAction.tablesInit());
+    this.basicTableData$ = this.store.pipe(select(basicExampleSelector.getTableData));
+
   }
 }

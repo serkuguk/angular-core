@@ -56,5 +56,8 @@
       "PERSON": "Individual",
       "LEGAL": "Entidad legal"
     }
+  },
+  "ERRORS": {
+    "FIELD_REQUIRED": "Este campo es obligatorio"
   }
 }

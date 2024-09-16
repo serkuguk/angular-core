@@ -5,10 +5,10 @@ export const getBasicExampleState = createFeatureSelector<BasicState>(BASIC_EXAM
 
 export const getTableData = createSelector(
   getBasicExampleState,
-  (state) => state.access_token
+  (state) => state.basicData
 );
 
 export const getUser = createSelector(
   getBasicExampleState,
-  (state) => state.user
+  (state) => state
 );
