@@ -4,7 +4,9 @@
   <div class="dropdowns-container__item">
     <h3>Basic dropdown</h3>
     <app-select
-      [items]="[]"
+      [items]="countries()"
+      [placeholder]="'Cheese your Country'"
+      [title]="'Countries'"
     ></app-select>
   </div>
 </div>

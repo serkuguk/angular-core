@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import {loggedGuard, redirectLoggedInGuard} from '@pages/auth/services/auth.guard';
 import {LoginComponent} from "@pages/auth/components/login/login.component";
-import {FormsComponent} from "@pages/basic-example/components/forms/forms.component";
 
 export const routes: Routes = [
   {
@@ -16,7 +15,7 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('@pages/basic-example/components/tables/tables.component').then(c => c.TablesComponent),
+    loadComponent: () => import('@pages/home/home.component').then(c => c.HomeComponent),
     canActivate: [loggedGuard]
   },
   {

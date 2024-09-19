@@ -23,15 +23,28 @@ export const basicExampleFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(BasicExampleActions.tablesInit,
-      state => ({ ...state})
+      state => ({ ...state, loading: true})
     ),
 
     on(BasicExampleActions.tablesSuccess,
-      (state, {basicData}) => ({...state, tableData: basicData})
+      (state, {basicData}) => ({...state, basicData: basicData, loading: false, error: null})
     ),
 
     on(BasicExampleActions.tablesError,
-      (state, {error}) => ({ ...state, loading: false, error: error })
+        (state, {error}) => ({...state, error: error, loading: false})
+    ),
+
+    //Dropdown
+    on(BasicExampleActions.dropdownInit,
+        state => ({...state, loading: true})
+    ),
+
+    on(BasicExampleActions.dropdownSuccess,
+        (state, {basicData}) => ({...state, basicData: basicData, loading: false, error: null})
+    ),
+
+    on(BasicExampleActions.dropdownError,
+        (state, {error}) => ({...state, error: error, loading: false})
     )
   )
 })

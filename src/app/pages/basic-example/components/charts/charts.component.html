@@ -3,6 +3,32 @@
 <div class="charts-container">
   <div class="charts-container__item">
     <h3>Line Charts</h3>
-    <line-charts></line-charts>
+    <line-charts
+      [filled]="true"
+      [charts]="lineCharts"
+      [height]="200"
+      [labelsX]="labelsX"
+      [labelsY]="labelsY"
+      [smoothingFactor]="50"
+      [width]="400"
+    ></line-charts>
+  </div>
+
+  <div class="charts-container__item">
+    <h3>Bar Charts</h3>
+    <bar-charts
+       [filled]="true"
+       [charts]="barChart"
+       [height]="200"
+       [labelsX]="labelsX"
+       [labelsY]="labelsY"
+       [smoothingFactor]="50"
+       [width]="400"
+    ></bar-charts>
+  </div>
+
+  <div class="charts-container__item">
+    <h3>Lien Days Chart</h3>
+    <line-days-chart></line-days-chart>
   </div>
 </div>

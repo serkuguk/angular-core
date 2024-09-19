@@ -56,7 +56,7 @@ export class SidenavComponent implements OnInit {
   private hideTimeout: any = null;
 
   @HostListener('body:resize', ['$event.target'])
-  public onResize(event: any) { console.log('event', event);
+  public onResize(event: any) {
     this.screenWidth.set(window.innerWidth);
     if (this.screenWidth() <= 768) {
       this.collapsed.set(false);

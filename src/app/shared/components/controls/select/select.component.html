@@ -13,7 +13,7 @@
     />
     <tui-data-list-wrapper
       *tuiDataList
-      [items]="items()"
+      [items]="items() | async"
     />
   </tui-select>
 </div>

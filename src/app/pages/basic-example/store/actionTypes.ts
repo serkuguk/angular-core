@@ -3,9 +3,9 @@ export enum Types {
   TABLES_SUCCESS = '[Tables] Get data: Success',
   TABLES_ERROR = '[Tables] Get data: Error',
 
-  LOGIN = '[User] Login: Start',
-  LOGIN_SUCCESS = '[User] Login: Success',
-  LOGIN_ERROR = '[User] Login: Error',
+  DROPDOWN_INIT = '[Dropdown] Get data: Start',
+  DROPDOWN_SUCCESS = '[Dropdown] Get data: Success',
+  DROPDOWN_ERROR = '[Dropdown] Get data: Error',
 
   LOGOUT = '[User] Logout: Start',
   LOGOUT_SUCCESS = '[User] Logout: Success',

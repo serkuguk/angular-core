@@ -1,19 +1,23 @@
 <div class="line-chart">
   <tui-axes
     class="axes"
+    [axisXLabels]="labelsX()"
+    [axisYLabels]="labelsY()"
     [horizontalLines]="2"
     [tuiLineChartHint]="hintContent"
     [verticalLines]="4"
   >
     <tui-line-chart
-      [dots]="true"
-      [height]="200"
-      [value]="value"
-      [width]="400"
+      [filled]="filled()"
+      [smoothingFactor]="smoothingFactor()"
+      [dots]="dots()"
+      [height]="height()"
+      [value]="charts()"
+      [width]="width()"
+      [xStringify]="xStringify()"
       [x]="0"
-      [xStringify]="stringify"
       [y]="0"
-      [yStringify]="stringify"
+      [yStringify]="yStringify()"
     />
   </tui-axes>
 </div>

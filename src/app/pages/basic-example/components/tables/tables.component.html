@@ -1,5 +1,4 @@
 <h2>Tables</h2>
-<pre>{{basicTableData$ | async | json}}</pre>
 <div class="table-container">
   <div class="table-container__item">
     <h3>Basic Table</h3>
@@ -13,6 +12,9 @@
     <h3>Editable Table</h3>
     <editable-table
       [columns]="editable_columns"
+      [accordionOne]="editable_python_data"
+      [accordionTwo]="editable_python_starwars"
+      [unit]="units"
     ></editable-table>
   </div>
 </div>

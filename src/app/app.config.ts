@@ -24,6 +24,7 @@ import {basicExampleFeature} from "@pages/basic-example/store/basic-example.redu
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import {ENV} from "@core/tokens/environment.token";
 import {TablesService} from "@pages/basic-example/components/tables/services/tables.service";
+import {SelectorsService} from "@pages/basic-example/components/selectors/services/selectors.service";
 
 
 export const appConfig: ApplicationConfig = {
@@ -41,6 +42,7 @@ export const appConfig: ApplicationConfig = {
         AuthService,
         TablesService,
         TranslateService,
+        SelectorsService,
         NG_EVENT_PLUGINS,
         provideStore({
           router: routerReducer,

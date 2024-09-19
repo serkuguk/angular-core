@@ -1,33 +1,52 @@
 <table
-  tuiTable
-  class="table tui-space_top-3"
-  [columns]="columns"
+     tuiTable
+     class="table tui-space_top-3"
+     [columns]="columns"
 >
+  <!--pagination-->
+  <caption tuiCaption>
+    <span>999 rows</span>
+    <button
+         appearance="flat"
+         tuiButton
+         tuiButtonSelect
+         type="button"
+         [(ngModel)]="size"
+    >
+      {{ index * size + 1 }}-{{ (index + 1) * size }} rows
+      <tui-data-list-wrapper
+           *tuiTextfieldDropdown
+           [itemContent]="content"
+           [items]="items"
+      />
+    </button>
+    <tui-pagination
+         [length]="dataSource.length"
+         [style.float]="'center'"
+         [(index)]="index"
+    />
+  </caption>
+
   <thead>
     <tr tuiThGroup>
       @for (col of columns; track $index) {
-        <th *tuiHead="col" tuiTh>
-          {{ col }}
+        <th *tuiHead="col" tuiTh [resizable]="true">
+          {{ col.header }}
         </th>
       }
     </tr>
   </thead>
+
   <tbody *tuiLet="dataSource | tuiTableSort as sortedData"
          [data]="sortedData" tuiTbody>
     @for (item of sortedData; track $index) {
-      <tr tuiTr>
+      <tr *tuiLet="columns" tuiTr>
         @for (col of columns; track $index) {
-          {{'dd'}}
-          <td *tuiCell="col" tuiTd>
-            {{ item[col] }}
+          <td *tuiCell="col.column" tuiTd>
+            {{ item[col.column] }}
           </td>
         }
       </tr>
     }
   </tbody>
 </table>
-<tui-pagination
-  [length]="length"
-  [style.float]="'right'"
-  [(index)]="index"
-/>

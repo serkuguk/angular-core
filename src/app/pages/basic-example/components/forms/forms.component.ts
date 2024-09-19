@@ -12,6 +12,7 @@ import {DateComponent} from "@shared/components/controls/date/date.component";
 import {KeyValuePipe} from "@angular/common";
 import {SelectComponent} from "@shared/components/controls/select/select.component";
 import {ButtonComponent} from "@shared/components/buttons";
+import {Observable, of} from "rxjs";
 
 export enum ReceiverType {
   PERSON = 'PERSON',
@@ -40,7 +41,7 @@ export enum ReceiverType {
 export class FormsComponent {
 
   public readonly isInline: boolean = true;
-  public readonly type = signal<any[]>(['PERSON', 'LEGAL']);
+  public readonly type = signal<Observable<any[]>>(of(['PERSON', 'LEGAL']));
   nameValidator = inject(NameValidator);
 
   /*constructor() {

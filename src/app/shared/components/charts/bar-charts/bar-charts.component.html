@@ -1,0 +1,14 @@
+<div class="line-chart">
+  <tui-axes
+       class="axes"
+       [axisXLabels]="labelsX()"
+       [axisYLabels]="labelsY()"
+       [horizontalLines]="2"
+       [verticalLines]="4"
+  >
+    <tui-bar-chart
+       [value]="charts()"
+       [max]="10000"
+    />
+  </tui-axes>
+</div>

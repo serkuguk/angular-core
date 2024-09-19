@@ -1,14 +1,14 @@
 import {createAction, props} from '@ngrx/store'
 import {Types} from './actionTypes';
 
-// Init
+// Table
 export const tablesInit = createAction(
   Types.TABLES_INIT
 );
 
 export const tablesSuccess = createAction(
   Types.TABLES_SUCCESS,
-  props<{ basicData: any }>()
+  props<{basicData: any}>()
 );
 
 export const tablesError = createAction(
@@ -17,19 +17,18 @@ export const tablesError = createAction(
 );
 
 
-// Login
-export const login = createAction(
-  Types.LOGIN,
-  props<{ username: string, password: string}>()
+// Dropdown
+export const dropdownInit = createAction(
+  Types.DROPDOWN_INIT
 );
 
-export const loginSuccess = createAction(
-  Types.LOGIN_SUCCESS,
-  props<{ user: any }>()
+export const dropdownSuccess = createAction(
+  Types.DROPDOWN_SUCCESS,
+  props<{ basicData: any }>()
 );
 
-export const loginError = createAction(
-  Types.LOGIN_ERROR,
+export const dropdownError = createAction(
+  Types.DROPDOWN_ERROR,
   props<{ error: string }>()
 );
 

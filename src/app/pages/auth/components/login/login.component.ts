@@ -23,6 +23,7 @@ import {FormFieldComponent} from "@shared/components/controls/form-field/form-fi
 import {LoaderComponent} from "@shared/components/loader/loader.component";
 import {passwordValidators, passwordWithParamsValidators} from "@pages/auth/validators/authValidator";
 import {InputPasswordComponent} from "@shared/components/controls/input-pussword/input-password.component";
+import {TuiNotification} from "@taiga-ui/core";
 
 @Component({
   selector: 'app-login',
@@ -30,17 +31,18 @@ import {InputPasswordComponent} from "@shared/components/controls/input-pussword
   providers: [
     AuthTokenStorageService
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FormFieldComponent,
-    InputComponent,
-    ButtonComponent,
-    TranslateModule,
-    LoaderComponent,
-    InputPasswordComponent
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FormFieldComponent,
+        InputComponent,
+        ButtonComponent,
+        TranslateModule,
+        LoaderComponent,
+        InputPasswordComponent,
+        TuiNotification
+    ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

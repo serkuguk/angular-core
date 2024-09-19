@@ -48,7 +48,7 @@ export class SelectComponent implements ControlValueAccessor {
   public title = input<string>('Select');
   public direction = input<TuiVerticalDirection>('bottom');
   public tuiTextfieldSize = input<TuiSizeL | TuiSizeS>('m');
-  public placeholder = input<string>('Choose your hero');
+  public placeholder = input<string>('Choose your item');
   public changed = output<any>();
 
   protected control = new FormControl<string | null>(null);

@@ -1,19 +1,20 @@
 .table {
   table-layout: fixed;
+  width: 100%;
 }
 
 .textarea {
-  min-height: var(--tui-height-l);
+  min-block-size: var(--tui-height-l);
 }
 
 .number {
-  text-align: right;
+  text-align: end;
   flex-direction: row-reverse;
 }
 
 .first {
-  min-width: 11.25rem;
-  max-width: 11.25rem;
+  min-inline-size: 11.25rem;
+  max-inline-size: 11.25rem;
 }
 
 .second {
@@ -32,9 +33,9 @@
 }
 
 .select {
-  width: 6.25rem;
+  inline-size: 6.25rem;
 }
 
 .scrollbar {
-  max-height: 18.75rem;
+  max-block-size: 18.75rem;
 }
