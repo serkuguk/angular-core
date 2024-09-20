@@ -1,6 +1,7 @@
 <table
      tuiTable
      class="table tui-space_top-3"
+     [size]="tableSize()"
      [columns]="columns"
 >
   <!--pagination-->
@@ -21,32 +22,34 @@
       />
     </button>
     <tui-pagination
-         [length]="dataSource.length"
+         [length]="dataSource().length"
          [style.float]="'center'"
          [(index)]="index"
     />
   </caption>
-
-  <thead>
-    <tr tuiThGroup>
-      @for (col of columns; track $index) {
-        <th *tuiHead="col" tuiTh [resizable]="true">
-          {{ col.header }}
-        </th>
-      }
-    </tr>
-  </thead>
-
-  <tbody *tuiLet="dataSource | tuiTableSort as sortedData"
-         [data]="sortedData" tuiTbody>
-    @for (item of sortedData; track $index) {
-      <tr *tuiLet="columns" tuiTr>
+  <tui-scrollbar class="box">
+    <thead>
+      <tr tuiThGroup>
         @for (col of columns; track $index) {
-          <td *tuiCell="col.column" tuiTd>
-            {{ item[col.column] }}
-          </td>
+          <th *tuiHead="col" tuiTh [resizable]="resizable()">
+            {{ col }}
+          </th>
         }
       </tr>
-    }
-  </tbody>
+    </thead>
+
+    <tbody *tuiLet="dataSource() | tuiTableSort as sortedData"
+           [data]="sortedData" tuiTbody>
+      @for (item of sortedData; track $index) {
+        <tr tuiTr>
+          @for (col of columns; track $index) {
+            <td *tuiCell="col" tuiTd>
+              {{ item[col] }}
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </tui-scrollbar>
 </table>
+

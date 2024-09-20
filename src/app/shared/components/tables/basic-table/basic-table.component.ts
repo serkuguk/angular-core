@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
 import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {
   TuiContext,
@@ -6,9 +6,15 @@ import {
   TuiStringHandler
 } from "@taiga-ui/cdk";
 import {TuiTable, TuiTablePagination, TuiTablePaginationEvent} from "@taiga-ui/addon-table";
-import {TuiButton, TuiScrollable, TuiScrollbar, TuiTextfield} from '@taiga-ui/core';
+import {
+  TuiButton,
+  TuiScrollbar,
+  TuiScrollbarDirective, tuiScrollbarOptionsProvider,
+  TuiSizeL,
+  TuiSizeS,
+  TuiTextfield
+} from '@taiga-ui/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BehaviorSubject} from "rxjs";
 import {TuiButtonSelect, TuiDataListWrapper, TuiPagination} from '@taiga-ui/kit';
 
 @Component({
@@ -21,7 +27,6 @@ import {TuiButtonSelect, TuiDataListWrapper, TuiPagination} from '@taiga-ui/kit'
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    TuiScrollable,
     TuiScrollbar,
     TuiLet,
     TuiTable,
@@ -30,7 +35,13 @@ import {TuiButtonSelect, TuiDataListWrapper, TuiPagination} from '@taiga-ui/kit'
     TuiButton,
     TuiButtonSelect,
     TuiDataListWrapper,
-    TuiTextfield
+    TuiTextfield,
+    TuiScrollbarDirective
+  ],
+  providers: [
+    tuiScrollbarOptionsProvider({
+      mode: 'hover',
+    }),
   ],
   templateUrl: './basic-table.component.html',
   styleUrls: ['./basic-table.component.scss'],
@@ -38,22 +49,21 @@ import {TuiButtonSelect, TuiDataListWrapper, TuiPagination} from '@taiga-ui/kit'
 })
 export class DynamicTableComponent {
 
-  @Input() selectedRow: any;
-  @Input() dataSource: any[] = [];
-  @Input() columns: any[] = [];
-  //public columns = input<any[]>([]);
+  public selectedRow = input<any[]>([]);
+  public resizable = input<boolean>(true);
+  public tableSize = input<TuiSizeL | TuiSizeS>("m");
+  public scrollBar = input<"horizontal" | "vertical">("horizontal");
+  public dataSource = input<Array<Record<string, number | string>>>([]);
+  public selectRow = output<any[]>();
 
-  @Input() displayedColumns: string[] = [];
-  @Input() columnWidths: {[key: string]: string} = {};
-  @Output() selectRow = new EventEmitter<{row:unknown, selected:boolean}>();
+  protected get columns(): string[] {
+    return Object.keys(this.dataSource()[0] ?? {});
+  }
 
   protected index = 4;
   protected size = 10;
   protected readonly items = [10, 50, 100];
   protected readonly content: TuiStringHandler<TuiContext<number>> = ({$implicit}) => `${$implicit} items per page`;
-
-  private readonly size$ = new BehaviorSubject(10);
-  private readonly page$ = new BehaviorSubject(0);
 
   protected onPagination({page, size}: TuiTablePaginationEvent): void {
 
