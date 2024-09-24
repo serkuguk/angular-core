@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, HostListener, inject, input, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {Observable} from "rxjs";
 import { ISideNavToggle } from '@layouts/components/sidenav/interfaces/side-nav-toggle.interface';
 import { LoginComponent } from "@pages/auth/components/login/login.component";
-import {AsyncPipe, JsonPipe} from "@angular/common";
+import {AsyncPipe, CommonModule, JsonPipe} from "@angular/common";
 
 //Store
 import {select, Store} from "@ngrx/store";
@@ -18,8 +18,8 @@ import {TuiRoot} from "@taiga-ui/core";
 @Component({
   selector: 'app-root',
   standalone: true,
-  providers: [],
   imports: [
+    CommonModule,
     TuiRoot,
     SidenavComponent,
     LoginComponent,
@@ -35,8 +35,9 @@ import {TuiRoot} from "@taiga-ui/core";
 export class AppComponent implements OnInit {
   public isSideNavCollapsed = signal<boolean>(false);
   public screenWidth = signal<number>(0);
+
   public store: Store<fromAuth.State> = inject(Store);
-  public isAuthenticated$: Observable<boolean | null> | undefined;
+  public isAuthenticated$: Observable<boolean> | undefined;
 
   ngOnInit(): void {
     this.store.dispatch(fromLoginAction.init());

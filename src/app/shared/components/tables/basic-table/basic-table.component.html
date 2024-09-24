@@ -3,6 +3,7 @@
      class="table tui-space_top-3"
      [size]="tableSize()"
      [columns]="columns"
+     [style.width.rem]="200"
 >
   <!--pagination-->
   <caption tuiCaption>
@@ -32,7 +33,7 @@
       <tr tuiThGroup>
         @for (col of columns; track $index) {
           <th *tuiHead="col" tuiTh [resizable]="resizable()">
-            {{ col }}
+            {{ titleColumn()[col] }}
           </th>
         }
       </tr>

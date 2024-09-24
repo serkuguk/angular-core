@@ -70,7 +70,6 @@ export class AuthService {
   }
 
   public saveToken(res: any): void {
-      console.log('res', res)
     this.token = res.access_token;
     this.refreshToken = res.refresh_token;
     this.authTokenStorageService.setToken(this.token);

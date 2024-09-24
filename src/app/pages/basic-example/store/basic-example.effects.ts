@@ -1,8 +1,8 @@
 import {inject} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, exhaustMap, map, switchMap, tap} from 'rxjs/operators';
+import {catchError, exhaustMap, map} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {Router} from '@angular/router';
+
 
 import * as fromBasicData from './basic-example.actions';
 import {TablesService} from "@pages/basic-example/components/tables/services/tables.service";

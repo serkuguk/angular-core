@@ -24,6 +24,31 @@ export const basic_columns = [
   {column: "CuencaDesc", header: "Cuenca Desc"}
 ]
 
+export const title_columns = {
+  ["CodPais"]: "Cod Pais",
+  ["IdInstalacion"]: "Id Instalación",
+  ["InstalacionDesc"]: "Instalacion Desc",
+  ["PotenciaInst"]: "Potencia Inst",
+  ["FechaPuestaMarcha"]: "Fecha Puesta Marcha",
+  ["FechaIni"]: "Fecha Ini",
+  ["FechaFin"]: "Fecha Fin",
+  ["IdSociedadTitular"]: "Id Sociedad Titular",
+  ["PorcentajeIbd"]: "Porcentaje Ibd",
+  ["IdSocRepresentacion"]: "Id Soc Representacion",
+  ["IdTecnologia"]: "Id Tecnologia",
+  ["IdCuenca"]: "Id Cuenca",
+  ["FechaCs"]: "Fecha Cs",
+  ["Mayor10Mw"]: "Mayor 10Mw",
+  ["Estado"]: "Estado",
+  ["Bombeo"]: "Bombeo",
+  ["PorcentajeBombeo"]: "Porcentaje Bombeo",
+  ["Proyecto"]: "Proyecto",
+  ["SociedadTitularDesc"]: "Sociedad Titular Desc",
+  ["SocRepresentacionDesc"]: "Soc Representacion Desc",
+  ["TecnologiaDesc"]: "Tecnologia Desc",
+  ["CuencaDesc"]: "Cuenca Desc"
+}
+
 //Editable table
 export const editable_columns = ['name', 'price', 'quantity', 'unit', 'total'];
 export const units = ['items', 'kg', 'm'];

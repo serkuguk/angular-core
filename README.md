@@ -1,5 +1,8 @@
 # angular-core
 
+Angular
+- angular version 18.2
+
 Structure folders
 app/
 - components/
@@ -14,6 +17,17 @@ app/
   - shared abstract ui components (dump components)
 - store/
 
+Storage
+- ngrx https://ngrx.io/
 
-#Icons
-https://lucide.dev/icons/ all icons for taigaUI
+Icons
+- all icons for taigaUI https://lucide.dev/icons/
+
+Libraries
+- taiga-ui https://taiga-ui.dev/
+
+Translate
+- @ngx-translate/core https://github.com/ngx-translate/core
+
+Testing
+- Jest

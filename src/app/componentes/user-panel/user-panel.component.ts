@@ -72,6 +72,6 @@ export class UserPanelComponent implements OnInit {
 
   public logout(): void {
     this.store.dispatch(fromLoginAction.logOut({user: null}));
-    this.store.dispatch(fromLoginAction.init());
+    //this.store.dispatch(fromLoginAction.init());
   }
 }

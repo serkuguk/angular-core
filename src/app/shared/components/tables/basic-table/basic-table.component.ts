@@ -53,7 +53,8 @@ export class DynamicTableComponent {
   public resizable = input<boolean>(true);
   public tableSize = input<TuiSizeL | TuiSizeS>("m");
   public scrollBar = input<"horizontal" | "vertical">("horizontal");
-  public dataSource = input<Array<Record<string, number | string>>>([]);
+  public dataSource = input<any[]>([]);
+  public titleColumn = input<any>({});
   public selectRow = output<any[]>();
 
   protected get columns(): string[] {
@@ -65,7 +66,4 @@ export class DynamicTableComponent {
   protected readonly items = [10, 50, 100];
   protected readonly content: TuiStringHandler<TuiContext<number>> = ({$implicit}) => `${$implicit} items per page`;
 
-  protected onPagination({page, size}: TuiTablePaginationEvent): void {
-
-  }
 }

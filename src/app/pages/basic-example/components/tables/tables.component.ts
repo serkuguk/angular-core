@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {
   basic_columns,
   editable_columns,
+  title_columns,
   units} from '../../config/config-table'
 import { TuiRoot, TuiAlert, TuiDialog } from "@taiga-ui/core";
 import * as fromLoginAction from "@pages/auth/store/user.actions";
@@ -95,9 +96,7 @@ export class TablesComponent implements OnInit {
       },
     ];
 
-
     this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
-    this.store.dispatch(fromLoginAction.init());
     this.store.dispatch(basicExampleAction.tablesInit());
     this.basicTableData$ = this.store.pipe(select(basicExampleSelector.getTableData));
   }
@@ -105,4 +104,6 @@ export class TablesComponent implements OnInit {
   protected readonly units = units;
   protected readonly editable_columns = editable_columns;
   protected readonly basic_columns = basic_columns;
+  protected readonly title_columns = title_columns;
+
 }
