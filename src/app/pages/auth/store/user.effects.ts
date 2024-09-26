@@ -11,7 +11,6 @@ import * as fromUserActions from './user.actions';
 export const init = createEffect(
   (init$ = inject(Actions),
    authService = inject(AuthService)) => {
-      console.log('enter')
     return init$.pipe(
       ofType(fromUserActions.init),
         switchMap(() =>

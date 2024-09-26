@@ -5,6 +5,7 @@
           <h3>{{'PAGES.LOGIN.TITLE' | translate }}</h3>
         </div>
         <form class="login-container__form"
+              (keydown.enter)="login()"
               [formGroup]="loginForm">
             <app-form-field label="Username"
                         [required]="true"

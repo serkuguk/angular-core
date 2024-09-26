@@ -14,6 +14,9 @@ import {HeaderComponent } from "@layouts/components/header/header.component";
 import {FooterComponent} from "@layouts/components/footer/footer.component";
 import {SidenavComponent} from "@layouts/components/sidenav/components/sidenav/sidenav.component";
 import {TuiRoot} from "@taiga-ui/core";
+import {filter} from "rxjs/operators";
+import {NavigationEnd, Router} from "@angular/router";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-root',
@@ -37,10 +40,16 @@ export class AppComponent implements OnInit {
   public screenWidth = signal<number>(0);
 
   public store: Store<fromAuth.State> = inject(Store);
+  public router: Router = inject(Router);
   public isAuthenticated$: Observable<boolean> | undefined;
 
   ngOnInit(): void {
-    this.store.dispatch(fromLoginAction.init());
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.store.dispatch(fromLoginAction.init());
+    });
+
     this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
   }
 

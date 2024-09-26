@@ -56,14 +56,36 @@ export class DynamicTableComponent {
   public dataSource = input<any[]>([]);
   public titleColumn = input<any>({});
   public selectRow = output<any[]>();
+  protected selected: any = null;
 
   protected get columns(): string[] {
     return Object.keys(this.dataSource()[0] ?? {});
   }
 
-  protected index = 4;
-  protected size = 10;
+  protected index = 0;
+  protected size = 5;
   protected readonly items = [10, 50, 100];
   protected readonly content: TuiStringHandler<TuiContext<number>> = ({$implicit}) => `${$implicit} items per page`;
 
+  protected get paginatedData(): any[] {
+    const start = this.index * this.size;
+    const end = start + this.size;
+    return this.dataSource().slice(start, end);
+  }
+
+  protected toggleRowSelection(row: any): void {
+    if (this.selected === row) {
+      this.selected = null;
+    } else {
+      this.selected = row;
+    }
+  }
+
+  protected get displayedRowsRange(): string {
+    const start = this.index * this.size + 1;
+    const end = Math.min((this.index + 1) * this.size, this.dataSource().length);
+    return `${start}-${end}`;
+  }
+
+  protected readonly Math = Math;
 }

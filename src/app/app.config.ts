@@ -26,10 +26,15 @@ import {ENV} from "@core/tokens/environment.token";
 import {TablesService} from "@pages/basic-example/components/tables/services/tables.service";
 import {SelectorsService} from "@pages/basic-example/components/selectors/services/selectors.service";
 
-
 export const appConfig: ApplicationConfig = {
     providers: [
         {provide: ENV, useValue: environment},
+        AuthTokenStorageService,
+        AuthService,
+        TablesService,
+        TranslateService,
+        SelectorsService,
+        NG_EVENT_PLUGINS,
         importProvidersFrom(BrowserModule),
         importProvidersFrom(BrowserAnimationsModule),
         importProvidersFrom(PlatformModule),
@@ -38,12 +43,6 @@ export const appConfig: ApplicationConfig = {
           withComponentInputBinding(),
           withEnabledBlockingInitialNavigation()),
         provideAnimationsAsync(),
-        AuthTokenStorageService,
-        AuthService,
-        TablesService,
-        TranslateService,
-        SelectorsService,
-        NG_EVENT_PLUGINS,
         provideStore({
           router: routerReducer,
           [loginFeature.name]: loginFeature.reducer,

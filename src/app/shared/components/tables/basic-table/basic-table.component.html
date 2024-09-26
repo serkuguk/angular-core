@@ -1,56 +1,61 @@
-<table
-     tuiTable
-     class="table tui-space_top-3"
-     [size]="tableSize()"
-     [columns]="columns"
-     [style.width.rem]="200"
->
-  <!--pagination-->
-  <caption tuiCaption>
-    <span>999 rows</span>
+<tui-scrollbar class="box">
+  <table
+       tuiTable
+       class="table tui-space_top-3"
+       [size]="tableSize()"
+       [columns]="columns"
+  >
+      <thead>
+        <tr tuiThGroup>
+          @for (col of columns; track $index) {
+            <th *tuiHead="col"
+                class="header"
+                tuiTh
+                [resizable]="resizable()">
+              {{ titleColumn()[col] }}
+            </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody *tuiLet="paginatedData | tuiTableSort as sortedData"
+             [data]="sortedData" tuiTbody>
+        @for (item of sortedData; track $index) {
+          <tr (click)="toggleRowSelection(item)"
+            [class]="[selected === item ? 'rowColor' : null, 'tuiTrClass']" tuiTr>
+            @for (col of columns; track $index) {
+              <td *tuiCell="col" tuiTd>
+                {{ item[col] }}
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+  </table>
+</tui-scrollbar>
+<!--pagination-->
+<caption tuiCaption>
+  <div class="pagination">
+    <span>{{ dataSource().length }} rows</span>
     <button
-         appearance="flat"
-         tuiButton
-         tuiButtonSelect
-         type="button"
-         [(ngModel)]="size"
+      appearance="flat"
+      tuiButton
+      tuiButtonSelect
+      type="button"
+      [(ngModel)]="size"
     >
-      {{ index * size + 1 }}-{{ (index + 1) * size }} rows
+      {{ displayedRowsRange }} rows
       <tui-data-list-wrapper
-           *tuiTextfieldDropdown
-           [itemContent]="content"
-           [items]="items"
+        *tuiTextfieldDropdown
+        [itemContent]="content"
+        [items]="items"
       />
     </button>
     <tui-pagination
-         [length]="dataSource().length"
-         [style.float]="'center'"
-         [(index)]="index"
+      [length]="Math.ceil(dataSource().length / size)"
+      [(index)]="index"
+      [size]="'l'"
     />
-  </caption>
-  <tui-scrollbar class="box">
-    <thead>
-      <tr tuiThGroup>
-        @for (col of columns; track $index) {
-          <th *tuiHead="col" tuiTh [resizable]="resizable()">
-            {{ titleColumn()[col] }}
-          </th>
-        }
-      </tr>
-    </thead>
-
-    <tbody *tuiLet="dataSource() | tuiTableSort as sortedData"
-           [data]="sortedData" tuiTbody>
-      @for (item of sortedData; track $index) {
-        <tr tuiTr>
-          @for (col of columns; track $index) {
-            <td *tuiCell="col" tuiTd>
-              {{ item[col] }}
-            </td>
-          }
-        </tr>
-      }
-    </tbody>
-  </tui-scrollbar>
-</table>
+  </div>
+</caption>
 
