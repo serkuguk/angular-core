@@ -22,7 +22,7 @@
              [data]="sortedData" tuiTbody>
         @for (item of sortedData; track $index) {
           <tr (click)="toggleRowSelection(item)"
-            [class]="[selected === item ? 'rowColor' : null, 'tuiTrClass']" tuiTr>
+            [class.rowColor]="selected === item" tuiTr>
             @for (col of columns; track $index) {
               <td *tuiCell="col" tuiTd>
                 {{ item[col] }}

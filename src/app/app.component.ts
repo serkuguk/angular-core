@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import { ISideNavToggle } from '@layouts/components/sidenav/interfaces/side-nav-toggle.interface';
 import { LoginComponent } from "@pages/auth/components/login/login.component";
 import {AsyncPipe, CommonModule, JsonPipe} from "@angular/common";
@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
   public isAuthenticated$: Observable<boolean> | undefined;
 
   ngOnInit(): void {
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {

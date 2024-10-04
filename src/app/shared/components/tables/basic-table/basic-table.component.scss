@@ -18,11 +18,17 @@
 .rowColor td {
   background: var(--tui-background-accent-1-hover);
   color: #fff;
+  transition: all 0.3s ease 0s;
 }
 
-.tuiTrClass:hover {
-  background-color: var(--tui-background-accent-1-hover)!important;
-  color: #fff;
+.table tbody > tr:hover {
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  background: var(--tui-background-accent-1-hover);
+}
+
+.table tbody > tr:nth-child(2n) {
+  background: #8597df!important;
 }
 
 .pagination {

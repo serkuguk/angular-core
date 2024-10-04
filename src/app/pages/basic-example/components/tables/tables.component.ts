@@ -18,20 +18,22 @@ import {Observable} from "rxjs";
 import {BasicDataInterface} from "@core/models/backend/basick-examples/tables.interface";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
 import {TuiDay} from "@taiga-ui/cdk";
+import {TabulatorTableComponent} from "@shared/components/tables/tabulator-table/tabulator-table.component";
 
 @Component({
   selector: 'app-tables',
   standalone: true,
   providers: [],
-  imports: [
-    CommonModule,
-    DynamicTableComponent,
-    EditableTableComponent,
-    SelectComponent,
-    TuiRoot,
-    TuiDialog,
-    TuiAlert
-  ],
+    imports: [
+        CommonModule,
+        DynamicTableComponent,
+        EditableTableComponent,
+        SelectComponent,
+        TuiRoot,
+        TuiDialog,
+        TuiAlert,
+        TabulatorTableComponent
+    ],
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

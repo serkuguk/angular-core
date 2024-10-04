@@ -28,10 +28,11 @@ import {ToolTipComponent} from "@shared/components/tool-tip/tool-tip.component";
     fadeInOut,
     trigger('rotate', [
       transition(':enter', [
-        animate('1000ms',
+        animate('1500ms',
           keyframes([
-            style({transform: 'rotate(0deg)', offset: '0'}),
-            style({transform: 'rotate(2turn)', offset: '1'}),
+            style({opacity: 0, transform: 'rotate(0deg)', offset: 0}),
+            style({opacity: 0.5, transform: 'rotate(1turn)', offset: 0.5}),
+            style({opacity: 1, transform: 'rotate(2turn)', offset: 1})
           ])
         )
       ])

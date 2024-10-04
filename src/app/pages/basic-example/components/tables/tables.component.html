@@ -1,6 +1,14 @@
 <h2>Tables</h2>
 <div class="table-container">
   <div class="table-container__item">
+    <h3>Tabulador Table</h3>
+    <tabulator-table
+         [columnNames]="basic_columns"
+         [tableData]="[]"
+    ></tabulator-table>
+  </div>
+
+  <div class="table-container__item">
     <h3>Basic Table</h3>
     <basic-table
       [titleColumn]="title_columns"

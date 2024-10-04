@@ -1,7 +1,8 @@
 # angular-core
 
 Angular
-- angular version 18.2
+- angular version 18
+- rxjs version 7
 
 Structure folders
 app/
@@ -31,3 +32,17 @@ Translate
 
 Testing
 - Jest
+
+Jwt
+- @auth0/angular-jwt https://www.npmjs.com/package/@auth0/angular-jwt
+
+
+Installation
+- NodeJs version 22.0.0
+- Yarn latest
+
+Run core
+- yarn start --open
+
+Run Jest test
+- yarn test
