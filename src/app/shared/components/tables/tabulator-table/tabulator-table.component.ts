@@ -33,11 +33,13 @@ export class TabulatorTableComponent implements OnInit, AfterViewInit {
     this.table = new Tabulator(this.tableElement?.nativeElement, {
       data: tableData,
       layout: 'fitColumns',
+      validationMode:"highlight",
+      selectableRows:true,
       columns: [
-        {title: "Name", field: "name", width: 150},
-        {title: "Age", field: "age", hozAlign: "left", formatter: "progress"},
-        {title: "Favourite Color", field: "col"},
-        {title: "Date Of Birth", field: "dob", sorter: "date", hozAlign: "center"},
+        {title: "Name", field: "name", width: 150, editor:"input", validator:"required"},
+        {title: "Age", field: "age", hozAlign: "left", formatter: "progress", validator:"required"},
+        {title: "Favourite Color", field: "col", validator:"required"},
+        {title: "Date Of Birth", field: "dob", sorter: "date", hozAlign: "center", validator:"required"},
       ]
     });
 
