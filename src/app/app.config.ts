@@ -1,4 +1,3 @@
-import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
 import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection} from "@angular/core";
 import {provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation} from "@angular/router";
@@ -34,7 +33,6 @@ export const appConfig: ApplicationConfig = {
         TablesService,
         TranslateService,
         SelectorsService,
-        NG_EVENT_PLUGINS,
         importProvidersFrom(BrowserModule),
         importProvidersFrom(BrowserAnimationsModule),
         importProvidersFrom(PlatformModule),
@@ -83,8 +81,7 @@ export const appConfig: ApplicationConfig = {
           withInterceptorsFromDi()
         ),
         provideZoneChangeDetection({ eventCoalescing: true}),
-        provideHttpClient(withInterceptors([authInterceptor])),
-        NG_EVENT_PLUGINS
+        provideHttpClient(withInterceptors([authInterceptor]))
     ]
 }
 

@@ -16,14 +16,15 @@ import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
-import {ButtonComponent} from "@shared/components/buttons/button/button.component";
+import {TranslateModule} from "@ngx-translate/core";
+/*import {ButtonComponent} from "@shared/components/buttons/button/button.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {InputComponent} from "@shared/components/controls/input/input.component";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {LoaderComponent} from "@shared/components/loader/loader.component";
 import {passwordValidators, passwordWithParamsValidators} from "@pages/auth/validators/authValidator";
 import {InputPasswordComponent} from "@shared/components/controls/input-pussword/input-password.component";
-import {TuiNotification} from "@taiga-ui/core";
+import {TuiNotification} from "@taiga-ui/core";*/
 
 @Component({
   selector: 'app-login',
@@ -31,18 +32,19 @@ import {TuiNotification} from "@taiga-ui/core";
   providers: [
     AuthTokenStorageService
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        FormFieldComponent,
-        InputComponent,
-        ButtonComponent,
-        TranslateModule,
-        LoaderComponent,
-        InputPasswordComponent,
-        TuiNotification
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    /*FormFieldComponent,
+    InputComponent,
+    ButtonComponent,
+    TranslateModule,
+    LoaderComponent,
+    InputPasswordComponent,
+    TuiNotification*/
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

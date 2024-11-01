@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {SelectComponent} from "@shared/components/controls/select/select.component";
+//import {SelectComponent} from "@shared/components/controls/select/select.component";
 import {Observable} from "rxjs";
 import {BasicDataInterface} from "@core/models/backend/basick-examples/tables.interface";
 import {select, Store} from "@ngrx/store";
@@ -13,7 +13,7 @@ import * as basicExampleSelector from "@pages/basic-example/store/basic-example.
   providers: [],
   imports: [
     CommonModule,
-    SelectComponent
+    //SelectComponent
   ],
   templateUrl: './selectors.component.html',
   styleUrls: ['./selectors.component.scss'],

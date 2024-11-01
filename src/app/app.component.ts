@@ -13,17 +13,14 @@ import {BodyComponent} from "@layouts/components/body/body.component";
 import {HeaderComponent } from "@layouts/components/header/header.component";
 import {FooterComponent} from "@layouts/components/footer/footer.component";
 import {SidenavComponent} from "@layouts/components/sidenav/components/sidenav/sidenav.component";
-import {TuiRoot} from "@taiga-ui/core";
 import {filter} from "rxjs/operators";
 import {NavigationEnd, Router} from "@angular/router";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule,
-    TuiRoot,
     SidenavComponent,
     LoginComponent,
     HeaderComponent,

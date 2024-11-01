@@ -4,14 +4,14 @@ import {TranslateModule} from "@ngx-translate/core";
 import {NameValidator} from "@pages/basic-example/components/forms/validators/name.validator";
 import {getAddressForm} from "@pages/basic-example/components/forms/validators/addres.validator";
 import {validateDateRange} from "@pages/basic-example/components/forms/validators/range.validator";
-import {DynamicTableComponent} from "@shared/components/tables/basic-table/basic-table.component";
+/*import {DynamicTableComponent} from "@shared/components/tables/basic-table/basic-table.component";
 import {EditableTableComponent} from "@shared/components/tables/editable-table/editable-table.component";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {InputComponent} from "@shared/components/controls/input/input.component";
 import {DateComponent} from "@shared/components/controls/date/date.component";
 import {KeyValuePipe} from "@angular/common";
 import {SelectComponent} from "@shared/components/controls/select/select.component";
-import {ButtonComponent} from "@shared/components/buttons";
+import {ButtonComponent} from "@shared/components/buttons";*/
 import {Observable, of} from "rxjs";
 
 export enum ReceiverType {
@@ -25,14 +25,14 @@ export enum ReceiverType {
   imports: [
     ReactiveFormsModule,
     TranslateModule,
-    DynamicTableComponent,
+    /*DynamicTableComponent,
     EditableTableComponent,
     FormFieldComponent,
     InputComponent,
     DateComponent,
     KeyValuePipe,
     SelectComponent,
-    ButtonComponent
+    ButtonComponent*/
   ],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.scss',

@@ -8,8 +8,8 @@ import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-to
 import {navabarData} from "@layouts/components/sidenav/nav-data";
 import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.interface";
 import {TranslateModule} from "@ngx-translate/core";
-import {TuiHint, TuiIcon} from "@taiga-ui/core";
-import {ToolTipComponent} from "@shared/components/tool-tip/tool-tip.component";
+/*import {TuiHint, TuiIcon} from "@taiga-ui/core";
+import {ToolTipComponent} from "@shared/components/tool-tip/tool-tip.component";*/
 
 @Component({
   selector: 'app-sidenav',
@@ -20,7 +20,7 @@ import {ToolTipComponent} from "@shared/components/tool-tip/tool-tip.component";
     RouterLinkActive,
     RouterModule,
     TranslateModule,
-    TuiHint, TuiIcon, ToolTipComponent
+    //TuiHint, TuiIcon, ToolTipComponent
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',

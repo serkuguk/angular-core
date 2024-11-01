@@ -33,11 +33,15 @@
               "src/favicon.ico",
               "src/assets",
               {
-                "glob": "**/*"
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "/assets/"
               }
             ],
             "styles": [
               "node_modules/tabulator-tables/dist/css/tabulator.min.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
               "src/styles.scss"
             ],
             "scripts": [],

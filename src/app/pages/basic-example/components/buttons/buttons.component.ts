@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from "@angular/common";
 
-import {ButtonComponent} from "@shared/components/buttons";
-import {LoaderComponent} from "@shared/components/loader/loader.component";
+/*import {ButtonComponent} from "@shared/components/buttons";
+import {LoaderComponent} from "@shared/components/loader/loader.component";*/
 import {TranslateModule} from "@ngx-translate/core";
 
 
@@ -12,8 +12,8 @@ import {TranslateModule} from "@ngx-translate/core";
   providers: [],
   imports: [
     CommonModule,
-    ButtonComponent,
-    LoaderComponent,
+    /*ButtonComponent,
+    LoaderComponent,*/
     TranslateModule
   ],
   templateUrl: './buttons.component.html',

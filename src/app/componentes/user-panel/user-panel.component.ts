@@ -4,15 +4,11 @@ import {AsyncPipe, NgClass, NgOptimizedImage} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import * as fromAuth from "@pages/auth";
 import {Observable} from "rxjs";
-import {TuiFlagPipe} from '@taiga-ui/core';
-import type {TuiCountryIsoCode} from '@taiga-ui/i18n';
-import {TUI_COUNTRIES, TuiAvatar} from '@taiga-ui/kit';
 
 //Stor
 import {select, Store} from "@ngrx/store";
 import * as fromLoginAction from "@pages/auth/store/user.actions";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
-import {AvatarComponent} from "@shared/components/avatar/avatar.component";
 
 @Component({
   selector: 'app-user-panel',
@@ -21,10 +17,7 @@ import {AvatarComponent} from "@shared/components/avatar/avatar.component";
     NgClass,
     TranslateModule,
     AsyncPipe,
-    TuiFlagPipe,
     NgOptimizedImage,
-    AvatarComponent,
-    TuiAvatar
   ],
   templateUrl: './user-panel.component.html',
   styleUrl: './user-panel.component.scss',
@@ -33,9 +26,8 @@ import {AvatarComponent} from "@shared/components/avatar/avatar.component";
 export class UserPanelComponent implements OnInit {
   public translate = inject(TranslateService);
   private store: Store<fromAuth.State> = inject(Store);
-  public countryES: TuiCountryIsoCode = 'ES';
-  public countryEN: TuiCountryIsoCode = 'FK';
-  public countriesNames$:any = inject(TUI_COUNTRIES);
+
+  public countriesNames$: any = ''//inject('CONTRIES');
 
   public userData$: Observable<any | null> | undefined;
   public selectedLanguage: any;
