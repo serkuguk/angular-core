@@ -17,7 +17,7 @@ import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {TranslateModule} from "@ngx-translate/core";
-/*import {ButtonComponent} from "@shared/components/buttons/button/button.component";
+/*import {ButtonComponent} from "@shared/components/button/button/button.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {InputComponent} from "@shared/components/controls/input/input.component";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";

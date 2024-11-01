@@ -11,7 +11,7 @@ import {InputComponent} from "@shared/components/controls/input/input.component"
 import {DateComponent} from "@shared/components/controls/date/date.component";
 import {KeyValuePipe} from "@angular/common";
 import {SelectComponent} from "@shared/components/controls/select/select.component";
-import {ButtonComponent} from "@shared/components/buttons";*/
+import {ButtonComponent} from "@shared/components/button";*/
 import {Observable, of} from "rxjs";
 
 export enum ReceiverType {

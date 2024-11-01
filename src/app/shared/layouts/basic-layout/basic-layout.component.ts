@@ -1,7 +1,7 @@
 import { FormGroup } from '@angular/forms';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {ButtonComponent} from "@shared/components/buttons";
+import {ButtonComponent} from "@shared/components/button";
 
 @Component({
   selector: 'basic-layout',

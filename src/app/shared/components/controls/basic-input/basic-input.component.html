@@ -1,0 +1,10 @@
+<div class="basic-input">
+  <input
+    type="text"
+    pInputText
+    class="app-input"
+    (keyup)="onKeyup($event.target.value)"
+    (blur)="onBlur()"
+    [value]="value"
+  />
+</div>

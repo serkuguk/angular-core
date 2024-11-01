@@ -1,13 +1,13 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from "@angular/common";
 
-/*import {ButtonComponent} from "@shared/components/buttons";
+/*import {ButtonComponent} from "@shared/components/button";
 import {LoaderComponent} from "@shared/components/loader/loader.component";*/
 import {TranslateModule} from "@ngx-translate/core";
 
 
 @Component({
-  selector: 'app-buttons',
+  selector: 'app-button',
   standalone: true,
   providers: [],
   imports: [

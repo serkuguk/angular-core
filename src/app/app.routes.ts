@@ -24,7 +24,7 @@ export const routes: Routes = [
     canActivate: [loggedGuard]
   },
   {
-    path: 'basic-examples/buttons',
+    path: 'basic-examples/button',
     loadComponent: () => import('@pages/basic-example/components/buttons/buttons.component').then(c => c.ButtonsComponent),
     canActivate: [loggedGuard]
   },
