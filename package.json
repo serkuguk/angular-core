@@ -34,13 +34,13 @@
     "@ngrx/store-devtools": "^18.1.1",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "@ngrx/operators": "^18.0.0",
     "dompurify": "2.2.9",
     "primeng": "^17.18.11",
     "rxjs": "~7.8.1",
     "tabulator-tables": "^6.3.0",
     "tslib": "^2.6.2",
-    "zone.js": "0.15.0",
-    "@ngrx/operators": "^18.0.0"
+    "zone.js": "0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.2",
