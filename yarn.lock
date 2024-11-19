@@ -2119,10 +2119,10 @@
   dependencies:
     tslib "2.7.0"
 
-"@maskito/core@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@maskito/core/-/core-3.0.3.tgz#08a20898de76ab3c7dd035191c8154f0ce391463"
-  integrity sha512-bGd9+/j0yImCWDDMi/nJbGZIgWTQ4w/lTE3Y22NCmOBMST5cG4gZ4kNV6cfqpmJPQ3PWckMm8wOOmcdFgJWaHw==
+"@maskito/core@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@maskito/core/-/core-3.2.0.tgz#5da653b9538475cadf467a5a82c4d4b63cf1e201"
+  integrity sha512-c8GNwuz4PQmZqf5CSXIncwIkZSwBeU2FZtpBJtD21DaIe4uBQ541C0BncHMqEbLP2+n+HyFKEnT90m03BBlGrw==
 
 "@maskito/kit@3.0.3":
   version "3.0.3"
@@ -2205,6 +2205,13 @@
   integrity sha512-oRt/wG+szR4lMvMut16uWfbMD2CnOMscnQIbU+lcOs5+UDOzr4aHGBVpErzcoVWSTp/sl7x02j+2dto5NQZWoA==
   dependencies:
     tslib "^2.0.0"
+
+"@ngrx/operators@^18.0.0":
+  version "18.1.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/operators/-/operators-18.1.1.tgz#166bcbacff9bd5cbeb2c5d85f43e11db65eef2ac"
+  integrity sha512-RB156PouKI/E79jxvJLaDFYMHz9JVFR8f4ogfAeT7sh2dDGoK4A+B0n1Cl0iYW9fpcJCdfB/mu7TkH6auFv1aQ==
+  dependencies:
+    tslib "^2.3.0"
 
 "@ngrx/router-store@^18.1.1":
   version "18.1.1"

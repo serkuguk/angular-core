@@ -24,7 +24,7 @@
     "@angular/router": "^18.2.2",
     "@auth0/angular-jwt": "^5.2.0",
     "@maskito/angular": "3.0.3",
-    "@maskito/core": "3.0.3",
+    "@maskito/core": "3.2.0",
     "@maskito/kit": "3.0.3",
     "@maskito/phone": "^3.0.2",
     "@ng-web-apis/common": "4.6.5",
