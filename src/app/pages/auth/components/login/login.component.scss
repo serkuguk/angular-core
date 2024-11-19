@@ -1,3 +1,106 @@
+.login-container {
+  background: linear-gradient(145deg, #232844, #2f3356);
+  padding: 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.tab {
+  padding: 10px 20px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.tab.active {
+  opacity: 1;
+  border-bottom: 2px solid #1a73e8;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: #ffffff;
+  margin-bottom: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.remember-me input[type="radio"] {
+  margin-right: 8px;
+}
+
+.sign-in-button {
+  width: 100%;
+  padding: 12px;
+  background: #1a73e8;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sign-in-button:hover {
+  background: #1557b0;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.forgot-password a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.forgot-password a:hover {
+  opacity: 1;
+}
+
+
+
+
+
 .login-wrapper  {
   width: calc(100% - 5rem);
   margin-top: 92px;

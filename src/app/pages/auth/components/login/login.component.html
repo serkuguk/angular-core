@@ -1,13 +1,52 @@
 <div class="login-wrapper">
-    <div class="login-container">
-        <div class="login-container__title">
-          <h2>NTT DATA</h2>
-          <h3>{{'PAGES.LOGIN.TITLE' | translate }}</h3>
+  <div class="login-container">
+    <div class="tabs">
+      <div class="tab active">SIGN IN</div>
+      <div class="tab">SIGN UP</div>
+    </div>
+    <form>
+      <div class="form-group">
+        <app-form-field label="Username"
+          [required]="true"-->
+          [control]="loginForm.controls.username"-->
+          [showLabel]="false"-->
+          [isInline]="isInline">-->
+            <basic-input formControlName="username"
+            [placeholder]="'PAGES.LOGIN.USER' | translate"></basic-input>
+          </app-form-field>
         </div>
-        <form class="login-container__form"
-              (keydown.enter)="login()"
-              [formGroup]="loginForm">
-<!--            <app-form-field label="Username"-->
+                <div class="form-group">
+                  <label>PASSWORD</label>
+                  <input type="password" required>
+                </div>
+                <div class="remember-me">
+                  <input type="radio" id="remember" name="remember">
+                  <label for="remember">KEEP ME SIGNED IN</label>
+                </div>
+                <button type="submit" class="sign-in-button">SIGN IN</button>
+                <div class="forgot-password">
+                  <a href="#">Forgot your password?</a>
+                </div>
+              </form>
+            </div>
+
+
+
+
+
+
+
+            <div class="login-container">
+                  <div class="login-container__title">
+                    <h2>NTT DATA</h2>
+                    <h3>{{'PAGES.LOGIN.TITLE' | translate }}</h3>
+                  </div>
+                  <form class="login-container__form"
+                        (keydown.enter)="login()"
+                        [formGroup]="loginForm">
+
+
+          <!--            <app-form-field label="Username"-->
 <!--                        [required]="true"-->
 <!--                        [control]="loginForm.controls.username"-->
 <!--                        [showLabel]="false"-->
@@ -37,9 +76,3 @@
         </form>
     </div>
 </div>
-<!--<tui-notification>-->
-<!--  <div>-->
-<!--    <code>TuiLineDaysChart</code>-->
-<!--    is used to show data of several months to simplify working with different number of days in months-->
-<!--  </div>-->
-<!--</tui-notification>-->
