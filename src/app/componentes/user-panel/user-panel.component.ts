@@ -11,17 +11,16 @@ import * as fromLoginAction from "@pages/auth/store/user.actions";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
 
 @Component({
-  selector: 'app-user-panel',
-  standalone: true,
-  imports: [
-    NgClass,
-    TranslateModule,
-    AsyncPipe,
-    NgOptimizedImage,
-  ],
-  templateUrl: './user-panel.component.html',
-  styleUrl: './user-panel.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-user-panel',
+    imports: [
+        NgClass,
+        TranslateModule,
+        AsyncPipe,
+        NgOptimizedImage,
+    ],
+    templateUrl: './user-panel.component.html',
+    styleUrl: './user-panel.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserPanelComponent implements OnInit {
   public translate = inject(TranslateService);

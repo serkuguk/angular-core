@@ -7,18 +7,17 @@ import {TranslateModule} from "@ngx-translate/core";
 
 
 @Component({
-  selector: 'app-button',
-  standalone: true,
-  providers: [],
-  imports: [
-    CommonModule,
-    /*ButtonComponent,
-    LoaderComponent,*/
-    TranslateModule
-  ],
-  templateUrl: './buttons.component.html',
-  styleUrls: ['./buttons.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-button',
+    providers: [],
+    imports: [
+        CommonModule,
+        /*ButtonComponent,
+        LoaderComponent,*/
+        TranslateModule
+    ],
+    templateUrl: './buttons.component.html',
+    styleUrls: ['./buttons.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonsComponent{
 

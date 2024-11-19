@@ -21,9 +21,8 @@ import {TuiDay} from "@taiga-ui/cdk";
 import {TabulatorTableComponent} from "@shared/components/tables/tabulator-table/tabulator-table.component";*/
 
 @Component({
-  selector: 'app-tables',
-  standalone: true,
-  providers: [],
+    selector: 'app-tables',
+    providers: [],
     imports: [
         CommonModule,
         /*DynamicTableComponent,
@@ -34,9 +33,9 @@ import {TabulatorTableComponent} from "@shared/components/tables/tabulator-table
         TuiAlert,
         TabulatorTableComponent*/
     ],
-  templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './tables.component.html',
+    styleUrls: ['./tables.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TablesComponent implements OnInit {
 

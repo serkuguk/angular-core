@@ -27,27 +27,26 @@ import {InputPasswordComponent} from "@shared/components/controls/input-pussword
 import {TuiNotification} from "@taiga-ui/core";*/
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  providers: [
-    AuthTokenStorageService
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    /*FormFieldComponent,
-    InputComponent,
-    ButtonComponent,
-    TranslateModule,
-    LoaderComponent,
-    InputPasswordComponent,
-    TuiNotification*/
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-login',
+    providers: [
+        AuthTokenStorageService
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule,
+        /*FormFieldComponent,
+        InputComponent,
+        ButtonComponent,
+        TranslateModule,
+        LoaderComponent,
+        InputPasswordComponent,
+        TuiNotification*/
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
 

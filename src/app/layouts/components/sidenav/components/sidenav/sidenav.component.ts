@@ -12,32 +12,29 @@ import {TranslateModule} from "@ngx-translate/core";
 import {ToolTipComponent} from "@shared/components/tool-tip/tool-tip.component";*/
 
 @Component({
-  selector: 'app-sidenav',
-  standalone: true,
-  imports: [CommonModule,
-    SublevelMenuComponent,
-    RouterLink,
-    RouterLinkActive,
-    RouterModule,
-    TranslateModule,
-    //TuiHint, TuiIcon, ToolTipComponent
-  ],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss',
-  animations: [
-    fadeInOut,
-    trigger('rotate', [
-      transition(':enter', [
-        animate('1500ms',
-          keyframes([
-            style({opacity: 0, transform: 'rotate(0deg)', offset: 0}),
-            style({opacity: 0.5, transform: 'rotate(1turn)', offset: 0.5}),
-            style({opacity: 1, transform: 'rotate(2turn)', offset: 1})
-          ])
-        )
-      ])
-    ])
-  ]
+    selector: 'app-sidenav',
+    imports: [CommonModule,
+        SublevelMenuComponent,
+        RouterLink,
+        RouterLinkActive,
+        RouterModule,
+        TranslateModule,
+        //TuiHint, TuiIcon, ToolTipComponent
+    ],
+    templateUrl: './sidenav.component.html',
+    styleUrl: './sidenav.component.scss',
+    animations: [
+        fadeInOut,
+        trigger('rotate', [
+            transition(':enter', [
+                animate('1500ms', keyframes([
+                    style({ opacity: 0, transform: 'rotate(0deg)', offset: 0 }),
+                    style({ opacity: 0.5, transform: 'rotate(1turn)', offset: 0.5 }),
+                    style({ opacity: 1, transform: 'rotate(2turn)', offset: 1 })
+                ]))
+            ])
+        ])
+    ]
 })
 export class SidenavComponent implements OnInit {
 

@@ -8,16 +8,15 @@ import * as basicExampleAction from "@pages/basic-example/store/basic-example.ac
 import * as basicExampleSelector from "@pages/basic-example/store/basic-example.selectors";
 
 @Component({
-  selector: 'app-selectors',
-  standalone: true,
-  providers: [],
-  imports: [
-    CommonModule,
-    //SelectComponent
-  ],
-  templateUrl: './selectors.component.html',
-  styleUrls: ['./selectors.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-selectors',
+    providers: [],
+    imports: [
+        CommonModule,
+        //SelectComponent
+    ],
+    templateUrl: './selectors.component.html',
+    styleUrls: ['./selectors.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectorsComponent implements OnInit {
 

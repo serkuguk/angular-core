@@ -20,23 +20,22 @@ export enum ReceiverType {
 }
 
 @Component({
-  selector: 'app-forms',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    TranslateModule,
-    /*DynamicTableComponent,
-    EditableTableComponent,
-    FormFieldComponent,
-    InputComponent,
-    DateComponent,
-    KeyValuePipe,
-    SelectComponent,
-    ButtonComponent*/
-  ],
-  templateUrl: './forms.component.html',
-  styleUrl: './forms.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-forms',
+    imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        /*DynamicTableComponent,
+        EditableTableComponent,
+        FormFieldComponent,
+        InputComponent,
+        DateComponent,
+        KeyValuePipe,
+        SelectComponent,
+        ButtonComponent*/
+    ],
+    templateUrl: './forms.component.html',
+    styleUrl: './forms.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormsComponent {
 

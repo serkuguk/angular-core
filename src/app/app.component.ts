@@ -17,20 +17,20 @@ import {filter} from "rxjs/operators";
 import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule,
-    SidenavComponent,
-    LoginComponent,
-    HeaderComponent,
-    BodyComponent,
-    FooterComponent,
-    AsyncPipe,
-    JsonPipe],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-root',
+    imports: [
+        CommonModule,
+        SidenavComponent,
+        LoginComponent,
+        HeaderComponent,
+        BodyComponent,
+        FooterComponent,
+        AsyncPipe,
+        JsonPipe
+    ],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   public isSideNavCollapsed = signal<boolean>(false);

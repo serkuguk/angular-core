@@ -5,12 +5,11 @@ import {BarChartsComponent} from "@shared/components/charts/bar-charts/bar-chart
 import {LineDaysChartComponent} from "@shared/components/charts/line-days-chart/line-days-chart.component";*/
 
 @Component({
-  selector: 'app-charts',
-  standalone: true,
-  imports: [/*LineChartsComponent, BarChartsComponent, LineDaysChartComponent*/],
-  templateUrl: './charts.component.html',
-  styleUrl: './charts.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-charts',
+    imports: [ /*LineChartsComponent, BarChartsComponent, LineDaysChartComponent*/],
+    templateUrl: './charts.component.html',
+    styleUrl: './charts.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChartsComponent {
 

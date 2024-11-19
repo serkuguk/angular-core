@@ -16,10 +16,9 @@ import type {TuiCountryIsoCode} from "@taiga-ui/i18n";
 import {TUI_COUNTRIES} from "@taiga-ui/kit";*/
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss',
     imports: [
         CommonModule,
         TranslateModule,
@@ -29,7 +28,7 @@ import {TUI_COUNTRIES} from "@taiga-ui/kit";*/
         UserPanelComponent,
         //TuiFlagPipe
     ],
-  providers: [TranslateService]
+    providers: [TranslateService]
 })
 export class HeaderComponent implements OnInit {
   collapsed = input<boolean>(false);

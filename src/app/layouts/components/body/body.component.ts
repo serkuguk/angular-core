@@ -3,11 +3,10 @@ import {Component, input} from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-body',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './body.component.html',
-  styleUrl: './body.component.scss'
+    selector: 'app-body',
+    imports: [CommonModule, RouterModule],
+    templateUrl: './body.component.html',
+    styleUrl: './body.component.scss'
 })
 export class BodyComponent {
   collapsed = input<boolean>(false);
