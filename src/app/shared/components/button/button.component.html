@@ -1,1 +1,13 @@
-<p>buttons works!</p>
+<div class="default-button">
+  <p-button
+       [class]="class"
+       [type]="type()"
+       [label]="label()"
+       [style]="style()"
+       [disabled]="disabled()"
+       [icon]="icon() ? icon()"
+       [iconPos]="iconPos()"
+       [styleClass]="styleClass() ? styleClass()"
+  >
+  </p-button>
+</div>

@@ -17,10 +17,10 @@ import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {TranslateModule} from "@ngx-translate/core";
+import {FormFieldComponent} from "@shared/components/controls/from-field/form-field.component";
 /*import {ButtonComponent} from "@shared/components/button/button/button.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {InputComponent} from "@shared/components/controls/input/input.component";
-import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {LoaderComponent} from "@shared/components/loader/loader.component";
 import {passwordValidators, passwordWithParamsValidators} from "@pages/auth/validators/authValidator";
 import {InputPasswordComponent} from "@shared/components/controls/input-pussword/input-password.component";
@@ -36,13 +36,7 @@ import {TuiNotification} from "@taiga-ui/core";*/
         FormsModule,
         ReactiveFormsModule,
         TranslateModule,
-        /*FormFieldComponent,
-        InputComponent,
-        ButtonComponent,
-        TranslateModule,
-        LoaderComponent,
-        InputPasswordComponent,
-        TuiNotification*/
+        FormFieldComponent
     ],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
