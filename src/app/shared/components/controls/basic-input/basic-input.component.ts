@@ -1,11 +1,12 @@
 import {ChangeDetectionStrategy, Component, forwardRef, input, OnInit, output} from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {FloatLabel} from "primeng/floatlabel";
 
 @Component({
   selector: 'app-basic-input',
   standalone: true,
-  imports: [InputTextModule],
+  imports: [InputTextModule, FloatLabel],
   templateUrl: './basic-input.component.html',
   styleUrl: './basic-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,11 +19,12 @@ import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from "@angular/for
   ],
 })
 export class BasicInputComponent implements OnInit, ControlValueAccessor {
-  public placeholder = input<string>();
+  public placeholder = input<string>("Input some text...");
+  public labelType = input<string>("in_label");
   public changed = output<string>();
 
-  control = new FormControl();
-  value: string | undefined;
+  value: string = "";
+  isDisabled: boolean = false;
 
   ngOnInit(): void {
   }
@@ -30,21 +32,20 @@ export class BasicInputComponent implements OnInit, ControlValueAccessor {
   private propagateChange: any = () => { };
   private propagateTouched: any = () => { };
 
-  writeValue(value: string): void {
-    this.control.setValue(value);
-  }
-
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
-    this.control.valueChanges.subscribe(this.propagateChange);
   }
 
   registerOnTouched(fn: any): void {
     this.propagateTouched = fn;
   }
 
+  writeValue(value: string): void {
+    this.value = value;
+  }
+
   setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.control.disable() : this.control.enable();
+    this.isDisabled = isDisabled;
   }
 
   onKeyup(value: string): void {

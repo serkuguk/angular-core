@@ -1,10 +1,15 @@
 <div class="basic-input">
-  <input
-    type="text"
-    pInputText
-    class="app-input"
-    (keyup)="onKeyup($event.target.value)"
-    (blur)="onBlur()"
-    [value]="value"
-  />
+  <p-floatlabel>
+    <input
+      type="text"
+      pInputText
+      class="app-input"
+      [disabled]="isDisabled"
+      (keyup)="onKeyup($event.target.value)"
+      (blur)="onBlur()"
+      [value]="value"
+    />
+    <label for="labelType()">{{placeholder()}}</label>
+  </p-floatlabel>
 </div>
+
