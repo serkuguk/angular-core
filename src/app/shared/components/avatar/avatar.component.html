@@ -1,1 +1,31 @@
-<p>avatar works!</p>
+@if (iconType() === 'icon') {
+  <p-avatar
+    [icon]="icon()"
+    [class]="class()"
+    [size]="size()"
+    [shape]="shape()"
+    [label]="label()"
+  />
+}
+
+@if (iconType() === 'image' && !overlayBadge()) {
+  <p-avatar
+    [image]="imageUrl()"
+    [class]="class()"
+    [size]="size()"
+    [shape]="shape()"
+    [label]="label()"
+  />
+}
+
+@if (iconType() === 'image' && overlayBadge()) {
+  <p-overlay-badge value="5" severity="danger" class="inline-flex">
+    <p-avatar
+      [image]="imageUrl()"
+      [class]="class()"
+      [size]="size()"
+      [shape]="shape()"
+      [label]="label()"
+    />
+  </p-overlay-badge>
+}
