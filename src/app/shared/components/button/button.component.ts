@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 
 export type ButtonType = 'button' | 'submit';
@@ -8,7 +8,8 @@ export type ButtonIconPosition = 'left' | 'right' | 'top' | 'bottom';
   selector: 'app-button',
   imports: [ButtonModule],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrl: './button.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonComponent {
 

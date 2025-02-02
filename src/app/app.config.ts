@@ -24,6 +24,8 @@ import {provideAnimationsAsync} from "@angular/platform-browser/animations/async
 import {ENV} from "@core/tokens/environment.token";
 import {TablesService} from "@pages/basic-example/components/tables/services/tables.service";
 import {SelectorsService} from "@pages/basic-example/components/selectors/services/selectors.service";
+import {providePrimeNG} from "primeng/config";
+import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -41,6 +43,12 @@ export const appConfig: ApplicationConfig = {
           withComponentInputBinding(),
           withEnabledBlockingInitialNavigation()),
         provideAnimationsAsync(),
+        provideAnimationsAsync(),
+        providePrimeNG({
+          theme: {
+            preset: Aura
+          }
+        }),
         provideStore({
           router: routerReducer,
           [loginFeature.name]: loginFeature.reducer,
