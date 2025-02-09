@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, forwardRef, input, OnInit, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, input, linkedSignal, OnInit, output} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Select} from "primeng/select";
 import {FloatLabel} from "primeng/floatlabel";
@@ -30,13 +30,15 @@ export class BasicSelectComponent  implements OnInit, ControlValueAccessor {
   public lengthTextSelected = input<number>(20);
   public filter = input<boolean>(false);
   public emptyOption = input<boolean>(false);
-  public showClear = input<boolean>(Boolean(false));
+  public showClear = input<boolean>();
   public withIcons = input<boolean>(false);
   public resetFilterOnHide = input<boolean>(true);
   public nullOrZero = input<number | null>(null);
   public labelType = input<string>("in_label");
   public showIcon = input<boolean>(false);
   public changed = output<number | string>();
+  public showClearState = linkedSignal(() => this.showClear);
+  public nullOrZeroState = linkedSignal(() => this.nullOrZero);
 
   value: string | undefined;
   isDisabled: boolean | undefined;
@@ -70,7 +72,7 @@ export class BasicSelectComponent  implements OnInit, ControlValueAccessor {
 
   writeValue(value: any): void {
     this.value = value;
-    this.showClear = (value && this.emptyOption);
+    this.showClearState.set(value && this.showClearState());
   }
 
   onBlur(): void {
@@ -78,8 +80,8 @@ export class BasicSelectComponent  implements OnInit, ControlValueAccessor {
   }
 
   onChanged(event: any): void {
-    const value = event.value || event.value === 0 ? event.value : this.nullOrZero;
-    this.showClear = (value && this.emptyOption);
+    const value = event.value || event.value === 0 ? event.value : this.nullOrZeroState();
+    this.showClearState.set(value && this.showClearState());
     this.propagateChange(value);
     this.changed.emit(value);
   }
