@@ -1,8 +1,7 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import { ISideNavToggle } from '@layouts/components/sidenav/interfaces/side-nav-toggle.interface';
-import { LoginComponent } from "@pages/auth/components/login/login.component";
-import {AsyncPipe, CommonModule, JsonPipe} from "@angular/common";
+import {CommonModule} from "@angular/common";
 
 //Store
 import {select, Store} from "@ngrx/store";
@@ -18,16 +17,13 @@ import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
     selector: 'app-root',
-    imports: [
-        CommonModule,
-        SidenavComponent,
-        LoginComponent,
-        HeaderComponent,
-        BodyComponent,
-        FooterComponent,
-        AsyncPipe,
-        JsonPipe
-    ],
+  imports: [
+    CommonModule,
+    SidenavComponent,
+    HeaderComponent,
+    BodyComponent,
+    FooterComponent,
+  ],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush

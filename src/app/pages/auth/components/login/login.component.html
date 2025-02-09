@@ -1,79 +1,31 @@
 <div class="login-wrapper">
   <div class="login-container">
-    <div class="tabs">
-      <div class="tab active">SIGN IN</div>
-      <div class="tab">SIGN UP</div>
+    <div class="login-container__title">
+      <h2>NTT DATA</h2>
+      <h3>{{'PAGES.LOGIN.TITLE' | translate }}</h3>
     </div>
-    <form>
-      <div class="form-group">
-        <app-form-field
-          label="Username"
-          [required]="true"-->
-          [control]="loginForm.controls.username"-->
-          [showLabel]="false"-->
-          [isInline]="isInline">-->
-            <basic-input formControlName="username"
-            [placeholder]="'PAGES.LOGIN.USER' | translate"></basic-input>
-          </app-form-field>
-        </div>
-                <div class="form-group">
-                  <label>PASSWORD</label>
-                  <input type="password" required>
-                </div>
-                <div class="remember-me">
-                  <input type="radio" id="remember" name="remember">
-                  <label for="remember">KEEP ME SIGNED IN</label>
-                </div>
-                <button type="submit" class="sign-in-button">SIGN IN</button>
-                <div class="forgot-password">
-                  <a href="#">Forgot your password?</a>
-                </div>
-              </form>
-            </div>
-
-
-
-
-
-
-
-            <div class="login-container">
-                  <div class="login-container__title">
-                    <h2>NTT DATA</h2>
-                    <h3>{{'PAGES.LOGIN.TITLE' | translate }}</h3>
-                  </div>
-                  <form class="login-container__form"
-                        (keydown.enter)="login()"
-                        [formGroup]="loginForm">
-
-
-          <!--            <app-form-field label="Username"-->
-<!--                        [required]="true"-->
-<!--                        [control]="loginForm.controls.username"-->
-<!--                        [showLabel]="false"-->
-<!--                        [isInline]="isInline">-->
-<!--                <app-input formControlName="username"-->
-<!--                           [placeholder]="'PAGES.LOGIN.USER' | translate"></app-input>-->
-<!--            </app-form-field>-->
-<!--            <app-form-field label="Password"-->
-<!--                        [required]="true"-->
-<!--                        [control]="loginForm.controls.password"-->
-<!--                        [showLabel]="false"-->
-<!--                        [isInline]="isInline">-->
-<!--                <app-input-password formControlName="password"-->
-<!--                           [placeholder]="'PAGES.LOGIN.PASSWORD' | translate"></app-input-password>-->
-<!--            </app-form-field>-->
-<!--            <div class="login-error">-->
-<!--              <span>{{(loadingError$ | async)}}</span>-->
-<!--            </div>-->
-<!--            <app-loader [showLoader]="(loading$ | async)"-->
-<!--                        [loaderClass]="'inline-flex'"-->
-<!--                        [size]="'s'">-->
-<!--              <app-button [iconStart]="'@tui.user'"-->
-<!--                          [size]="'l'"-->
-<!--                          (click)="login()"-->
-<!--              >{{ 'BUTTON.LOGIN' | translate }}</app-button>-->
-<!--            </app-loader>-->
-        </form>
-    </div>
+    <form class="login-container__form"
+          [formGroup]="loginForm">
+      <app-form-field label="Username"
+                      [required]="true"
+                      [control]="loginForm.controls.username"
+                      [showLabel]="false"
+                      [isInline]="isInline">
+        <app-basic-input formControlName="username"
+                   [placeholder]="'PAGES.LOGIN.USER' | translate"></app-basic-input>
+      </app-form-field>
+      <app-form-field label="Password"
+                      [required]="true"
+                      [control]="loginForm.controls.password"
+                      [showLabel]="false"
+                      [isInline]="isInline">
+        <app-password-input formControlName="password"
+                            [placeholder]="'PAGES.LOGIN.PASSWORD' | translate"></app-password-input>
+      </app-form-field>
+      <div class="login-error">
+        <span>{{(loadingError$ | async)}}</span>
+      </div>
+       <app-button (click)="login()">{{ 'BUTTON.LOGIN' | translate }}</app-button>
+    </form>
+  </div>
 </div>

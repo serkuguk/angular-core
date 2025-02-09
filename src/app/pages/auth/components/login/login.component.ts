@@ -16,28 +16,27 @@ import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
-import {TranslateModule} from "@ngx-translate/core";
 import {FormFieldComponent} from "@shared/components/controls/from-field/form-field.component";
-/*import {ButtonComponent} from "@shared/components/button/button/button.component";
 import {TranslateModule} from "@ngx-translate/core";
-import {InputComponent} from "@shared/components/controls/input/input.component";
-import {LoaderComponent} from "@shared/components/loader/loader.component";
-import {passwordValidators, passwordWithParamsValidators} from "@pages/auth/validators/authValidator";
-import {InputPasswordComponent} from "@shared/components/controls/input-pussword/input-password.component";
-import {TuiNotification} from "@taiga-ui/core";*/
+import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
+import {PasswordInputComponent} from "@shared/components/controls/password-input/password-input.component";
+import {ButtonComponent} from "@shared/components/button/button.component";
 
 @Component({
     selector: 'app-login',
     providers: [
         AuthTokenStorageService
     ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        FormFieldComponent
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    FormFieldComponent,
+    BasicInputComponent,
+    PasswordInputComponent,
+    ButtonComponent
+  ],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

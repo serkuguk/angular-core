@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {Component, inject, input, OnInit} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -9,7 +9,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     imports: [CommonModule, TranslateModule],
     providers: [TranslateService]
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
   collapsed = input<boolean>(false);
   screenWidth = input<number>(0);
 
@@ -24,7 +24,4 @@ export class FooterComponent implements OnInit {
   }
 
   public translate = inject(TranslateService);
-
-  ngOnInit(): void {
-  }
 }
