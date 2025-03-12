@@ -22,5 +22,7 @@ export class ButtonComponent {
   icon = input<string>();
   disabled = input<boolean>();
 
-  constructor() {}
+  constructor() {
+  }
 }
+

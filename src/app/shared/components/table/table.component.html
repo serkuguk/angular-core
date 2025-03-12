@@ -1,1 +1,78 @@
-<p>table works!</p>
+<p-table #table class="pijama pricing-table"
+         [columns]="dataSourceColumns()"
+         [value]="dataSource()"
+         [paginator]="paginator()"
+         [scrollable]="scrollable()"
+         [resizableColumns]="resizableColumns()"
+         [(selection)]="selectedRowValue()"
+         [selectionMode]="selectionMode()"
+         [customSort]="customSortFun"
+         [rowsPerPageOptions]="[10, 25, 100]"
+         (onRowSelect)="onSelectedRow($event)"
+         (onRowUnselect)="onRowUnselect()"
+         (onSort)="customSort($event)"
+         [rows]="rows">
+  <ng-template #header let-columns>
+    <tr>
+      @for (col of columns; track $index) {
+        <th pResizableColumn
+            [pSortableColumn]="col.field"
+            [hidden]="!col.visible"
+            [style]="{'min-width': col.minWidth || '100px', 'width': col.width, 'text-align': col.textAlign}"
+            scope="col"
+        >
+          {{ col.header | translate }}
+          @if (showIconSort && col.field !== showFilterCondition) {
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          }
+        </th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template #body let-rowData let-rowIndex="rowIndex" let-columns="columns">
+    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+      @for (col of columns; track $index) {
+        <td
+             [style]="{'min-width': col.minWidth || '100px', 'width': col.width, 'text-align': col.textAlign}"
+             [hidden]="!col.visible"
+        >
+          <ng-container
+               [ngTemplateOutlet]="(col.type === 'datetime'
+                                          || col.type === 'date'
+                                          || col.type === 'icon'
+                                          || col.type === 'decimal') ? customCell : defaultCell; context: {$implicit: rowData, col: col}">
+          </ng-container>
+
+        </td>
+      }
+    </tr>
+  </ng-template>
+</p-table>
+
+<ng-template #customCell let-rowData="$implicit" let-col="col">
+  @switch (col.type) {
+    @case ('datetime') {
+      <span>{{ rowData[col.field] | translate }}</span>
+    }
+    @case ('date') {
+      <span>{{ rowData[col.field] }}</span>
+    }
+    @case ('decimal') {
+      <span>{{ rowData[col.field] }}</span>
+    }
+    @case ('icon') {
+      @if (rowData[col.field] === showIconCondition) {
+        <em [class]="iconClass"
+            [style]="{'color': iconColor}"
+            ngbTooltip="{{ rowData.ToolTipMsg || msgTooltip | translate}}" container="body">
+        </em>
+      }
+    }
+  }
+</ng-template>
+
+<ng-template #defaultCell let-rowData="$implicit" let-col="col">
+  @if (rowData !== null) {
+    <span>{{ rowData[col.field] }}</span>
+  }
+</ng-template>
