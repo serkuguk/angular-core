@@ -1,15 +1,13 @@
 <div class="user-panel-wrapper">
   <div class="user-panel-wrapper__right user-panel">
     <div class="user-panel-avatar-container">
-<!--      <div class="user-panel-username">{{(userData$ | async)?.username}}</div>-->
+      <div class="user-panel-username">{{ (userData$ | async)?.username }}</div>
       <div class="user-panel-avatar" (click)="userMenuToggle()">
-<!--        <app-avatar-->
-<!--          [appearance]="'appearance'"-->
-<!--          [icon]="'@tui.user'"-->
-<!--          [size]="'s'"-->
-<!--          [class]="'text'"-->
-<!--          [customStyle]="'AI'"-->
-<!--        ></app-avatar>-->
+        <app-avatar
+             [icon]="'@tui.user'"
+             [size]="'xlarge'"
+             [class]="'text'"
+        ></app-avatar>
       </div>
     </div>
   </div>
@@ -17,31 +15,25 @@
   @if (showPanel()) {
     <div class="overlay overlay-user overlay-fall">
       <ul>
-        @for(item of userItems; track $index) {
+        @for (item of userItems; track $index) {
           <li>
             <a (click)="executeUserEvent(item.userEvent)">
               <i class="icon" [ngClass]="item.icon"></i>
-              <span translate>{{'USER_PANEL.' + item.label}}</span>
+              <span translate>{{ 'USER_PANEL.' + item.label }}</span>
             </a>
           </li>
         }
       </ul>
       <div class="language">
         <a (click)="translate.use('sp')">
-<!--          <img-->
-<!--            [alt]="(countriesNames$ | async)?.[countryES]"-->
-<!--            [src]="countryES | tuiFlag"-->
-<!--            [style.border-radius.%]="50"-->
-<!--            [style.width.%]="50"-->
-<!--          />-->
-<!--        </a>-->
-<!--        <a (click)="translate.use('en')">-->
-<!--          <img-->
-<!--            [alt]="(countriesNames$ | async)?.[countryEN]"-->
-<!--            [src]="countryEN | tuiFlag"-->
-<!--            [style.border-radius.%]="50"-->
-<!--            [style.width.%]="50"-->
-<!--          />-->
+          <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+               [class]="'flag flag-es'" style="width: 20px"/>
+          <span>{{ 'Spain' }}</span>
+        </a>
+        <a (click)="translate.use('en')">
+          <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+               [class]="'flag flag-gb'" style="width: 20px"/>
+          <span>{{ 'English' }}</span>
         </a>
       </div>
     </div>

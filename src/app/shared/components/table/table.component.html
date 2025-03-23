@@ -63,8 +63,7 @@
     @case ('icon') {
       @if (rowData[col.field] === showIconCondition) {
         <em [class]="iconClass"
-            [style]="{'color': iconColor}"
-            ngbTooltip="{{ rowData.ToolTipMsg || msgTooltip | translate}}" container="body">
+            [style]="{'color': iconColor}">
         </em>
       }
     }

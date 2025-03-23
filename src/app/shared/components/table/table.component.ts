@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, input, OnChanges, output, ViewChild}
 import {TableModule} from "primeng/table";
 import {Temporal} from '@js-temporal/polyfill';
 import {TranslateModule} from "@ngx-translate/core";
-import {async} from "rxjs";
+import {NgTemplateOutlet} from "@angular/common";
 
 interface IOutputRow {
     row: any[],
@@ -12,7 +12,7 @@ interface IOutputRow {
 @Component({
     selector: 'app-table',
     standalone: true,
-    imports: [TableModule, TranslateModule],
+    imports: [TableModule, TranslateModule, NgTemplateOutlet],
     templateUrl: './table.component.html',
     styleUrl: './table.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -83,6 +83,4 @@ export class TableComponent implements OnChanges {
             });
         }
     }
-
-    protected readonly async = async;
 }
