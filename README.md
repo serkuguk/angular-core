@@ -2,8 +2,9 @@
 
 Angular
 
-- angular version 19
+- angular version 20
 - rxjs version 7
+- type script 5
 
 Structure folders
 app/
