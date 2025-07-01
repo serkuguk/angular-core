@@ -1,6 +1,11 @@
 import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection} from "@angular/core";
-import {provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation} from "@angular/router";
+import {
+    provideRouter,
+    withComponentInputBinding,
+    withEnabledBlockingInitialNavigation,
+    withViewTransitions
+} from "@angular/router";
 import {authInterceptor} from "@core/interceptors/auth.interceptor";
 import {routes as appRotes} from "./app.routes";
 import {provideEffects} from "@ngrx/effects";
@@ -94,6 +99,7 @@ const ANGULAR_PROVIDERS = [
 const ROUTER_PROVIDERS = [
     provideRouter(appRotes,
         withComponentInputBinding(),
+        withViewTransitions(),//TODO: probar
         withEnabledBlockingInitialNavigation(),
     ),
 ];

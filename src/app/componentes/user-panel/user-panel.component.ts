@@ -25,7 +25,7 @@ import {AvatarComponent} from "@shared/components/avatar/avatar.component";
 })
 export class UserPanelComponent implements OnInit {
     public translate = inject(TranslateService);
-    private store: Store<fromAuth.State> = inject(Store);
+    private readonly store: Store<fromAuth.State> = inject(Store);
 
     public countriesNames$: any = ''//inject('CONTRIES');
 
