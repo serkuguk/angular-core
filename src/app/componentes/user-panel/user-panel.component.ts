@@ -3,7 +3,6 @@ import {languages, userItems} from './header-dummy-data';
 import {AsyncPipe, NgClass} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import * as fromAuth from "@pages/auth";
-import {Observable} from "rxjs";
 
 //Stor
 import {select, Store} from "@ngrx/store";
@@ -11,6 +10,7 @@ import * as fromLoginAction from "@pages/auth/store/user.actions";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
 import {AvatarComponent} from "@shared/components/avatar/avatar.component";
 import {DatePickerModule} from "primeng/datepicker";
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-user-panel',
@@ -28,7 +28,7 @@ import {DatePickerModule} from "primeng/datepicker";
 export class UserPanelComponent implements OnInit {
     public translate = inject(TranslateService);
     private readonly store: Store<fromAuth.State> = inject(Store);
-    
+
     public userData$: Observable<any | null> | undefined;
     public selectedLanguage: any;
     public languages = languages;
