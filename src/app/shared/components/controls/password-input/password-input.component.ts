@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, forwardRef, input, OnInit, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, input, output} from '@angular/core';
 import {FloatLabel} from "primeng/floatlabel";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Password} from "primeng/password";
@@ -22,7 +22,7 @@ import {Password} from "primeng/password";
         }
     ],
 })
-export class PasswordInputComponent implements OnInit, ControlValueAccessor {
+export class PasswordInputComponent implements ControlValueAccessor {
     public placeholder = input<string>("Input your password...");
     public labelType = input<string>("in_label");
     public toggleMask = input<boolean>(true);
@@ -31,9 +31,6 @@ export class PasswordInputComponent implements OnInit, ControlValueAccessor {
 
     value: string = "";
     isDisabled: boolean = false;
-
-    ngOnInit(): void {
-    }
 
     private propagateChange: any = () => {
     };
@@ -56,10 +53,11 @@ export class PasswordInputComponent implements OnInit, ControlValueAccessor {
         this.isDisabled = isDisabled;
     }
 
-    onKeyup(value: string): void {
-        this.value = value;
-        this.propagateChange(value);
-        this.changed.emit(value);
+    onKeyup(password: any): void {
+        this.value = password.target.value;
+        const passwordValue = password.target.value;
+        this.propagateChange(passwordValue);
+        this.changed.emit(passwordValue);
     }
 
     onBlur(): void {

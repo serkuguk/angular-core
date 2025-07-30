@@ -1,11 +1,10 @@
-import {Component, inject, input, Input, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, inject, input, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {Observable} from "rxjs";
-import { languages, positions, userItems } from './header-dummy-data';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { OverlayModule } from "@angular/cdk/overlay";
-import { CdkMenuModule } from "@angular/cdk/menu";
+import {ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {OverlayModule} from "@angular/cdk/overlay";
+import {CdkMenuModule} from "@angular/cdk/menu";
 //store
 import {select, Store} from "@ngrx/store";
 import * as fromAuth from "@pages/auth";
@@ -27,28 +26,25 @@ import {UserPanelComponent} from "@app/componentes/user-panel/user-panel.compone
     providers: [TranslateService]
 })
 export class HeaderComponent implements OnInit {
-  collapsed = input<boolean>(false);
-  screenWidth = input<number>(0);
+    collapsed = input<boolean>(false);
+    screenWidth = input<number>(0);
 
-  public isAuthenticated$: Observable<boolean | null> | undefined;
-  public translate = inject(TranslateService);
-  private store: Store<fromAuth.State> = inject(Store);
-  public countryES: string = 'ES';
-  public countryEN: string = 'FK';
-  public countriesNames$: any;// = inject(TUI_COUNTRIES);
+    public isAuthenticated$: Observable<boolean | null> | undefined;
+    public translate = inject(TranslateService);
+    private readonly store: Store<fromAuth.State> = inject(Store);
 
-  ngOnInit(): void {
-    this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
-  }
-
-  public getHeadClass(): string {
-    let styleClass = '';
-    if (this.collapsed() && this.screenWidth() > 768) {
-      styleClass = 'head-trimmed';
-    } else {
-      styleClass = 'head-md-screen';
+    ngOnInit(): void {
+        this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
     }
 
-    return styleClass;
-  }
+    public getHeadClass(): string {
+        let styleClass = '';
+        if (this.collapsed() && this.screenWidth() > 768) {
+            styleClass = 'head-trimmed';
+        } else {
+            styleClass = 'head-md-screen';
+        }
+
+        return styleClass;
+    }
 }

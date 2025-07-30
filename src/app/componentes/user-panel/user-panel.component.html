@@ -4,8 +4,9 @@
       <div class="user-panel-username">{{ (userData$ | async)?.username }}</div>
       <div class="user-panel-avatar" (click)="userMenuToggle()">
         <app-avatar
-             [icon]="'@tui.user'"
-             [size]="'xlarge'"
+             [iconType]="'icon'"
+             [icon]="'pi pi-user'"
+             [size]="'large'"
              [class]="'text'"
         ></app-avatar>
       </div>
@@ -26,13 +27,13 @@
       </ul>
       <div class="language">
         <a (click)="translate.use('sp')">
-          <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+          <img src="http://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
                [class]="'flag flag-es'" style="width: 20px"/>
           <span>{{ 'Spain' }}</span>
         </a>
         <a (click)="translate.use('en')">
-          <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-               [class]="'flag flag-gb'" style="width: 20px"/>
+          <img src="http://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+               [class]="'flag flag-en'" style="width: 20px"/>
           <span>{{ 'English' }}</span>
         </a>
       </div>

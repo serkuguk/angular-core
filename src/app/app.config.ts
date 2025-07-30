@@ -1,5 +1,5 @@
 import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
-import {ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection} from "@angular/core";
+import {ApplicationConfig, importProvidersFrom, inject, provideZonelessChangeDetection} from "@angular/core";
 import {
     provideRouter,
     withComponentInputBinding,
@@ -23,7 +23,6 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthService} from "@pages/auth/services/auth.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {PlatformModule} from '@angular/cdk/platform';
-import {BrowserModule} from "@angular/platform-browser";
 import {basicExampleFeature} from "@pages/basic-example/store/basic-example.reducer";
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import {ENV} from "@core/tokens/environment.token";
@@ -34,9 +33,12 @@ import Aura from '@primeng/themes/aura';
 import {NgxPermissionsModule} from "ngx-permissions";
 
 // ---------- Factories ----------
+
+const jwtAllowedDomains = environment.jwtAllowedDomains ?? ['localhost:4200'];
+
 export function JwtTokenGetter() {
     const token = inject(AuthTokenStorageService).getToken('access_token');
-    return token || '';
+    return token ?? '';
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -55,7 +57,7 @@ const CORE_PROVIDERS = [
 
 // ---------- Third-party modules ----------
 const MODULE_PROVIDERS = [
-    importProvidersFrom(BrowserModule),
+    //importProvidersFrom(BrowserModule),
     importProvidersFrom(BrowserAnimationsModule),
     importProvidersFrom(PlatformModule),
     importProvidersFrom(NgxPermissionsModule.forRoot()),
@@ -63,7 +65,7 @@ const MODULE_PROVIDERS = [
         JwtModule.forRoot({
             config: {
                 tokenGetter: JwtTokenGetter,
-                allowedDomains: ['localhost:4200'],
+                allowedDomains: jwtAllowedDomains,
                 disallowedRoutes: [],
             },
         }),
@@ -92,14 +94,14 @@ const ANGULAR_PROVIDERS = [
         withInterceptorsFromDi(),
         withInterceptors([authInterceptor]),
     ),
-    provideZoneChangeDetection({eventCoalescing: true}),
+    provideZonelessChangeDetection()
 ];
 
 // ---------- Router ----------
 const ROUTER_PROVIDERS = [
     provideRouter(appRotes,
         withComponentInputBinding(),
-        withViewTransitions(),//TODO: probar
+        withViewTransitions(),
         withEnabledBlockingInitialNavigation(),
     ),
 ];

@@ -10,6 +10,7 @@ import {select, Store} from "@ngrx/store";
 import * as fromLoginAction from "@pages/auth/store/user.actions";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
 import {AvatarComponent} from "@shared/components/avatar/avatar.component";
+import {DatePickerModule} from "primeng/datepicker";
 
 @Component({
     selector: 'app-user-panel',
@@ -18,6 +19,7 @@ import {AvatarComponent} from "@shared/components/avatar/avatar.component";
         TranslateModule,
         AsyncPipe,
         AvatarComponent,
+        DatePickerModule
     ],
     templateUrl: './user-panel.component.html',
     styleUrl: './user-panel.component.scss',
@@ -26,9 +28,7 @@ import {AvatarComponent} from "@shared/components/avatar/avatar.component";
 export class UserPanelComponent implements OnInit {
     public translate = inject(TranslateService);
     private readonly store: Store<fromAuth.State> = inject(Store);
-
-    public countriesNames$: any = ''//inject('CONTRIES');
-
+    
     public userData$: Observable<any | null> | undefined;
     public selectedLanguage: any;
     public languages = languages;
