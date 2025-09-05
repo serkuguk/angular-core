@@ -14,7 +14,6 @@ import {FooterComponent} from "@layouts/components/footer/footer.component";
 import {SidenavComponent} from "@layouts/components/sidenav/components/sidenav/sidenav.component";
 import {filter} from "rxjs/operators";
 import {NavigationEnd, Router} from "@angular/router";
-import {ExcelService} from "@app/excel-service.service";
 
 @Component({
     selector: 'app-root',
@@ -32,9 +31,8 @@ import {ExcelService} from "@app/excel-service.service";
 export class AppComponent implements OnInit {
     public isSideNavCollapsed = signal<boolean>(false);
     public screenWidth = signal<number>(0);
-    jsonData: any[] = [];
 
-    constructor(private readonly excelService: ExcelService) {
+    constructor() {
     }
 
     public store: Store<fromAuth.State> = inject(Store);
@@ -55,28 +53,5 @@ export class AppComponent implements OnInit {
     public onToggleSideNav(data: ISideNavToggle): void {
         this.screenWidth.set(data.screenWidth);
         this.isSideNavCollapsed.set(data.collapsed);
-    }
-
-    sum(a: number, b: number) {
-        return a + b;
-    }
-
-
-    exportExcel(): void {
-        this.excelService.exportToExcel();
-    }
-
-    onFileChange(event: any) {
-        const file = event.target.files[0];
-        if (file) {
-            this.excelService.readExcelFile(file).subscribe({
-                next: (data) => {
-                    console.log(data);
-                    this.jsonData = data;
-                    console.log('Excel Data:', data);
-                },
-                error: (err) => console.error('Ошибка при чтении Excel:', err),
-            });
-        }
     }
 }
