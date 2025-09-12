@@ -54,4 +54,8 @@ export class AppComponent implements OnInit {
         this.screenWidth.set(data.screenWidth);
         this.isSideNavCollapsed.set(data.collapsed);
     }
+
+    public sum(num1: any, num2: any): number {
+        return num1 + num2;
+    }
 }
