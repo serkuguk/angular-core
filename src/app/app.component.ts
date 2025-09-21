@@ -32,9 +32,6 @@ export class AppComponent implements OnInit {
     public isSideNavCollapsed = signal<boolean>(false);
     public screenWidth = signal<number>(0);
 
-    constructor() {
-    }
-
     public store: Store<fromAuth.State> = inject(Store);
     public router: Router = inject(Router);
     public isAuthenticated$: Observable<boolean> | undefined;
@@ -55,7 +52,4 @@ export class AppComponent implements OnInit {
         this.isSideNavCollapsed.set(data.collapsed);
     }
 
-    public sum(num1: any, num2: any): number {
-        return num1 + num2;
-    }
 }

@@ -16,13 +16,16 @@
 <!--    ></basic-table>-->
 <!--  </div>-->
 
-<!--  <div class="table-container__item">-->
-<!--    <h3>Editable Table</h3>-->
-<!--    <editable-table-->
-<!--      [columns]="editable_columns"-->
-<!--      [accordionOne]="editable_python_data"-->
-<!--      [accordionTwo]="editable_python_starwars"-->
-<!--      [unit]="units"-->
-<!--    ></editable-table>-->
+    <div class="table-container__item">
+      <h3>Editable Table</h3>
+      <app-table
+           [dataSource]="mockData"
+           [dataSourceColumns]="primeNgTableColumns"
+           [paginator]="true"
+           [iconColor]="'orangered'"
+           [iconClass]="'fa fa-exclamation-triangle'"
+           (rowUpdate)="updateSelectedRow($event)"
+      ></app-table>
+    </div>
   </div>
 </div>

@@ -2,10 +2,10 @@ import {TestBed} from '@angular/core/testing';
 import {provideMockStore} from '@ngrx/store/testing';
 import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
-import {AppComponent} from './app.component';
+import {BodyComponent} from "@app/layouts";
 
-describe('AppComponent (unit methods only)', () => {
-    let component: AppComponent;
+describe('BodyComponent (unit methods only)', () => {
+    let component: BodyComponent;
 
     beforeEach(async () => {
         const routerEvents$ = new Subject<any>();
@@ -23,20 +23,20 @@ describe('AppComponent (unit methods only)', () => {
             ],
         }).compileComponents();
 
-        component = TestBed.runInInjectionContext(() => new AppComponent());
+        component = TestBed.runInInjectionContext(() => new BodyComponent());
     });
 
     describe('onToggleSideNav', () => {
         it('updates screenWidth and isSideNavCollapsed', () => {
-            component.onToggleSideNav({screenWidth: 1200, collapsed: true});
-            expect(component.screenWidth()).toBe(1200);
-            expect(component.isSideNavCollapsed()).toBe(true);
+            component.getBoddyClass();
+            expect(component.screenWidth()).toBe(768);
+            expect(component.collapsed()).toBe(true);
         });
 
         it('handles collapsed = false', () => {
-            component.onToggleSideNav({screenWidth: 800, collapsed: false});
-            expect(component.screenWidth()).toBe(800);
-            expect(component.isSideNavCollapsed()).toBe(false);
+            component.getBoddyClass();
+            expect(component.screenWidth()).toBe(768);
+            expect(component.collapsed()).toBe(false);
         });
     });
 });

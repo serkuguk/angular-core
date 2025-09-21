@@ -1,8 +1,10 @@
 <div class="form-field" [class.form-field_error]="hasError()" [class.form-field_inline]="isInline()">
   @if (showLabel()) {
     <label class="form-field__label">
-      {{ label() }}
-      @if (required()) {<span class="form-field__req">*</span>}
+      <span class="form-field__label-text">{{ label() }}</span>
+      @if (required()) {
+        <span class="form-field__req">*</span>
+      }
     </label>
   }
 
@@ -10,31 +12,31 @@
     <ng-content></ng-content>
 
     <div class="form-field__error">
-      @if(control() && errorKey) {
+      @if(control() && errorKey; as key) {
         @switch(errorKey) {
           @case("min") {
-            <span>Minimum {{control()?.errors?.[errorKey].min}}</span>
+            <span>Minimum {{control()?.errors?.[key].min}}</span>
           }
           @case("max") {
-            <span>Maximum {{control()?.errors?.[errorKey].max}}</span>
+            <span>Maximum {{control()?.errors?.[key].max}}</span>
           }
           @case("required") {
             <span>{{'ERRORS.FIELD_REQUIRED' | translate}}</span>
           }
           @case("minlength") {
-            <span>At least {{control()?.errors?.[errorKey].requiredLength}} characters</span>
+            <span>At least {{control()?.errors?.[key].requiredLength}} characters</span>
           }
           @case("maxlength") {
-            <span>No more than {{control()?.errors?.[errorKey].requiredLength}} characters</span>
+            <span>No more than {{control()?.errors?.[key].requiredLength}} characters</span>
           }
           @case("startsWith") {
-            <span>{{control()?.errors?.[errorKey]}} Test</span>
+            <span>{{control()?.errors?.[key]}} Test</span>
           }
           @case("startsWithParam") {
-            <span>{{control()?.errors?.[errorKey].message}} Test</span>
+            <span>{{control()?.errors?.[key].message}} Test</span>
           }
           @default {
-            @if ("pattern") {
+            @if (key === "pattern") {
               <span>
                 @if (patternError()) {
                   <span>{{patternError()}}</span>

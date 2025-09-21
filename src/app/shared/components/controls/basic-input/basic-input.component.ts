@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, forwardRef, input, OnInit, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, input, output} from '@angular/core';
 import {InputTextModule} from 'primeng/inputtext';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {FloatLabel} from "primeng/floatlabel";
@@ -18,16 +18,13 @@ import {FloatLabel} from "primeng/floatlabel";
         }
     ],
 })
-export class BasicInputComponent implements OnInit, ControlValueAccessor {
+export class BasicInputComponent implements ControlValueAccessor {
     public placeholder = input<string>("Input some text...");
     public labelType = input<string>("in_label");
     public changed = output<string>();
 
-    value: string = "";
+    value!: string;
     isDisabled: boolean = false;
-
-    ngOnInit(): void {
-    }
 
     private propagateChange: any = () => {
     };
@@ -50,10 +47,10 @@ export class BasicInputComponent implements OnInit, ControlValueAccessor {
         this.isDisabled = isDisabled;
     }
 
-    onKeyup(value: string): void {
-        this.value = value;
-        this.propagateChange(value);
-        this.changed.emit(value);
+    onKeyup(value: any): void {
+        this.value = value.target.value;
+        this.propagateChange(value.target.value);
+        this.changed.emit(value.target.value);
     }
 
     onBlur(): void {

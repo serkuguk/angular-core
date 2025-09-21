@@ -5,9 +5,9 @@
       pInputText
       class="app-input"
       [disabled]="isDisabled"
-      (keyup)="onKeyup($event.target.value)"
+      (keyup)="onKeyup($event)"
       (blur)="onBlur()"
-      [value]="value"
+      [value]="value || ''"
     />
     <label for="labelType()">{{placeholder()}}</label>
   </p-floatlabel>

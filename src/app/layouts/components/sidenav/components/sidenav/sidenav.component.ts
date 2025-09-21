@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {Component, EventEmitter, HostListener, OnInit, Output, inject, signal, ElementRef, output} from '@angular/core';
+import {Component, HostListener, OnInit, inject, signal, ElementRef, output} from '@angular/core';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import {SublevelMenuComponent} from "@app/layouts";
@@ -8,8 +8,6 @@ import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-to
 import {navabarData} from "@layouts/components/sidenav/nav-data";
 import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.interface";
 import {TranslateModule} from "@ngx-translate/core";
-/*import {TuiHint, TuiIcon} from "@taiga-ui/core";
-import {ToolTipComponent} from "@shared/components/tool-tip/tool-tip.component";*/
 
 @Component({
     selector: 'app-sidenav',
@@ -19,7 +17,7 @@ import {ToolTipComponent} from "@shared/components/tool-tip/tool-tip.component";
         RouterLinkActive,
         RouterModule,
         TranslateModule,
-        //TuiHint, TuiIcon, ToolTipComponent
+
     ],
     templateUrl: './sidenav.component.html',
     styleUrl: './sidenav.component.scss',
@@ -45,7 +43,7 @@ export class SidenavComponent implements OnInit {
   public multiple: boolean = false;
 
   public router: Router = inject(Router);
-  private elementRef = inject(ElementRef);
+  private readonly elementRef = inject(ElementRef);
 
   //Floating menu
   public isSubMenuVisible: boolean = false;
@@ -53,7 +51,7 @@ export class SidenavComponent implements OnInit {
   public submenuPosition = { top: '0px', left: '0px' };
   private hideTimeout: any = null;
 
-  @HostListener('body:resize', ['$event.target'])
+  @HostListener('window:resize', ['$event'])
   public onResize(event: any) {
     this.screenWidth.set(window.innerWidth);
     if (this.screenWidth() <= 768) {

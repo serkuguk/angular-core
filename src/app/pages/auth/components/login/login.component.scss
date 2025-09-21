@@ -33,6 +33,12 @@
   }
 }
 
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
 .custom-password-size {
   margin-top: 0.6rem;
 }

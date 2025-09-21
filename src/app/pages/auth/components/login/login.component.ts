@@ -16,7 +16,7 @@ import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
-import {FormFieldComponent} from "@shared/components/controls/from-field/form-field.component";
+import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
 import {PasswordInputComponent} from "@shared/components/controls/password-input/password-input.component";
@@ -49,16 +49,15 @@ export class LoginComponent implements OnInit {
   public loading$: Observable<boolean | null> | undefined;
   public loadingError$: Observable<string | null> | undefined;
 
-  private fb = inject(FormBuilder);
-  private store: Store<fromAuth.State> = inject(Store);
+  private readonly fb = inject(FormBuilder);
+  private readonly store: Store<fromAuth.State> = inject(Store);
 
   ngOnInit(): void {
     this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
     this.store.dispatch(fromLoginAction.init());
 
     this.loginForm = this.fb.group({
-        username: ['', {
-            updateOn: 'blur',
+        username: [null, {
             validators: [
               Validators.required,
               Validators.minLength(3),
@@ -66,7 +65,7 @@ export class LoginComponent implements OnInit {
               //passwordWithParamsValidators('secret')
             ]
         }],
-        password: ['', {
+        password: [null, {
           validators: [
             Validators.required,
             Validators.minLength(3),
@@ -77,11 +76,13 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if (this.loginForm.valid) {
-      this.store.dispatch(fromLoginAction.login(this.loginForm.value));
+    if (!this.loginForm.valid) {
       this.loadingError$ = this.store.pipe(select(fromLoginSelectors.getLoadingError));
-    } else {
       markFormGroupTouched(this.loginForm);
+      return;
     }
+
+    this.store.dispatch(fromLoginAction.login(this.loginForm.value));
+
   }
 }

@@ -12,7 +12,7 @@ export class BodyComponent {
   collapsed = input<boolean>(false);
   screenWidth = input<number>(0);
 
-  public getBoddyClass(): string {
+  public getBodyClass(): string {
     let styleClass = '';
     if (this.collapsed() && this.screenWidth() > 768) {
       styleClass = 'body-treemed';

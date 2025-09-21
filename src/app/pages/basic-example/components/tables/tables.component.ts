@@ -1,37 +1,19 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {
-  basic_columns,
-  editable_columns,
-  title_columns,
-  units} from '../../config/config-table'
-//import { TuiRoot, TuiAlert, TuiDialog } from "@taiga-ui/core";
-import * as fromLoginAction from "@pages/auth/store/user.actions";
-import * as basicExampleAction from "@pages/basic-example/store/basic-example.actions";
-import * as basicExampleSelector from "@pages/basic-example/store/basic-example.selectors";
 
-import {select, Store} from "@ngrx/store";
-/*import {DynamicTableComponent} from "@shared/components/tables/basic-table/basic-table.component";
-import {EditableTableComponent} from "@shared/components/tables/editable-table/editable-table.component";
-import {SelectComponent} from "@shared/components/controls/select/select.component";
-import {Observable} from "rxjs";
-import {BasicDataInterface} from "@core/models/backend/basick-examples/tables.interface";
-import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
-import {TuiDay} from "@taiga-ui/cdk";
-import {TabulatorTableComponent} from "@shared/components/tables/tabulator-table/tabulator-table.component";*/
+import {Store} from "@ngrx/store";
+import {TableComponent} from "@shared/components/table/table.component";
+import {basicColumns} from "@pages/basic-example/config/config-table";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
     selector: 'app-tables',
     providers: [],
     imports: [
         CommonModule,
-        /*DynamicTableComponent,
-        EditableTableComponent,
-        SelectComponent,
-        TuiRoot,
-        TuiDialog,
-        TuiAlert,
-        TabulatorTableComponent*/
+        TableComponent,
+        FormsModule,
+        ReactiveFormsModule
     ],
     templateUrl: './tables.component.html',
     styleUrls: ['./tables.component.scss'],
@@ -39,72 +21,70 @@ import {TabulatorTableComponent} from "@shared/components/tables/tabulator-table
 })
 export class TablesComponent implements OnInit {
 
-  public editable_python_data: any[] = [];
-  public editable_python_starwars: any[] = [];
+    /*public loading$: Observable<boolean | null> | undefined;
+    public basicTableData$: Observable<BasicDataInterface[] | null> | undefined;*/
+    public mockData: any[] = [];
+    private readonly store: Store = inject(Store);
+    private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
 
-  /*public loading$: Observable<boolean | null> | undefined;
-  public basicTableData$: Observable<BasicDataInterface[] | null> | undefined;*/
-  private store: Store = inject(Store);
+    ngOnInit(): void {
 
-  ngOnInit(): void {
+        this.mockData = [
+            {
+                id: 0,
+                FechaMesAnio: '01-01-2025',
+                Dia: 'Lunes',
+                Hora: 8,
+                Valor: '54,05'
+            },
+            {
+                id: 1,
+                FechaMesAnio: '01-01-2025',
+                Dia: 'Martes',
+                Hora: 10,
+                Valor: '32,10'
+            },
+            {
+                id: 2,
+                FechaMesAnio: '01-01-2025',
+                Dia: 'Miércoles',
+                Hora: 12,
+                Valor: '-5,1'
+            },
+            {
+                id: 3,
+                FechaMesAnio: '01-01-2025',
+                Dia: 'Jueves',
+                Hora: 16,
+                Valor: '75,00'
+            },
+            {
+                id: 4,
+                FechaMesAnio: '01-01-2025',
+                Dia: 'Viernes',
+                Hora: 20,
+                Valor: '12,34'
+            }
+        ];
 
+        /*this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
+        this.store.dispatch(basicExampleAction.tablesInit());
+        this.basicTableData$ = this.store.pipe(select(basicExampleSelector.getTableData));*/
+    }
 
-   /* this.editable_python_data = [
-      {
-        name: 'Holy Grail',
-        price: 999999,
-        quantity: 1,
-        unit: 'items',
-        date: TuiDay.currentLocal(),
-      },
-      {
-        name: 'Foot',
-        price: 29.95,
-        quantity: 5,
-        unit: 'kg',
-        date: TuiDay.currentLocal().append({day: -42}),
-      },
-      {
-        name: 'Shed',
-        price: 499,
-        quantity: 2,
-        unit: 'm',
-        date: TuiDay.currentLocal().append({day: -237}),
-      },
-    ];*/
+    protected readonly primeNgTableColumns = basicColumns.displayedColumns;
 
-    /*this.editable_python_starwars = [
-      {
-        name: 'Lightsaber',
-        price: 4999,
-        quantity: 3,
-        unit: 'itms',
-        date: TuiDay.currentLocal(),
-      },
-      {
-        name: 'Spaceship',
-        price: 19999,
-        quantity: 1,
-        unit: 'm',
-        date: TuiDay.currentLocal().append({day: -237}),
-      },
-      {
-        name: 'Stormtrooper helmet',
-        price: 14.95,
-        quantity: 5,
-        unit: 'kg',
-        date: TuiDay.currentLocal().append({day: -42}),
-      },
-    ];*/
+    updateSelectedRow(row: any) {
+        const filteredRow = this.mockData.findIndex(rowData => rowData.id === row.data.id);
+        if (filteredRow === -1) return;
 
-    /*this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
-    this.store.dispatch(basicExampleAction.tablesInit());
-    this.basicTableData$ = this.store.pipe(select(basicExampleSelector.getTableData));*/
-  }
-
-  protected readonly units = units;
-  protected readonly editable_columns = editable_columns;
-  protected readonly basic_columns = basic_columns;
-  protected readonly title_columns = title_columns;
-
+        const newRowData = [...this.mockData];
+        row.data = {
+            ...row.data,
+            Valor: row.newValue
+        }
+        newRowData[filteredRow] = row.data;
+        this.mockData = newRowData;
+        this.cd.markForCheck();
+    }
 }
