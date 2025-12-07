@@ -1,6 +1,6 @@
 <p-table #table class="custom-table"
          [columns]="dataSourceColumns()"
-         [value]="dataSource()"
+         [value]="enrichedDataSource()"
          [paginator]="paginator()"
          [scrollable]="scrollable()"
          [resizableColumns]="resizableColumns()"
@@ -68,13 +68,7 @@
 
               } @else {
                 <ng-container *ngTemplateOutlet="
-                                      col.type === 'datetime'
-                                      || col.type === 'date'
-                                      || col.type === 'date-mes'
-                                      || col.type === 'date-reverse'
-                                      || col.type === 'icon'
-                                      || col.type === 'decimal'
-                                      || col.type === 'clickable'
+                                      shouldUseCustomCell(col)
                                         ? customCell
                                         : defaultCell;
                                       context: { $implicit: rowData, col: col }

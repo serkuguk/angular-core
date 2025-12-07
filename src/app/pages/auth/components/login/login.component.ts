@@ -23,10 +23,8 @@ import {PasswordInputComponent} from "@shared/components/controls/password-input
 import {ButtonComponent} from "@shared/components/button/button.component";
 
 @Component({
-    selector: 'app-login',
-    providers: [
-        AuthTokenStorageService
-    ],
+  selector: 'app-login',
+  providers: [AuthTokenStorageService],
   imports: [
     CommonModule,
     FormsModule,
@@ -37,9 +35,9 @@ import {ButtonComponent} from "@shared/components/button/button.component";
     PasswordInputComponent,
     ButtonComponent
   ],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
 

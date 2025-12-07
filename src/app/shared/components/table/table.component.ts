@@ -2,16 +2,17 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    computed,
     ContentChild, effect,
     input, OnInit,
     output,
+    signal,
     TemplateRef,
     ViewChild
 } from '@angular/core';
-import {TableModule} from "primeng/table";
+import {Table, TableModule} from "primeng/table";
 import {TranslateModule} from "@ngx-translate/core";
 import {DatePipe, NgTemplateOutlet} from "@angular/common";
-import {InputText} from "primeng/inputtext";
 import {ButtonComponent} from "@shared/components/button/button.component";
 import {SortEvent} from "primeng/api";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
@@ -36,6 +37,17 @@ export interface TableColumn {
 interface IOutputRow {
     row: any[],
     rowIndex: number
+}
+
+export interface TableRowUpdateEvent {
+    data: TableRow;
+    field: string;
+    newValue: any;
+}
+
+export interface TableRowSelectEvent {
+    data: TableRow;
+    index: number;
 }
 
 export interface TableRow {
@@ -65,10 +77,27 @@ export class TableComponent implements OnInit {
 
     rows = 10;
     private currentlyEditingRow: TableRow | null = null;
-    private readonly originalByRow = new WeakMap<any, any>();
+    private readonly originalByRow = new WeakMap<TableRow, Partial<TableRow>>();
 
+    // Local signal to track the index of the currently editing row
+    private editingRowIndex = signal<number | null>(null);
 
     dataSource = input<TableRow[]>([]);
+
+    // Computed signal that enriches data with _editing flag without mutating input
+    enrichedDataSource = computed(() => {
+        const data = this.dataSource();
+        const editIndex = this.editingRowIndex();
+
+        if (editIndex === null) {
+            return data;
+        }
+
+        return data.map((row, index) => ({
+            ...row,
+            _editing: index === editIndex
+        }));
+    });
     dataSourceColumns = input<TableColumn[]>([]);
     iconColor = input<string>('');
     iconClass = input<string>('');
@@ -83,6 +112,7 @@ export class TableComponent implements OnInit {
     showRowActions = input<boolean>(true);
     showIconCondition = input<boolean>(false);
     showFilterCondition = input<string>();
+    editableFieldName = input<string>(); // Optional: explicitly specify which field is editable
     customSortFun = false;
     initialForm!: FormGroup;
 
@@ -90,14 +120,14 @@ export class TableComponent implements OnInit {
     selectRow = output<{ row: TableRow, rowIndex: number }>();
     unselectRow = output<null>();
     cellEdit = output<any>();
-    rowUpdate = output<TableRow>();
+    rowUpdate = output<TableRowUpdateEvent>();
 
-    @ViewChild('table') table: any;
+    @ViewChild('table') table!: Table;
     @ContentChild('customCellTemplate') customCellTemplate: TemplateRef<any> | undefined;
 
     constructor(private readonly cd: ChangeDetectorRef, private readonly fb: FormBuilder) {
         effect(() => {
-            const ds = this.dataSource();
+            const ds = this.enrichedDataSource();
             if (ds?.length && this.table) {
                 this.table.first = 0;
             }
@@ -113,7 +143,7 @@ export class TableComponent implements OnInit {
         });
     }
 
-    public onSelectedRow(event: any): void {
+    public onSelectedRow(event: TableRowSelectEvent): void {
         this.selectRow.emit({row: event.data, rowIndex: event.index});
     }
 
@@ -128,15 +158,13 @@ export class TableComponent implements OnInit {
         const col = this.dataSourceColumns().find(c => c.field === field);
         if (!col) return;
 
-        const isDate = col.type === 'date' || col.type === 'datetime' || col.type === 'date-mes' || col.type === 'date-reverse';
-
         if (!data) return;
 
-        data.sort((a: any, b: any) => {
+        data.sort((a: TableRow, b: TableRow) => {
             const av = a[field];
             const bv = b[field];
 
-            if (isDate) {
+            if (this.isDateType(col.type)) {
                 const ad = new Date(av);
                 const bd = new Date(bv);
                 return (ad.getTime() - bd.getTime()) * (order ?? 1);
@@ -148,15 +176,15 @@ export class TableComponent implements OnInit {
         });
     }
 
-    private takeSnapshot(row: any): void {
-        const snap: any = {};
+    private takeSnapshot(row: TableRow): void {
+        const snap: Partial<TableRow> = {};
         (this.dataSourceColumns() || [])
             .filter(c => c && c.modificable)
             .forEach(c => snap[c.field] = row[c.field]);
         this.originalByRow.set(row, snap);
     }
 
-    private revertFromSnapshot(row: any): void {
+    private revertFromSnapshot(row: TableRow): void {
         const snap = this.originalByRow.get(row);
         if (snap) {
             Object.keys(snap).forEach(k => row[k] = snap[k]);
@@ -164,35 +192,77 @@ export class TableComponent implements OnInit {
         }
     }
 
+    /**
+     * Determines the field name to edit.
+     * Priority: 1) explicit editableFieldName input, 2) first modificable column
+     */
+    private getEditableField(): string | null {
+        // First, check if editableFieldName is explicitly provided
+        const explicitField = this.editableFieldName();
+        if (explicitField) {
+            return explicitField;
+        }
+
+        // Otherwise, find the first modificable column
+        const modificableCol = this.dataSourceColumns().find(col => col.modificable);
+        return modificableCol?.field ?? null;
+    }
+
+    /**
+     * Determines if a column type is a date type
+     */
+    private isDateType(type: ColumnType): boolean {
+        return type === 'date' || type === 'datetime' || type === 'date-mes' || type === 'date-reverse';
+    }
+
+    /**
+     * Determines if a column should use custom cell template
+     */
+    shouldUseCustomCell(col: TableColumn): boolean {
+        return this.isDateType(col.type)
+            || col.type === 'icon'
+            || col.type === 'decimal'
+            || col.type === 'clickable';
+    }
+
     public startEdit(row: TableRow, rowIndex: number): void {
-        this.initialForm.controls.inputValue.setValue(row.Valor);
+        // Dynamically get the editable field instead of hardcoding 'Valor'
+        const editableField = this.getEditableField();
+        if (!editableField) {
+            console.warn('No editable field found. Make sure at least one column has modificable: true or provide editableFieldName input.');
+            return;
+        }
+
+        this.initialForm.controls.inputValue.setValue(row[editableField]);
+
+        // If another row was being edited, revert its changes
         if (this.currentlyEditingRow && this.currentlyEditingRow !== row) {
             this.revertFromSnapshot(this.currentlyEditingRow);
-            this.currentlyEditingRow._editing = false;
         }
 
-        if (Array.isArray(this.dataSource())) {
-            this.dataSource().forEach((r, i) => {
-                if (i !== rowIndex) {
-                    r._editing = false;
-                }
-            });
-        }
-
-        row._editing = true;
+        // Update the editing index signal (no mutation of input data)
+        this.editingRowIndex.set(rowIndex);
         this.takeSnapshot(row);
         this.currentlyEditingRow = row;
 
         this.cd.markForCheck();
     }
 
-    public confirmEdit(row: any): void {
-        row._editing = false;
+    public confirmEdit(row: TableRow): void {
+        const editableField = this.getEditableField();
+        if (!editableField) {
+            console.warn('No editable field found.');
+            return;
+        }
+
+        // Clear the editing state
+        this.editingRowIndex.set(null);
         this.originalByRow.delete(row);
         this.currentlyEditingRow = null;
 
         this.rowUpdate.emit({
             data: row,
+            field: editableField,
             newValue: this.initialForm.controls.inputValue.value,
         });
     }
@@ -203,7 +273,10 @@ export class TableComponent implements OnInit {
             Object.keys(snap).forEach(k => row[k] = snap[k]);
             this.originalByRow.delete(row);
         }
-        row._editing = false;
+
+        // Clear the editing state
+        this.editingRowIndex.set(null);
+        this.currentlyEditingRow = null;
         this.cd.markForCheck();
     }
 

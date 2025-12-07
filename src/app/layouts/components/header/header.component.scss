@@ -20,6 +20,8 @@
     &__logo {
       display: inline-flex;
       gap: 0.2rem;
+      margin-left: 5rem;
+      transition: margin-left 0.5s ease;
 
       img {
         width: 2.5rem;
@@ -39,6 +41,10 @@
 .head-trimmed {
   width: calc(100% - 16.5625rem);
   margin-left: 16.5625rem;
+
+  .header-container__logo {
+    margin-left: 1rem;
+  }
 }
 
 .head-md-screen {
