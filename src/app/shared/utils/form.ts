@@ -1,4 +1,3 @@
-import { ControlItem } from '@app/core/models/frontend';
 import {FormGroup} from "@angular/forms";
 
 export const markFormGroupTouched = (formGroup: FormGroup) => {
@@ -11,21 +10,20 @@ export const markFormGroupTouched = (formGroup: FormGroup) => {
     });
 };
 
-export interface Control {
-    items?: ControlItem[];
-    changed?: () => void;
-    map?: () => void;
-}
 
-export interface ControlEntities {
-    [key: string]: Control;
-}
+/*export const markFormGroupTouched = (formGroup: any) => {
+    for (const inner in formGroup.controls) {
+        if (formGroup.controls.hasOwnProperty(inner)) {
+            const control = formGroup.get(inner);
 
-export const mapControls = (controls: ControlEntities): void => {
-    Object.keys(controls).forEach(key => {
-        if (controls[key].map) {
-           // controls[key].map();
+            if (control instanceof FormGroup) {
+                markFormGroupTouched(control);
+            } else {
+                control.markAsTouched({ onlySelf: true });
+                control.markAsDirty({ onlySelf: true });
+                control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+            }
         }
-    });
-};
+    }
+};*/
 

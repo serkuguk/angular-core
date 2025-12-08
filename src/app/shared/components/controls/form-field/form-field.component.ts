@@ -1,31 +1,63 @@
-import {Component, OnInit, Input, input, ChangeDetectionStrategy, ChangeDetectorRef, inject} from '@angular/core';
-import { AbstractControl } from '@angular/forms';
-import {CommonModule} from "@angular/common";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    effect,
+    forwardRef, inject,
+    input,
+} from '@angular/core';
+import {AbstractControl, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {TranslateModule} from "@ngx-translate/core";
+import {startWith} from "rxjs/operators";
+import {merge} from "rxjs";
 
 @Component({
     selector: 'app-form-field',
-    standalone: true,
     imports: [
-      CommonModule
+        TranslateModule
     ],
     templateUrl: './form-field.component.html',
-    styleUrls: ['./form-field.component.scss']
+    styleUrl: './form-field.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => FormFieldComponent),
+            multi: true
+        }
+    ],
 })
 export class FormFieldComponent {
-    public label = input<string>();
-    public required = input<boolean>();
-    public isInline = input<boolean>(true);
-    public showLabel = input<boolean>();
-    public control = input<AbstractControl>();
-    public patternError = input<string>();
+    private readonly cdr = inject(ChangeDetectorRef);
+
+    label = input<string>();
+    required = input<boolean>(false);
+    isInline = input<boolean>(true);
+    showLabel = input<boolean>(false);
+    control = input.required<AbstractControl>();
+    patternError = input<string>();
+
+    constructor() {
+        effect(() => {
+            const control = this.control();
+            if (!control) return;
+
+            const sub = merge(control.statusChanges, control.valueChanges)
+                .pipe(startWith(null))
+                .subscribe(() => this.cdr.markForCheck());
+
+            return () => sub.unsubscribe();
+        });
+    }
 
     hasError(): boolean {
-      const control = this.control();
-      return !!control && control.invalid && control.touched;
+        const control = this.control();
+        return !!control && control.invalid && control.touched;
     }
 
     get errorKey() {
-      const control = this.control();
-      return (control && control?.errors && Object.keys(control.errors)[0]) ? Object.keys(control.errors)[0] : null;
+        const control = this.control();
+        const errs = control?.errors ?? null;
+        return errs ? Object.keys(errs)[0] : null;
     }
 }

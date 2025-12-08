@@ -16,7 +16,7 @@ export const navabarData: INavbarData[] = [
         label: 'TABLES',
       },
       {
-        routerLink: 'basic-examples/buttons',
+        routerLink: 'basic-examples/button',
         label: 'BUTTONS',
       },
       {

@@ -7,29 +7,28 @@ import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
-  selector: 'app-sublevel-menu',
-  standalone: true,
-  imports: [CommonModule,
-    RouterLinkActive,
-    RouterLink,
-    TranslateModule],
-  templateUrl: './sublevel-menu.component.html',
-  styleUrl: './sublevel-menu.component.scss',
-  animations: [
-    fadeInOut,
-    trigger('submenu', [
-      state('hidden', style({
-        height: '0',
-        overflow: 'hidden'
-      })),
-      state('visible', style({
-        height: '*'
-      })),
-      transition('visible <=> hidden', [style({overflow: 'hidden'}),
-        animate('{{transitionParams}}')]),
-      transition('void => *', animate(0))
-    ])
-  ]
+    selector: 'app-sublevel-menu',
+    imports: [CommonModule,
+        RouterLinkActive,
+        RouterLink,
+        TranslateModule],
+    templateUrl: './sublevel-menu.component.html',
+    styleUrl: './sublevel-menu.component.scss',
+    animations: [
+        fadeInOut,
+        trigger('submenu', [
+            state('hidden', style({
+                height: '0',
+                overflow: 'hidden'
+            })),
+            state('visible', style({
+                height: '*'
+            })),
+            transition('visible <=> hidden', [style({ overflow: 'hidden' }),
+                animate('{{transitionParams}}')]),
+            transition('void => *', animate(0))
+        ])
+    ]
 })
 export class SublevelMenuComponent {
 

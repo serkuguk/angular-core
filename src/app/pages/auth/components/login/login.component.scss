@@ -1,4 +1,4 @@
-.login-wrapper  {
+.login-wrapper {
   width: calc(100% - 5rem);
   margin-top: 92px;
   margin-left: 5rem;
@@ -31,4 +31,19 @@
   .login-error {
     margin-bottom: 1.5rem;
   }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.custom-password-size {
+  margin-top: 0.6rem;
+}
+
+
+.button-style {
+  background-color: #070e27;
 }

@@ -1,6 +1,6 @@
 .forms-container  {
   max-width: 50rem;
-  &__item {}
+
  .delivery-form {
    border: 1px solid black;
    border-radius: 0.5rem;
@@ -8,16 +8,6 @@
    padding: 1rem;
    margin-bottom: 3rem;
 
-   &__date-range {
-     display: flex;
-     flex-direction: row;
-     width: 100%;
-     gap: 1rem;
-   }
-
-   .range-item {
-     flex: 1 1 5rem;
-   }
 
    .delivery-title {
      display: flex;
@@ -26,6 +16,21 @@
      justify-content: space-between;
    }
  }
+
+  &__date-range {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1rem;
+
+    &.range-item {
+      flex: 1 1 5rem;
+    }
+  }
+
+  .range-item {
+    flex: 1 1 5rem;
+  }
 }
 
 h2 {

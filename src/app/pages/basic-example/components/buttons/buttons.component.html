@@ -1,19 +1,10 @@
 <h2>Buttons</h2>
-
-<div class="button-container">
-  <div class="button-container__item">
-    <app-loader [showLoader]="true"
-                [loaderClass]="'inline-flex'"
-                [size]="'s'">
-      <app-button [iconStart]="'@tui.user'"
-                  [size]="'l'"
-      >{{ 'BUTTON.LOGIN' | translate }}</app-button>
-    </app-loader>
-  </div>
-
-  <div class="button-container__item">
-      <app-button [iconEnd]="'@tui.settings'"
-                  [size]="'l'"
-      >{{ 'BUTTON.LOGIN' | translate }}</app-button>
+<div class="table-container">
+  <div class="table-container__item">
+    <div class="table-container__item">
+      <app-button
+        [label]="'Custom Button'"
+      ></app-button>
+    </div>
   </div>
 </div>

@@ -13,7 +13,7 @@ export const init = createEffect(
    authService = inject(AuthService)) => {
     return init$.pipe(
       ofType(fromUserActions.init),
-      switchMap(() =>
+        switchMap(() =>
         authService.init().pipe(
           map((auth) => fromUserActions.initAuthorized({access_token: auth})),
           catchError((error: { message: string }) =>

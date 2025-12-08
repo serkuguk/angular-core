@@ -1,38 +1,33 @@
 <div class="login-wrapper">
-    <div class="login-container">
-        <div class="login-container__title">
-          <h2>NTT DATA</h2>
-          <h3>{{'PAGES.LOGIN.TITLE' | translate }}</h3>
-        </div>
-        <form class="login-container__form"
-              [formGroup]="loginForm">
-            <app-form-field label="Username"
-                        [required]="true"
-                        [control]="loginForm.controls.username"
-                        [showLabel]="false"
-                        [isInline]="isInline">
-                <app-input formControlName="username"
-                           [placeholder]="'PAGES.LOGIN.USER' | translate"></app-input>
-            </app-form-field>
-            <app-form-field label="Password"
-                        [required]="true"
-                        [control]="loginForm.controls.password"
-                        [showLabel]="false"
-                        [isInline]="isInline">
-                <app-input-password formControlName="password"
-                           [placeholder]="'PAGES.LOGIN.PASSWORD' | translate"></app-input-password>
-            </app-form-field>
-            <div class="login-error">
-              <span>{{(loadingError$ | async)}}</span>
-            </div>
-            <app-loader [showLoader]="(loading$ | async)"
-                        [loaderClass]="'inline-flex'"
-                        [size]="'s'">
-              <app-button [iconStart]="'@tui.user'"
-                          [size]="'l'"
-                          (click)="login()"
-              >{{ 'BUTTON.LOGIN' | translate }}</app-button>
-            </app-loader>
-        </form>
+  <div class="login-container">
+    <div class="login-container__title">
+      <h2>NTT DATA</h2>
+      <h3>{{ 'PAGES.LOGIN.TITLE' | translate }}</h3>
     </div>
+    <form class="login-container__form" [formGroup]="loginForm">
+      <div class="items">
+        <app-form-field label="Username"
+                        [control]="loginForm.controls.username">
+          <app-basic-input formControlName="username"
+                           [placeholder]="'PAGES.LOGIN.USER' | translate"></app-basic-input>
+        </app-form-field>
+
+        <app-form-field label="Password"
+                        [control]="loginForm.controls.password">
+          <app-password-input formControlName="password"
+                              class="custom-password-size"
+                              [placeholder]="'PAGES.LOGIN.PASSWORD' | translate"></app-password-input>
+        </app-form-field>
+      </div>
+      <div class="login-error">
+        <span>{{ (loadingError$ | async) }}</span>
+      </div>
+      <app-button
+           [label]="'BUTTON.LOGIN' | translate"
+           [icon]="'pi pi-users'"
+           [size]="'large'"
+           [styleClass]="'button-style'"
+           (click)="login()"></app-button>
+    </form>
+  </div>
 </div>

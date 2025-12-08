@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {Component, EventEmitter, HostListener, OnInit, Output, inject, signal, ElementRef, output} from '@angular/core';
+import {Component, HostListener, OnInit, inject, signal, ElementRef, output} from '@angular/core';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import {SublevelMenuComponent} from "@app/layouts";
@@ -8,35 +8,31 @@ import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-to
 import {navabarData} from "@layouts/components/sidenav/nav-data";
 import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.interface";
 import {TranslateModule} from "@ngx-translate/core";
-import {TuiHint, TuiIcon} from "@taiga-ui/core";
-import {ToolTipComponent} from "@shared/components/tool-tip/tool-tip.component";
 
 @Component({
-  selector: 'app-sidenav',
-  standalone: true,
-  imports: [CommonModule,
-    SublevelMenuComponent,
-    RouterLink,
-    RouterLinkActive,
-    RouterModule,
-    TranslateModule,
-    TuiHint, TuiIcon, ToolTipComponent
-  ],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss',
-  animations: [
-    fadeInOut,
-    trigger('rotate', [
-      transition(':enter', [
-        animate('1000ms',
-          keyframes([
-            style({transform: 'rotate(0deg)', offset: '0'}),
-            style({transform: 'rotate(2turn)', offset: '1'}),
-          ])
-        )
-      ])
-    ])
-  ]
+    selector: 'app-sidenav',
+    imports: [CommonModule,
+        SublevelMenuComponent,
+        RouterLink,
+        RouterLinkActive,
+        RouterModule,
+        TranslateModule,
+
+    ],
+    templateUrl: './sidenav.component.html',
+    styleUrl: './sidenav.component.scss',
+    animations: [
+        fadeInOut,
+        trigger('rotate', [
+            transition(':enter', [
+                animate('1500ms', keyframes([
+                    style({ opacity: 0, transform: 'rotate(0deg)', offset: 0 }),
+                    style({ opacity: 0.5, transform: 'rotate(1turn)', offset: 0.5 }),
+                    style({ opacity: 1, transform: 'rotate(2turn)', offset: 1 })
+                ]))
+            ])
+        ])
+    ]
 })
 export class SidenavComponent implements OnInit {
 
@@ -47,7 +43,7 @@ export class SidenavComponent implements OnInit {
   public multiple: boolean = false;
 
   public router: Router = inject(Router);
-  private elementRef = inject(ElementRef);
+  private readonly elementRef = inject(ElementRef);
 
   //Floating menu
   public isSubMenuVisible: boolean = false;
@@ -55,8 +51,8 @@ export class SidenavComponent implements OnInit {
   public submenuPosition = { top: '0px', left: '0px' };
   private hideTimeout: any = null;
 
-  @HostListener('body:resize', ['$event.target'])
-  public onResize(event: any) { console.log('event', event);
+  @HostListener('window:resize', ['$event'])
+  public onResize(event: any) {
     this.screenWidth.set(window.innerWidth);
     if (this.screenWidth() <= 768) {
       this.collapsed.set(false);

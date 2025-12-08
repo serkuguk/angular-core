@@ -4,14 +4,15 @@ import {TranslateModule} from "@ngx-translate/core";
 import {NameValidator} from "@pages/basic-example/components/forms/validators/name.validator";
 import {getAddressForm} from "@pages/basic-example/components/forms/validators/addres.validator";
 import {validateDateRange} from "@pages/basic-example/components/forms/validators/range.validator";
-import {DynamicTableComponent} from "@shared/components/tables/basic-table/basic-table.component";
+/*import {DynamicTableComponent} from "@shared/components/tables/basic-table/basic-table.component";
 import {EditableTableComponent} from "@shared/components/tables/editable-table/editable-table.component";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {InputComponent} from "@shared/components/controls/input/input.component";
 import {DateComponent} from "@shared/components/controls/date/date.component";
 import {KeyValuePipe} from "@angular/common";
 import {SelectComponent} from "@shared/components/controls/select/select.component";
-import {ButtonComponent} from "@shared/components/buttons";
+import {ButtonComponent} from "@shared/components/button";*/
+import {Observable, of} from "rxjs";
 
 export enum ReceiverType {
   PERSON = 'PERSON',
@@ -19,28 +20,27 @@ export enum ReceiverType {
 }
 
 @Component({
-  selector: 'app-forms',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    TranslateModule,
-    DynamicTableComponent,
-    EditableTableComponent,
-    FormFieldComponent,
-    InputComponent,
-    DateComponent,
-    KeyValuePipe,
-    SelectComponent,
-    ButtonComponent
-  ],
-  templateUrl: './forms.component.html',
-  styleUrl: './forms.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-forms',
+    imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        /*DynamicTableComponent,
+        EditableTableComponent,
+        FormFieldComponent,
+        InputComponent,
+        DateComponent,
+        KeyValuePipe,
+        SelectComponent,
+        ButtonComponent*/
+    ],
+    templateUrl: './forms.component.html',
+    styleUrl: './forms.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormsComponent {
 
   public readonly isInline: boolean = true;
-  public readonly type = signal<any[]>(['PERSON', 'LEGAL']);
+  public readonly type = signal<Observable<any[]>>(of(['PERSON', 'LEGAL']));
   nameValidator = inject(NameValidator);
 
   /*constructor() {

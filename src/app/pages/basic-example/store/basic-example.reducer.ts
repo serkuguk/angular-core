@@ -1,22 +1,20 @@
 
 import {createFeature, createReducer, on} from "@ngrx/store";
-import * as UserLoginActions from './basic-example.actions';
+import * as BasicExampleActions from './basic-example.actions';
+import {BasicDataInterface} from "@core/models/backend/basick-examples/tables.interface";
 
 export const BASIC_EXAMPLE_KEY = 'basic-example';
 
+
 export interface BasicState {
-    user: string | null;
-    access_token: string | boolean | null;
+    basicData: BasicDataInterface[],
     loading: boolean | null;
-    role: string | null;
     error: string | null;
 }
 
 export const initialState: BasicState = {
-    user: null,
-    access_token: null,
+    basicData: [],
     loading: null,
-    role: null,
     error: null
 };
 
@@ -24,55 +22,29 @@ export const basicExampleFeature = createFeature({
   name: BASIC_EXAMPLE_KEY,
   reducer: createReducer(
     initialState,
-    on(UserLoginActions.tablesInit,
-      state => ({ ...state})
+    on(BasicExampleActions.tablesInit,
+      state => ({ ...state, loading: true})
     ),
 
-    on(UserLoginActions.tablesSuccess,
-      (state, {access_token}) => ({...state, access_token: access_token})
+    on(BasicExampleActions.tablesSuccess,
+      (state, {basicData}) => ({...state, basicData: basicData, loading: false, error: null})
     ),
 
-    on(UserLoginActions.tablesError,
-      (state, {error}) => ({ ...state, loading: false, error: error })
+    on(BasicExampleActions.tablesError,
+        (state, {error}) => ({...state, error: error, loading: false})
     ),
 
-    //Login
-    on(UserLoginActions.login,
-      (state) => ({ ...state, loading: true })
+    //Dropdown
+    on(BasicExampleActions.dropdownInit,
+        state => ({...state, loading: true})
     ),
 
-    on(UserLoginActions.loginSuccess,
-      (state, {user}) => ({ ...state, user: user, loading: false, error: null })
+    on(BasicExampleActions.dropdownSuccess,
+        (state, {basicData}) => ({...state, basicData: basicData, loading: false, error: null})
     ),
 
-    on(UserLoginActions.loginError,
-      state => ({ ...state,  error: state.error, loading: false })
-    ),
-
-    //Logout
-    on(UserLoginActions.logOut,
-      state => ({ ...state, loading: true })
-    ),
-
-    on(UserLoginActions.logOutSuccess,
-      state => ({ ...state, error: state.error, loading: false })
-    ),
-
-    on(UserLoginActions.logOutError,
-      state => ({ ...state,  error: state.error, loading: false })
-    ),
-
-    //Update
-    on(UserLoginActions.updateUser,
-      state => ({ ...state, loading: true, error: null })
-    ),
-
-    on(UserLoginActions.updateUserSuccess,
-      state => ({ ...state, user: state.user, loading: false })
-    ),
-
-    on(UserLoginActions.updateUserError,
-      state => ({ ...state,  loading: false, error: state.error })
-    ),
+    on(BasicExampleActions.dropdownError,
+        (state, {error}) => ({...state, error: error, loading: false})
+    )
   )
 })

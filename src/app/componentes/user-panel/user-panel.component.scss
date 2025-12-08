@@ -32,7 +32,7 @@
 
 .overlay-user {
   position: fixed;
-  top: 3rem;
+  top: 4rem;
   right: 0;
   z-index: 1000;
   background: white;
@@ -43,7 +43,7 @@
   ul {
     padding: 0.5rem 0;
     list-style: none;
-    width: 10rem;
+    width: 11rem;
 
     li {
       padding: 0.35rem 1.5rem;
@@ -63,12 +63,18 @@
   }
 }
 
-
 .language {
   display: flex;
   justify-content: center;
   width: 100%;
+
   a {
     cursor: pointer;
+
+    span {
+      color: #000;
+      font-size: 0.8rem;
+      padding: 0.5rem;
+    }
   }
 }

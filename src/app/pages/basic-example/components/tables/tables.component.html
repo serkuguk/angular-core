@@ -1,17 +1,16 @@
 <h2>Tables</h2>
 <div class="table-container">
   <div class="table-container__item">
-    <h3>Basic Table</h3>
-    <basic-table
-      [columns]="basic_columns"
-      [dataSource]="dataSource"
-    ></basic-table>
-  </div>
-
-  <div class="table-container__item">
-    <h3>Editable Table</h3>
-    <editable-table
-      [columns]="editable_columns"
-    ></editable-table>
+    <div class="table-container__item">
+      <h3>Editable Table</h3>
+      <app-table
+           [dataSource]="mockData"
+           [dataSourceColumns]="primeNgTableColumns"
+           [paginator]="true"
+           [iconColor]="'orangered'"
+           [iconClass]="'fa fa-exclamation-triangle'"
+           (rowUpdate)="updateSelectedRow($event)"
+      ></app-table>
+    </div>
   </div>
 </div>

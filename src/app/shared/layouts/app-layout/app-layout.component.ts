@@ -1,18 +1,21 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-layout',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './app-layout.component.html',
   styleUrls: ['./app-layout.component.scss']
 })
 export class AppLayoutComponent implements OnInit {
 
-  @Input() filterForm: FormGroup;
+  @Input() filterForm: FormGroup | undefined;
   @Input() canEdit: boolean = false;
   @Input() canSave: boolean = false;
   @Input() canCancel: boolean = false;
-  @Input() canSearch: boolean;
+  @Input() canSearch: boolean | undefined;
   @Input() notification: string = '';
   @Input() tableTitle: string = '';
   @Input() showTable: boolean = false;
