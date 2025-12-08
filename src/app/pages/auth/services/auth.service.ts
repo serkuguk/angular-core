@@ -1,14 +1,15 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable, inject} from "@angular/core";
-import {catchError, Observable, of, tap, throwError} from "rxjs";
+import {catchError, finalize, Observable, of, tap, throwError} from "rxjs";
 import {LoginRequestInterface} from "../types/login-request_interface";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {map} from "rxjs/operators";
 import {ENV} from "@core/tokens/environment.token";
 import {EnvironmentInterface} from "@core/interfaces/environment.interface";
+import {ApiBaseService} from "@core/services/api-base.service";
 
 @Injectable()
-export class AuthService {
+export class AuthService extends ApiBaseService {
 
   private http: HttpClient = inject(HttpClient);
   private authTokenStorageService: AuthTokenStorageService = inject(AuthTokenStorageService);
@@ -37,15 +38,15 @@ export class AuthService {
   }
 
   public refreshAccessToken(): Observable<any> {
-    return this.http.post(`${this.env.server_url}/auth/refresh_token`,
-      {refresh_token: this.refreshToken})
+    return this.http.post(`${this.env.server_url}/auth/refresh_token`, {refresh_token: this.refreshToken})
       .pipe(
         tap((res: any) => this.saveToken(res)),
         catchError(err => {
           this.token = null;
           this.authTokenStorageService.logOut()
-          return throwError(err);
-        })
+          return this.handleError(err, {})
+        }),
+        finalize(() => of([])) /*this.spinnerService.spinner('hide'))*/,
       )
   }
 

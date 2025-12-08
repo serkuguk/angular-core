@@ -1,7 +1,8 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { APP_STATE } from '../../tokens/stor-token.token';
+import {APP_STATE} from "@shared/tokens/store-token.constant";
+
 
 /**
  * Interfaz para la configuración de GlobalStore
