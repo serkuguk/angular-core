@@ -1,1 +1,9 @@
-<p>checkbox works!</p>
+<p-checkbox
+    [(ngModel)]="value"
+    [binary]="binary()"
+    [label]="label()"
+    [disabled]="disabled() || isDisabled"
+    [readonly]="readonly()"
+    (onChange)="onChange($event)"
+    (onBlur)="onBlur()"
+/>
