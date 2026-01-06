@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, forwardRef, input, output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, inject, input, output, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CheckboxModule} from 'primeng/checkbox';
 
@@ -48,10 +48,10 @@ export class CheckboxComponent implements ControlValueAccessor {
         this.isDisabled = isDisabled;
     }
 
-    onChange(event: any): void {
-        this.value = event.checked;
-        this.propagateChange(event.checked);
-        this.changed.emit(event.checked);
+    onValueChange(checked: boolean): void {
+        this.value = checked;
+        this.propagateChange(checked);
+        this.changed.emit(checked);
     }
 
     onBlur(): void {

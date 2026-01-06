@@ -1,9 +1,13 @@
-<p-checkbox
-    [(ngModel)]="value"
-    [binary]="binary()"
-    [label]="label()"
-    [disabled]="disabled() || isDisabled"
-    [readonly]="readonly()"
-    (onChange)="onChange($event)"
-    (onBlur)="onBlur()"
-/>
+<div class="checkbox-wrapper">
+    <p-checkbox
+        [ngModel]="value"
+        [binary]="binary()"
+        [disabled]="disabled() || isDisabled"
+        [readonly]="readonly()"
+        (ngModelChange)="onValueChange($event)"
+        (onBlur)="onBlur()"
+    />
+    @if (label()) {
+        <label class="checkbox-label">{{ label() }}</label>
+    }
+</div>

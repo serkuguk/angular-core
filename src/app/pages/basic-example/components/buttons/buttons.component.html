@@ -8,3 +8,15 @@
     </div>
   </div>
 </div>
+
+<h3>Checkbox Example</h3>
+<div class="table-container">
+  <div class="table-container__item">
+    <app-checkbox
+      [(ngModel)]="esMenorEdad"
+      [label]="'Tienes menor edad?'"
+      (changed)="onCheckboxChanged($event)"
+    />
+    <p>Valor actual: {{ esMenorEdad ? 'Sí' : 'No' }}</p>
+  </div>
+</div>
