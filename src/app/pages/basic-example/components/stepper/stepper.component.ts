@@ -2,6 +2,8 @@ import {Component, signal} from '@angular/core';
 import {StepChangeEvent, StepConfig, StepperControlComponent, StepperStepDirective} from "@shared/components/controls";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {JsonPipe} from "@angular/common";
+import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
+import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
 
 /**
  * Interface for the stepper form data structure
@@ -24,7 +26,9 @@ interface StepperFormData {
     StepperControlComponent,
     StepperStepDirective,
     ReactiveFormsModule,
-    JsonPipe
+    JsonPipe,
+    FormFieldComponent,
+    BasicInputComponent
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
