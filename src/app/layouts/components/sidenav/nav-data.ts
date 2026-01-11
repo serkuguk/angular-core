@@ -30,6 +30,10 @@ export const navabarData: INavbarData[] = [
       {
         routerLink: 'basic-examples/forms',
         label: 'FORMS',
+      },
+      {
+        routerLink: 'basic-examples/stepper',
+        label: 'STEPPER',
       }
     ]
   },

@@ -1,0 +1,238 @@
+<h2>Stepper Control Example</h2>
+
+<div class="stepper-container">
+  <!-- Basic Horizontal Stepper with Reactive Forms -->
+  <div class="stepper-example">
+    <h3>Horizontal Stepper (with Form Validation)</h3>
+    <form [formGroup]="stepperFormGroup">
+      <app-stepper-control
+        [steps]="stepperSteps()"
+        [linear]="false"
+        [orientation]="'horizontal'"
+        [showNavigation]="true"
+        [backLabel]="'Previous'"
+        [nextLabel]="'Continue'"
+        [finishLabel]="'Submit'"
+        [formControl]="stepperControl"
+        (stepChange)="onStepChange($event)"
+        (complete)="onStepperComplete()">
+
+        <!-- Step 1: Personal Information -->
+        <ng-template appStepperStep [step]="0">
+          <div class="step-form" [formGroup]="personalInfoGroup">
+            <h4>Personal Information</h4>
+            <p>Enter your personal details in this step.</p>
+
+            <div class="form-group">
+              <label for="fullName">Full Name <span class="required">*</span></label>
+              <input
+                id="fullName"
+                type="text"
+                formControlName="fullName"
+                placeholder="John Doe"
+                class="form-control"
+                [class.is-invalid]="personalInfoGroup.get('fullName')?.invalid && personalInfoGroup.get('fullName')?.touched" />
+              @if (personalInfoGroup.get('fullName')?.invalid && personalInfoGroup.get('fullName')?.touched) {
+                <div class="invalid-feedback">
+                  @if (personalInfoGroup.get('fullName')?.hasError('required')) {
+                    <small>Full name is required.</small>
+                  }
+                  @if (personalInfoGroup.get('fullName')?.hasError('minlength')) {
+                    <small>Full name must be at least 3 characters.</small>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email <span class="required">*</span></label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="john@example.com"
+                class="form-control"
+                [class.is-invalid]="personalInfoGroup.get('email')?.invalid && personalInfoGroup.get('email')?.touched" />
+              @if (personalInfoGroup.get('email')?.invalid && personalInfoGroup.get('email')?.touched) {
+                <div class="invalid-feedback">
+                  @if (personalInfoGroup.get('email')?.hasError('required')) {
+                    <small>Email is required.</small>
+                  }
+                  @if (personalInfoGroup.get('email')?.hasError('email')) {
+                    <small>Please enter a valid email address.</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- Step 2: Address Details -->
+        <ng-template appStepperStep [step]="1">
+          <div class="step-form" [formGroup]="addressDetailsGroup">
+            <h4>Address Details</h4>
+            <p>Provide your address information.</p>
+
+            <div class="form-group">
+              <label for="streetAddress">Street Address <span class="required">*</span></label>
+              <input
+                id="streetAddress"
+                type="text"
+                formControlName="streetAddress"
+                placeholder="123 Main St"
+                class="form-control"
+                [class.is-invalid]="addressDetailsGroup.get('streetAddress')?.invalid && addressDetailsGroup.get('streetAddress')?.touched" />
+              @if (addressDetailsGroup.get('streetAddress')?.invalid && addressDetailsGroup.get('streetAddress')?.touched) {
+                <div class="invalid-feedback">
+                  <small>Street address is required.</small>
+                </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="city">City <span class="required">*</span></label>
+              <input
+                id="city"
+                type="text"
+                formControlName="city"
+                placeholder="New York"
+                class="form-control"
+                [class.is-invalid]="addressDetailsGroup.get('city')?.invalid && addressDetailsGroup.get('city')?.touched" />
+              @if (addressDetailsGroup.get('city')?.invalid && addressDetailsGroup.get('city')?.touched) {
+                <div class="invalid-feedback">
+                  <small>City is required.</small>
+                </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="postalCode">Postal Code <span class="required">*</span></label>
+              <input
+                id="postalCode"
+                type="text"
+                formControlName="postalCode"
+                placeholder="10001"
+                class="form-control"
+                [class.is-invalid]="addressDetailsGroup.get('postalCode')?.invalid && addressDetailsGroup.get('postalCode')?.touched" />
+              @if (addressDetailsGroup.get('postalCode')?.invalid && addressDetailsGroup.get('postalCode')?.touched) {
+                <div class="invalid-feedback">
+                  @if (addressDetailsGroup.get('postalCode')?.hasError('required')) {
+                    <small>Postal code is required.</small>
+                  }
+                  @if (addressDetailsGroup.get('postalCode')?.hasError('pattern')) {
+                    <small>Please enter a valid postal code (e.g., 12345 or 12345-6789).</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- Step 3: Review & Submit -->
+        <ng-template appStepperStep [step]="2">
+          <div class="step-form">
+            <h4>Review & Submit</h4>
+            <p>Please review your information before submitting.</p>
+
+            <div class="review-summary">
+              <div class="review-section">
+                <h5>Personal Information</h5>
+                <p><strong>Full Name:</strong> {{ personalInfoGroup.get('fullName')?.value || 'Not provided' }}</p>
+                <p><strong>Email:</strong> {{ personalInfoGroup.get('email')?.value || 'Not provided' }}</p>
+              </div>
+
+              <div class="review-section">
+                <h5>Address Details</h5>
+                <p><strong>Street Address:</strong> {{ addressDetailsGroup.get('streetAddress')?.value || 'Not provided' }}</p>
+                <p><strong>City:</strong> {{ addressDetailsGroup.get('city')?.value || 'Not provided' }}</p>
+                <p><strong>Postal Code:</strong> {{ addressDetailsGroup.get('postalCode')?.value || 'Not provided' }}</p>
+              </div>
+
+              @if (!stepperFormGroup.valid) {
+                <div class="alert alert-warning">
+                  <strong>Warning:</strong> Please complete all required fields before submitting.
+                </div>
+              } @else {
+                <div class="alert alert-success">
+                  <strong>Ready to Submit:</strong> All information is complete and valid.
+                </div>
+              }
+            </div>
+          </div>
+        </ng-template>
+
+      </app-stepper-control>
+    </form>
+  </div>
+
+  <!-- Vertical Stepper Example (Simplified) -->
+  <div class="stepper-example">
+    <h3>Vertical Stepper (Linear Mode - Simple Example)</h3>
+    <app-stepper-control
+      [steps]="stepperSteps()"
+      [linear]="true"
+      [orientation]="'vertical'"
+      [showNavigation]="true">
+
+      <ng-template appStepperStep [step]="0">
+        <div class="step-content-vertical">
+          <p>Complete step 1 before proceeding. This stepper enforces sequential completion.</p>
+        </div>
+      </ng-template>
+
+      <ng-template appStepperStep [step]="1">
+        <div class="step-content-vertical">
+          <p>Step 2 content. You can only reach here after completing step 1.</p>
+        </div>
+      </ng-template>
+
+      <ng-template appStepperStep [step]="2">
+        <div class="step-content-vertical">
+          <p>Final step. Complete to finish the wizard.</p>
+        </div>
+      </ng-template>
+
+    </app-stepper-control>
+  </div>
+
+  <!-- Form Status Display -->
+  <div class="stepper-status">
+    <h3>Form Status</h3>
+    <div class="status-grid">
+      <div class="status-item">
+        <strong>Current Step:</strong> {{ stepperControl.value }}
+      </div>
+      <div class="status-item">
+        <strong>Form Valid:</strong>
+        <span [class.text-success]="stepperFormGroup.valid" [class.text-danger]="!stepperFormGroup.valid">
+          {{ stepperFormGroup.valid ? 'Yes' : 'No' }}
+        </span>
+      </div>
+      <div class="status-item">
+        <strong>Personal Info Valid:</strong>
+        <span [class.text-success]="personalInfoGroup.valid" [class.text-danger]="!personalInfoGroup.valid">
+          {{ personalInfoGroup.valid ? 'Yes' : 'No' }}
+        </span>
+      </div>
+      <div class="status-item">
+        <strong>Address Valid:</strong>
+        <span [class.text-success]="addressDetailsGroup.valid" [class.text-danger]="!addressDetailsGroup.valid">
+          {{ addressDetailsGroup.valid ? 'Yes' : 'No' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Debug: Form Values (can be removed in production) -->
+    <details class="form-debug">
+      <summary>Debug: Form Values (JSON)</summary>
+      <pre>{{ stepperFormGroup.value | json }}</pre>
+    </details>
+
+    <!-- Reset Button -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="resetForm()">
+        Reset Form
+      </button>
+    </div>
+  </div>
+</div>

@@ -24,6 +24,7 @@
     "BUTTONS" : "Buttons",
     "DROPDOWNS" : "Dropdowns",
     "CHARTS" : "Charts",
+    "STEPPER" : "Stepper",
     "FORMS" : "Forms",
     "LIST_COUPONS" : "List Coupons",
     "CREATE_COUPONS" : "Create Coupons",

@@ -1,18 +1,22 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {CommonModule} from "@angular/common";
-//import {SelectComponent} from "@shared/components/controls/select/select.component";
+import {ReactiveFormsModule} from "@angular/forms";
 import {Observable} from "rxjs";
 import {BasicDataInterface} from "@core/models/backend/basick-examples/tables.interface";
 import {select, Store} from "@ngrx/store";
 import * as basicExampleAction from "@pages/basic-example/store/basic-example.actions";
 import * as basicExampleSelector from "@pages/basic-example/store/basic-example.selectors";
+import {
+    StepperControlComponent,
+    StepperStepDirective
+} from "@shared/components/controls/stepper";
 
 @Component({
     selector: 'app-selectors',
     providers: [],
     imports: [
         CommonModule,
-        //SelectComponent
+        ReactiveFormsModule,
     ],
     templateUrl: './selectors.component.html',
     styleUrls: ['./selectors.component.scss'],
@@ -26,10 +30,8 @@ export class SelectorsComponent implements OnInit {
   private store: Store = inject(Store);
 
   ngOnInit(): void {
-
     this.loading$ = this.store.pipe(select(basicExampleSelector.getLoading));
     this.store.dispatch(basicExampleAction.dropdownInit());
-    //this.basicDropdownData$ = this.store.pipe(select(basicExampleSelector.getBasicDropdownData));
     this.countries.set(this.store.pipe(select(basicExampleSelector.getBasicDropdownData)));
   }
 }

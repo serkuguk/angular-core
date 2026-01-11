@@ -44,6 +44,11 @@ export const routes: Routes = [
     canActivate: [loggedGuard]
   },
   {
+    path: 'basic-examples/stepper',
+    loadComponent: () => import('@pages/basic-example/components/stepper/stepper.component').then(c => c.StepperComponent),
+    canActivate: [loggedGuard]
+  },
+  {
     path: '**',
     loadComponent: () => import('./pages/notfound-page/notfound-page.component').then(c => c.NotfoundPageComponent)
   }
