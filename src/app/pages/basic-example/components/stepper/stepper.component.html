@@ -25,7 +25,7 @@
 
             <div class="form-group">
               <app-form-field label="Full Name"
-                              [control]="personalInfoGroup.controls.fullName"
+                              [field]="personalInfoGroup.controls.fullName"
                               [required]="true">
                 <app-basic-input formControlName="fullName"
                                  [placeholder]="'John Doe'"></app-basic-input>
@@ -34,7 +34,7 @@
 
             <div class="form-group">
               <app-form-field label="Email"
-                              [control]="personalInfoGroup.controls.email"
+                              [field]="personalInfoGroup.controls.email"
                               [required]="true">
                 <app-basic-input formControlName="email"
                                  [placeholder]="'john@example.com'"></app-basic-input>
@@ -51,7 +51,7 @@
 
             <div class="form-group">
               <app-form-field label="Street Address"
-                              [control]="addressDetailsGroup.controls.streetAddress"
+                              [field]="addressDetailsGroup.controls.streetAddress"
                               [required]="true">
                 <app-basic-input formControlName="streetAddress"
                                  [placeholder]="'123 Main St'"></app-basic-input>
@@ -60,7 +60,7 @@
 
             <div class="form-group">
               <app-form-field label="City"
-                              [control]="addressDetailsGroup.controls.city"
+                              [field]="addressDetailsGroup.controls.city"
                               [required]="true">
                 <app-basic-input formControlName="city"
                                  [placeholder]="'New York'"></app-basic-input>
@@ -69,7 +69,7 @@
 
             <div class="form-group">
               <app-form-field label="Postal Code"
-                              [control]="addressDetailsGroup.controls.postalCode"
+                              [field]="addressDetailsGroup.controls.postalCode"
                               [required]="true"
                               [patternError]="'Please enter a valid postal code (e.g., 12345 or 12345-6789)'">
                 <app-basic-input formControlName="postalCode"

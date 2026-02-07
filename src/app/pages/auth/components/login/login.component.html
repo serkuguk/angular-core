@@ -7,13 +7,13 @@
     <form class="login-container__form" [formGroup]="loginForm">
       <div class="items">
         <app-form-field label="Username"
-                        [control]="loginForm.controls.username">
+                        [field]="loginForm.controls.username">
           <app-basic-input formControlName="username"
                            [placeholder]="'PAGES.LOGIN.USER' | translate"></app-basic-input>
         </app-form-field>
 
         <app-form-field label="Password"
-                        [control]="loginForm.controls.password">
+                        [field]="loginForm.controls.password">
           <app-password-input formControlName="password"
                               class="custom-password-size"
                               [placeholder]="'PAGES.LOGIN.PASSWORD' | translate"></app-password-input>

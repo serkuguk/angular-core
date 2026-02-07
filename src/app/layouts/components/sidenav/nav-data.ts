@@ -34,6 +34,10 @@ export const navabarData: INavbarData[] = [
       {
         routerLink: 'basic-examples/stepper',
         label: 'STEPPER',
+      },
+      {
+        routerLink: 'basic-examples/calendar',
+        label: 'CALENDAR',
       }
     ]
   },
