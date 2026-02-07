@@ -21,10 +21,8 @@ import {AuthTokenStorageService} from "@core/services/auth-token-storage.service
 import {JwtModule} from '@auth0/angular-jwt';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthService} from "@pages/auth/services/auth.service";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {PlatformModule} from '@angular/cdk/platform';
 import {basicExampleFeature} from "@pages/basic-example/store/basic-example.reducer";
-import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import {ENV} from "@core/tokens/environment.token";
 import {TablesService} from "@pages/basic-example/components/tables/services/tables.service";
 import {SelectorsService} from "@pages/basic-example/components/selectors/services/selectors.service";
@@ -57,8 +55,6 @@ const CORE_PROVIDERS = [
 
 // ---------- Third-party modules ----------
 const MODULE_PROVIDERS = [
-    //importProvidersFrom(BrowserModule),
-    importProvidersFrom(BrowserAnimationsModule),
     importProvidersFrom(PlatformModule),
     importProvidersFrom(NgxPermissionsModule.forRoot()),
     importProvidersFrom(
@@ -84,7 +80,6 @@ const MODULE_PROVIDERS = [
 
 // ---------- Angular features ----------
 const ANGULAR_PROVIDERS = [
-    provideAnimationsAsync(),
     providePrimeNG({
         theme: {
             preset: Aura,

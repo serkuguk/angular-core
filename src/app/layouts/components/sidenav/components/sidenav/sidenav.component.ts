@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {Component, HostListener, OnInit, inject, signal, ElementRef, output} from '@angular/core';
-import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import {SublevelMenuComponent} from "@app/layouts";
-import {fadeInOut} from "@layouts/components/sidenav/utils/animation-helper";
 import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-toggle.interface";
 import {navabarData} from "@layouts/components/sidenav/nav-data";
 import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.interface";
@@ -21,18 +19,6 @@ import {TranslateModule} from "@ngx-translate/core";
     ],
     templateUrl: './sidenav.component.html',
     styleUrl: './sidenav.component.scss',
-    animations: [
-        fadeInOut,
-        trigger('rotate', [
-            transition(':enter', [
-                animate('1500ms', keyframes([
-                    style({ opacity: 0, transform: 'rotate(0deg)', offset: 0 }),
-                    style({ opacity: 0.5, transform: 'rotate(1turn)', offset: 0.5 }),
-                    style({ opacity: 1, transform: 'rotate(2turn)', offset: 1 })
-                ]))
-            ])
-        ])
-    ]
 })
 export class SidenavComponent implements OnInit {
 

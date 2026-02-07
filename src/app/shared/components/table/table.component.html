@@ -58,7 +58,7 @@
                 <form [formGroup]="initialForm" (keydown.enter)="confirmEdit(rowData)">
                   <app-form-field
                        [required]="true"
-                       [control]="initialForm.controls.inputValue">
+                       [field]="initialForm.controls.inputValue">
                     <app-basic-input
                          [placeholder]="''"
                          formControlName="inputValue"

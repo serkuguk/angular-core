@@ -12,28 +12,28 @@
     <ng-content></ng-content>
 
     <div class="form-field__error">
-      @if(control() && errorKey; as key) {
+      @if(errorKey; as key) {
         @switch(errorKey) {
           @case("min") {
-            <span>Minimum {{control()?.errors?.[key].min}}</span>
+            <span>Minimum {{errorValue?.min}}</span>
           }
           @case("max") {
-            <span>Maximum {{control()?.errors?.[key].max}}</span>
+            <span>Maximum {{errorValue?.max}}</span>
           }
           @case("required") {
             <span>{{'ERRORS.FIELD_REQUIRED' | translate}}</span>
           }
           @case("minlength") {
-            <span>At least {{control()?.errors?.[key].requiredLength}} characters</span>
+            <span>At least {{errorValue?.requiredLength}} characters</span>
           }
           @case("maxlength") {
-            <span>No more than {{control()?.errors?.[key].requiredLength}} characters</span>
+            <span>No more than {{errorValue?.requiredLength}} characters</span>
           }
           @case("startsWith") {
-            <span>{{control()?.errors?.[key]}} Test</span>
+            <span>{{errorValue}} Test</span>
           }
           @case("startsWithParam") {
-            <span>{{control()?.errors?.[key].message}} Test</span>
+            <span>{{errorValue?.message}} Test</span>
           }
           @default {
             @if (key === "pattern") {

@@ -1,8 +1,6 @@
 import {Component, inject, input} from '@angular/core';
 import { INavbarData } from '../../interfaces/nav-bar-data.interface';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { fadeInOut } from '../../utils/animation-helper';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {TranslateModule} from "@ngx-translate/core";
 
@@ -14,21 +12,6 @@ import {TranslateModule} from "@ngx-translate/core";
         TranslateModule],
     templateUrl: './sublevel-menu.component.html',
     styleUrl: './sublevel-menu.component.scss',
-    animations: [
-        fadeInOut,
-        trigger('submenu', [
-            state('hidden', style({
-                height: '0',
-                overflow: 'hidden'
-            })),
-            state('visible', style({
-                height: '*'
-            })),
-            transition('visible <=> hidden', [style({ overflow: 'hidden' }),
-                animate('{{transitionParams}}')]),
-            transition('void => *', animate(0))
-        ])
-    ]
 })
 export class SublevelMenuComponent {
 
