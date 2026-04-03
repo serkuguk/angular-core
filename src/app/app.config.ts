@@ -29,6 +29,7 @@ import {SelectorsService} from "@pages/basic-example/components/selectors/servic
 import {providePrimeNG} from "primeng/config";
 import Aura from '@primeng/themes/aura';
 import {NgxPermissionsModule} from "ngx-permissions";
+import { GLOBAL_SHARED_STORE_PROVIDERS } from "@shared/services/global-shared.service";
 
 // ---------- Factories ----------
 
@@ -51,6 +52,7 @@ const CORE_PROVIDERS = [
     TablesService,
     SelectorsService,
     TranslateService,
+    ...GLOBAL_SHARED_STORE_PROVIDERS,
 ];
 
 // ---------- Third-party modules ----------

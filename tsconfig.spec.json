@@ -23,7 +23,6 @@
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts",
-    "src/setup-jest.ts"
+    "src/setup.jest.ts"
   ]
 }
-
