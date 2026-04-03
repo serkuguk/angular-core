@@ -3,20 +3,19 @@
     <p-select
       class="select"
       [options]="items()"
-      [disabled]="isDisabled"
+      [disabled]="isDisabled()"
       [placeholder]="placeholder()"
       [resetFilterOnHide]="resetFilterOnHide"
       [filter]="filter()"
       [showClear]="showClearState()"
       [optionLabel]="'name'"
-      [(ngModel)]="value"
-      (onChange)="onChanged($event)"
-      (onBlur)="onBlur()">
+      [ngModel]="value()"
+      (onChange)="onChanged($event)">
       @if (showIcon()) {
         <ng-template #selectedItem let-selectedOption>
           <div class="flex items-center gap-2">
             <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-                 [class]="'flag flag-' + value.code.toLowerCase()" style="width: 18px" alt=""/>
+                 [class]="'flag flag-' + value()" style="width: 18px" alt=""/>
             <div>{{ selectedOption.name }}</div>
           </div>
         </ng-template>

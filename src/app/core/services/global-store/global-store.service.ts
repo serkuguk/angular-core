@@ -1,7 +1,5 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import {APP_STATE} from "@shared/tokens/store-token.constant";
+import { computed, Inject, Injectable, InjectionToken, Optional, signal, Signal, WritableSignal } from '@angular/core';
+import { APP_STATE } from '@shared/tokens/store-token.constant';
 
 
 /**
@@ -36,7 +34,7 @@ export class GlobalStoreService<T extends object> {
   private readonly enableLogging: boolean;
   private readonly sensitiveFields: Set<string>;
 
-  private readonly state$!: BehaviorSubject<T>;
+  private readonly stateSig!: WritableSignal<T>;
 
   constructor(@Inject(APP_STATE) initialState: T, @Optional() @Inject(GLOBAL_STORE_CONFIG) config?: GlobalStoreConfig) {
     // Aplicamos la configuración
@@ -48,14 +46,10 @@ export class GlobalStoreService<T extends object> {
     // Cargamos el estado guardado
     const saved = this.safeGetItem(this.storageKey);
     const state = this.safeParse(saved) ?? initialState;
-    this.state$ = new BehaviorSubject<T>(state);
+    this.stateSig = signal<T>(state);
 
     // Guardar automáticamente al cambiar el estado
-    this.state$.subscribe(value => {
-      const sanitized = this.sanitizeForStorage(value);
-      const json = JSON.stringify(sanitized);
-      this.safeSetItem(this.storageKey, json);
-    });
+    this.persistState(state);
   }
 
   // ============================================================
@@ -241,6 +235,15 @@ export class GlobalStoreService<T extends object> {
   }
 
   /**
+   * Guardar estado actual en localStorage
+   */
+  private persistState(state: T): void {
+    const sanitized = this.sanitizeForStorage(state);
+    const json = JSON.stringify(sanitized);
+    this.safeSetItem(this.storageKey, json);
+  }
+
+  /**
    * Análisis seguro de JSON
    */
   private safeParse(json: string | null): T | null {
@@ -300,68 +303,80 @@ export class GlobalStoreService<T extends object> {
    * Obtener todo el estado (sincrónico)
    */
   getState(): T {
-    return this.state$.getValue();
+    return this.stateSig();
   }
 
   /**
    * Obtener valor por clave (sincrónico)
    */
   getValue<K extends keyof T>(key: K): T[K] {
-    return this.state$.getValue()[key];
+    return this.stateSig()[key];
   }
 
   /**
-   * Observable de todo el estado
+   * Signal de todo el estado
    */
-  state(): Observable<T> {
-    return this.state$.asObservable();
+  state(): Signal<T> {
+    return this.stateSig.asReadonly();
   }
 
   /**
-   * Observable de valor por clave
+   * Signal de valor por clave
    */
-  select<K extends keyof T>(key: K): Observable<T[K] | undefined> {
-    return this.state$.asObservable().pipe(map(s => (s ? s[key] : undefined)));
+  select<K extends keyof T>(key: K): Signal<T[K] | undefined> {
+    return computed(() => {
+      const s = this.stateSig();
+      return s ? s[key] : undefined;
+    });
   }
 
   /**
    * Establecer valor por clave
    */
   set<K extends keyof T>(key: K, data: T[K]): void {
-    const curr = this.state$.getValue();
-    this.state$.next({ ...curr, [key]: data });
+    const curr = this.stateSig();
+    const next = { ...curr, [key]: data };
+    this.stateSig.set(next);
+    this.persistState(next);
   }
 
   /**
    * Actualizar valor por clave mediante una función
    */
   updateStore<K extends keyof T>(key: K, fn: (prev: T[K]) => T[K]): void {
-    const curr = this.state$.getValue();
-    this.state$.next({ ...curr, [key]: fn(curr[key]) });
+    const curr = this.stateSig();
+    const next = { ...curr, [key]: fn(curr[key]) };
+    this.stateSig.set(next);
+    this.persistState(next);
   }
 
   /**
    * Limpiar valor por clave
    */
   clear<K extends keyof T>(key: K): void {
-    const curr = this.state$.getValue();
+    const curr = this.stateSig();
     const { [key]: _removed, ...rest } = curr as Record<string, unknown>;
-    this.state$.next(rest as T);
+    const next = rest as T;
+    this.stateSig.set(next);
+    this.persistState(next);
   }
 
   /**
    * Restablecer estado al inicial
    */
   reset(newInitial: T): void {
-    this.state$.next(newInitial);
+    this.stateSig.set(newInitial);
+    this.persistState(newInitial);
   }
 
   /**
    * Actualización parcial del estado
    */
   patchState(partial: Partial<T>): void {
-    const curr = this.state$.getValue();
-    this.state$.next({ ...curr, ...partial });
+    const curr = this.stateSig();
+    const next = { ...curr, ...partial };
+    this.stateSig.set(next);
+    this.persistState(next);
   }
 
   /**

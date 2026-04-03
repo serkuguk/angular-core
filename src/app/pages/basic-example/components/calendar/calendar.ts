@@ -1,12 +1,12 @@
 import {JsonPipe} from '@angular/common';
 import {Component, signal} from '@angular/core';
-import {Field, form} from '@angular/forms/signals';
+import {FormField, form} from '@angular/forms/signals';
 import {CalendarComponent as SharedCalendarComponent} from '@shared/components/calendar';
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 
 @Component({
   selector: 'app-calendar-example',
-  imports: [SharedCalendarComponent, Field, JsonPipe, FormFieldComponent],
+  imports: [SharedCalendarComponent, FormField, JsonPipe, FormFieldComponent],
   templateUrl: './calendar.html',
   styleUrl: './calendar.scss',
 })

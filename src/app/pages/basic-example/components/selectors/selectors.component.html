@@ -3,10 +3,17 @@
 <div class="dropdowns-container">
   <div class="dropdowns-container__item">
     <h3>Basic dropdown</h3>
-<!--    <app-select-->
-<!--      [items]="countries()"-->
-<!--      [placeholder]="'Cheese your Country'"-->
-<!--      [title]="'Countries'"-->
-<!--    ></app-select>-->
+      <app-form-field
+        label="Type"
+        [required]="true"
+        [field]="dropdownForm.createdAt"
+        [showLabel]="false"
+        [isInline]="isInline()">
+          <app-basic-select
+              [items]="optionList()"
+              [formField]="dropdownForm.createdAt"
+          >
+         </app-basic-select>
+      </app-form-field>
   </div>
 </div>

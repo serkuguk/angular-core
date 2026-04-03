@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component, forwardRef, input, linkedSignal, OnInit, output} from '@angular/core';
-import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {ChangeDetectionStrategy, Component, input, linkedSignal, model, output} from '@angular/core';
+import {FormsModule} from "@angular/forms";
 import {Select} from "primeng/select";
 import {FloatLabel} from "primeng/floatlabel";
+import {FormValueControl} from "@angular/forms/signals";
 
 @Component({
   selector: 'app-basic-select',
-  standalone: true,
   imports: [
     Select,
     FormsModule,
@@ -13,16 +13,9 @@ import {FloatLabel} from "primeng/floatlabel";
   ],
   templateUrl: './basic-select.component.html',
   styleUrl: './basic-select.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => BasicSelectComponent),
-      multi: true
-    }
-  ]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BasicSelectComponent  implements OnInit, ControlValueAccessor {
+export class BasicSelectComponent implements FormValueControl<any | null> {
   public items = input<any[]>();
   public class = input<string>();
   public disabledValue = input<any[]>([]);
@@ -38,51 +31,18 @@ export class BasicSelectComponent  implements OnInit, ControlValueAccessor {
   public showIcon = input<boolean>(false);
   public changed = output<number | string>();
   public showClearState = linkedSignal(() => this.showClear);
-  public nullOrZeroState = linkedSignal(() => this.nullOrZero);
+  public isDisabled= input<boolean>(false);
+  public value = model<any[]>([]);
+  public touched = model<boolean>(false);
+  public closed = output<void>();
 
-  value: string | undefined;
-  isDisabled: boolean | undefined;
-
-  ngOnInit(): void {}
-
-  private propagateChange: any = () => {}
-  private propagateTouched: any = () => {}
-
-  disableItem(value: any): boolean {
-    if (this.disabledValue()) {
-      if (!this.disabledValue().length) {
-        //this.disabledValue = [this.disabledValue];
-      }
-      return this.disabledValue().includes(value);
-    }
-    return false;
+  onChanged(event: any | null): void {
+    this.value.set(event);
+    this.changed.emit(event);
   }
 
-  registerOnChange(fn: any): void {
-    this.propagateChange = fn
-  }
-
-  registerOnTouched(fn: any): void {
-    this.propagateTouched = fn
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled
-  }
-
-  writeValue(value: any): void {
-    this.value = value;
-    this.showClearState.set(value && this.showClearState());
-  }
-
-  onBlur(): void {
-    this.propagateTouched()
-  }
-
-  onChanged(event: any): void {
-    const value = event.value || event.value === 0 ? event.value : this.nullOrZeroState();
-    this.showClearState.set(value && this.showClearState());
-    this.propagateChange(value);
-    this.changed.emit(value);
+  onClosed(): void {
+    this.touched.set(true);
+    this.closed.emit();
   }
 }

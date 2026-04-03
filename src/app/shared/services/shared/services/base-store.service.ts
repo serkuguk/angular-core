@@ -1,4 +1,4 @@
-import {GlobalStoreService} from "@core/services/global-store/global-store.service";
+import { GlobalStoreService } from "@core/services/global-store/global-store.service";
 
 
 export class BaseStoreService<T extends object> {
