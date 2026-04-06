@@ -41,7 +41,7 @@ export const routes: Routes = [
       },
       {
         path: 'charts',
-        loadComponent: () => import('@pages/basic-example/components/charts/charts.component').then(c => c.ChartsComponent),
+        loadComponent: () => import('@pages/basic-example/components/charts/charts-example.component').then(c => c.ChartsExampleComponent),
       },
       {
         path: 'forms',

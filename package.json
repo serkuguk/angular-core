@@ -39,6 +39,7 @@
     "@ngx-translate/http-loader": "^8.0.0",
     "@primeng/themes": "^21.0.4",
     "abab": "^2.0.6",
+    "chart.js": "^4.5.1",
     "domexception": "^4.0.0",
     "dompurify": "^3.1.7",
     "exceljs": "^4.4.0",
