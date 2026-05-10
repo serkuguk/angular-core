@@ -17,7 +17,7 @@
       transition: all .3s ease;
 
       .sublevel-link-icon {
-        font-style: 4px;
+        font-size: 14px;
         width: 2rem;
         min-width: 2rem;
         margin: 0 0.5rem;
@@ -41,7 +41,7 @@
 }
 
 .nav-fade-enter {
-  animation: navFadeIn 2050ms ease both;
+  animation: navFadeIn 300ms ease both;
 }
 
 .nav-fade-leave {

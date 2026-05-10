@@ -82,10 +82,10 @@
       color: #f3f3f3;
       text-decoration: none;
       border-radius: 0.625rem;
-      transform: all .3s ease;
+      transition: all .3s ease;
 
       .sidenav-link-icon {
-        font-style: 22px;
+        font-size: 22px;
         width: 2rem;
         min-width: 2rem;
         margin: 0 0.5rem;
@@ -180,7 +180,7 @@
   background-color: rgba(7, 14, 39, 1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   padding: 10px;
-  z-index: 1000;
+  z-index: 10000;
   transition: opacity 0.3s;
   border-radius: 0.5rem;
 
@@ -206,7 +206,7 @@
 }
 
 .nav-fade-enter {
-  animation: navFadeIn 2050ms ease both;
+  animation: navFadeIn 300ms ease both;
 }
 
 .nav-fade-leave {
@@ -234,6 +234,19 @@
 
   to {
     opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-fade-enter,
+  .nav-fade-leave,
+  .rotate-enter {
+    animation: none;
+  }
+
+  .sidenav,
+  .sidenav-nav-link {
+    transition: none;
   }
 }
 

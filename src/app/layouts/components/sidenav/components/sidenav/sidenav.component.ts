@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import {Component, HostListener, OnInit, inject, signal, ElementRef, output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  inject,
+  signal,
+  ElementRef,
+  output
+} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import {SublevelMenuComponent} from "@app/layouts";
 import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-toggle.interface";
@@ -15,30 +25,30 @@ import {TranslateModule} from "@ngx-translate/core";
         RouterLinkActive,
         RouterModule,
         TranslateModule,
-
     ],
     templateUrl: './sidenav.component.html',
     styleUrl: './sidenav.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnDestroy {
 
   public onToggleSideNav = output<ISideNavToggle>();
   public collapsed = signal<boolean>(false);
   public screenWidth = signal<number>(0);
-  public navData: any = navabarData;
+  public navData: INavbarData[] = navabarData;
   public multiple: boolean = false;
 
   public router: Router = inject(Router);
   private readonly elementRef = inject(ElementRef);
 
-  //Floating menu
-  public isSubMenuVisible: boolean = false;
-  public hoveredMenuItem: any = null;
-  public submenuPosition = { top: '0px', left: '0px' };
-  private hideTimeout: any = null;
+  // Floating menu
+  public isSubMenuVisible = signal<boolean>(false);
+  public hoveredMenuItem = signal<INavbarData | null>(null);
+  public submenuPosition = signal<{ top: string; left: string }>({ top: '0px', left: '0px' });
+  private hideTimeout: ReturnType<typeof setTimeout> | null = null;
 
-  @HostListener('window:resize', ['$event'])
-  public onResize(event: any) {
+  @HostListener('window:resize')
+  public onResize(): void {
     this.screenWidth.set(window.innerWidth);
     if (this.screenWidth() <= 768) {
       this.collapsed.set(false);
@@ -48,8 +58,8 @@ export class SidenavComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   public onClosePanelExternalClick(event: MouseEvent): void {
-    const clickedOutside = this.elementRef.nativeElement.contains(event.target as HTMLElement);
-    if (!clickedOutside && this.collapsed()) {
+    const clickedInside = this.elementRef.nativeElement.contains(event.target as HTMLElement);
+    if (!clickedInside && this.collapsed()) {
       this.collapsed.set(false);
       this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
     }
@@ -59,28 +69,31 @@ export class SidenavComponent implements OnInit {
     this.screenWidth.set(window.innerWidth);
   }
 
-  //Floating mene
-  public showSubMenu(menuItem: any, event: MouseEvent): void {
-    if (this.hideTimeout) {
-      clearTimeout(this.hideTimeout); // Отменяем таймер скрытия, если пользователь вернулся на элемент
-    }
-
-    this.isSubMenuVisible = true;
-    this.hoveredMenuItem = menuItem;
-
-    // Вычисляем позицию всплывающего меню
-    const target = event.target as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    this.submenuPosition = {
-      top: `${rect.top}px`,
-      left: `${rect.right + 19}px`
-    };
+  ngOnDestroy(): void {
+    if (this.hideTimeout) clearTimeout(this.hideTimeout);
   }
 
-  public hideSubMenu(event: MouseEvent): void {
+  // Floating menu
+  public showSubMenu(menuItem: INavbarData, event: MouseEvent): void {
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+    }
+
+    this.isSubMenuVisible.set(true);
+    this.hoveredMenuItem.set(menuItem);
+
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    this.submenuPosition.set({
+      top: `${rect.top}px`,
+      left: `${rect.right + 19}px`
+    });
+  }
+
+  public hideSubMenu(): void {
     this.hideTimeout = setTimeout(() => {
-      this.isSubMenuVisible = false;
-      this.hoveredMenuItem = null;
+      this.isSubMenuVisible.set(false);
+      this.hoveredMenuItem.set(null);
     }, 200);
   }
 
@@ -89,7 +102,6 @@ export class SidenavComponent implements OnInit {
       clearTimeout(this.hideTimeout);
     }
   }
-
 
   public toggleCollapse(): void {
     this.collapsed.update((collapsed) => !collapsed);
@@ -102,17 +114,17 @@ export class SidenavComponent implements OnInit {
   }
 
   public getActiveClass(item: INavbarData): string {
-    return this.router.url.includes(item.routerLink) ? 'active':'';
+    return this.router.url.includes(item.routerLink) ? 'active' : '';
   }
 
-  public hundleClick(item: INavbarData): void {
+  public handleClick(item: INavbarData): void {
     this.shrinkItems(item);
     item.expanded = !item.expanded;
   }
 
   public shrinkItems(item: INavbarData): void {
     if (!this.multiple) {
-      for(let modelItem of this.navData) {
+      for (const modelItem of this.navData) {
         if (item !== modelItem && modelItem.expanded) {
           modelItem.expanded = false;
         }
