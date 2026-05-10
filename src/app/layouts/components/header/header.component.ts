@@ -1,4 +1,4 @@
-import {Component, inject, input, OnInit} from '@angular/core';
+import {Component, computed, inject, input, OnInit, output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Observable} from "rxjs";
 import {ReactiveFormsModule} from '@angular/forms';
@@ -28,6 +28,10 @@ import {UserPanelComponent} from "@app/componentes/user-panel/user-panel.compone
 export class HeaderComponent implements OnInit {
     collapsed = input<boolean>(false);
     screenWidth = input<number>(0);
+
+    public onHamburgerClick = output<void>();
+
+    public isMobile = computed(() => this.screenWidth() <= 768);
 
     public isAuthenticated$: Observable<boolean | null> | undefined;
     public translate = inject(TranslateService);

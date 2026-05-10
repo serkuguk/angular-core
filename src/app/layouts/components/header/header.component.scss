@@ -66,3 +66,32 @@
     }
   }
 }
+
+// Mobile: hamburger button
+.hamburger-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 2.75rem;   // 44px touch target
+  height: 2.75rem;
+  padding: 0.625rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+}
+
+// Mobile: reset logo margin (no sidenav in normal flow)
+@media (max-width: 768px) {
+  .header-container__logo {
+    margin-left: 0.5rem;
+  }
+}

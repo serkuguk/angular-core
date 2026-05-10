@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostListener, inject, OnInit, Renderer2, signal} from '@angular/core';
 import {Observable} from "rxjs";
 import {ISideNavToggle} from '@layouts/components/sidenav/interfaces/side-nav-toggle.interface';
 import {CommonModule} from "@angular/common";
@@ -31,10 +31,20 @@ import {NavigationEnd, Router} from "@angular/router";
 export class AppComponent implements OnInit {
     public isSideNavCollapsed = signal<boolean>(false);
     public screenWidth = signal<number>(0);
+    public mobileOpen = signal<boolean>(false);
 
     public store: Store<fromAuth.State> = inject(Store);
     public router: Router = inject(Router);
+    private renderer = inject(Renderer2);
     public isAuthenticated$: Observable<boolean> | undefined;
+
+    @HostListener('window:resize')
+    public onWindowResize(): void {
+        if (window.innerWidth > 768 && this.mobileOpen()) {
+            this.mobileOpen.set(false);
+            this.renderer.removeClass(document.body, 'mobile-nav-open');
+        }
+    }
 
     ngOnInit(): void {
 
@@ -50,6 +60,16 @@ export class AppComponent implements OnInit {
     public onToggleSideNav(data: ISideNavToggle): void {
         this.screenWidth.set(data.screenWidth);
         this.isSideNavCollapsed.set(data.collapsed);
+    }
+
+    public onHamburgerClick(): void {
+        this.mobileOpen.set(true);
+        this.renderer.addClass(document.body, 'mobile-nav-open');
+    }
+
+    public onSidenavClose(): void {
+        this.mobileOpen.set(false);
+        this.renderer.removeClass(document.body, 'mobile-nav-open');
     }
 
 }

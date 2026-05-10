@@ -15,6 +15,10 @@ body {
     background-color: #ffffff;
 }
 
+body.mobile-nav-open {
+    overflow: hidden;
+}
+
 .card {
     display: flex;
     flex-direction: column;

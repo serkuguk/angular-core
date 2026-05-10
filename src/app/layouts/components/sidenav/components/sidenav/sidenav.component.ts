@@ -7,6 +7,8 @@ import {
   OnInit,
   inject,
   signal,
+  computed,
+  input,
   ElementRef,
   output
 } from '@angular/core';
@@ -32,7 +34,11 @@ import {TranslateModule} from "@ngx-translate/core";
 })
 export class SidenavComponent implements OnInit, OnDestroy {
 
+  public mobileOpen = input<boolean>(false);
+
   public onToggleSideNav = output<ISideNavToggle>();
+  public onClose = output<void>();
+
   public collapsed = signal<boolean>(false);
   public screenWidth = signal<number>(0);
   public navData: INavbarData[] = navabarData;
@@ -40,6 +46,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   public router: Router = inject(Router);
   private readonly elementRef = inject(ElementRef);
+
+  public isMobile = computed(() => this.screenWidth() <= 768);
+  public isExpanded = computed(() => this.collapsed() || (this.isMobile() && this.mobileOpen()));
 
   // Floating menu
   public isSubMenuVisible = signal<boolean>(false);
@@ -50,16 +59,13 @@ export class SidenavComponent implements OnInit, OnDestroy {
   @HostListener('window:resize')
   public onResize(): void {
     this.screenWidth.set(window.innerWidth);
-    if (this.screenWidth() <= 768) {
-      this.collapsed.set(false);
-      this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
-    }
+    this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
   }
 
   @HostListener('document:click', ['$event'])
   public onClosePanelExternalClick(event: MouseEvent): void {
     const clickedInside = this.elementRef.nativeElement.contains(event.target as HTMLElement);
-    if (!clickedInside && this.collapsed()) {
+    if (!clickedInside && this.collapsed() && !this.isMobile()) {
       this.collapsed.set(false);
       this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
     }
@@ -111,6 +117,16 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public closeSidenav(): void {
     this.collapsed.set(false);
     this.onToggleSideNav.emit({collapsed: this.collapsed(), screenWidth: this.screenWidth()});
+  }
+
+  public closeDrawer(): void {
+    this.onClose.emit();
+  }
+
+  public onNavLinkClick(): void {
+    if (this.isMobile()) {
+      this.onClose.emit();
+    }
   }
 
   public getActiveClass(item: INavbarData): string {

@@ -8,7 +8,12 @@
 }
 
 .body-md-screen {
-  width: calc(100% - 5rem);
-  margin-left: 5rem;
+  width: 100%;
+  margin-left: 0;
 }
 
+@media (max-width: 768px) {
+  .body {
+    margin-left: 1rem;
+  }
+}
