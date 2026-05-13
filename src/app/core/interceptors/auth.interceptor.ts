@@ -2,20 +2,21 @@ import {inject} from '@angular/core'
 import {HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '@angular/common/http'
 import {AuthTokenStorageService} from '../services/auth-token-storage.service';
 import {BehaviorSubject, catchError, switchMap, tap, throwError} from "rxjs";
-import {AuthService} from "@pages/auth/services/auth.service";
 import {filter} from "rxjs/operators";
+import { AUTH_REFRESH_PORT } from "@core/tokens/auth-refresh-port.token";
+import { AuthRefreshPort, AuthRefreshResponse } from "@core/interfaces/auth-refresh-port.interface";
 
 let isRefreshing$ = new BehaviorSubject<boolean>(false);
 
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
     const authToken: AuthTokenStorageService = inject(AuthTokenStorageService);
-    const authService: AuthService = inject(AuthService);
+    const authRefreshPort: AuthRefreshPort = inject(AUTH_REFRESH_PORT);
     const token = authToken.getToken('access_token');
 
     if (!token) return next(req);
 
     if (isRefreshing$.value) {
-      return refreshToken(authService, req, next, token);
+      return refreshToken(authRefreshPort, req, next, token);
     }
 
     return next(addToken(req, token)).pipe(
@@ -25,28 +26,26 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
         }
 
         if (err.status === 403) {
-          refreshToken(authService, req, next, token);
+          return refreshToken(authRefreshPort, req, next, token);
         }
 
         const error = err.error.message || err.statusText;
-        return throwError(error);
+        return throwError(() => error);
       }
     ))
-
-    return next(req);
 }
 
 const refreshToken = (
-  authService: AuthService,
+  authRefreshPort: AuthRefreshPort,
   req: HttpRequest<any>,
   next: HttpHandlerFn,
   token: string) => {
 
     if (!isRefreshing$.value) {
       isRefreshing$.next(true);
-      return authService.refreshAccessToken()
+      return authRefreshPort.refreshAccessToken()
         .pipe(
-          switchMap(res => {
+          switchMap((res: AuthRefreshResponse) => {
             return next(addToken(req, res.access_token))
               .pipe(
                 tap(_ => isRefreshing$.next(false))

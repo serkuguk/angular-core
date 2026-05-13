@@ -7,9 +7,10 @@ import {map} from "rxjs/operators";
 import {ENV} from "@core/tokens/environment.token";
 import {EnvironmentInterface} from "@core/interfaces/environment.interface";
 import {ApiBaseService} from "@core/services/api-base.service";
+import { AuthRefreshPort, AuthRefreshResponse } from "@core/interfaces/auth-refresh-port.interface";
 
 @Injectable()
-export class AuthService extends ApiBaseService {
+export class AuthService extends ApiBaseService implements AuthRefreshPort {
 
   private http: HttpClient = inject(HttpClient);
   private authTokenStorageService: AuthTokenStorageService = inject(AuthTokenStorageService);
@@ -37,10 +38,10 @@ export class AuthService extends ApiBaseService {
     )
   }
 
-  public refreshAccessToken(): Observable<any> {
-    return this.http.post(`${this.env.server_url}/auth/refresh_token`, {refresh_token: this.refreshToken})
+  public refreshAccessToken(): Observable<AuthRefreshResponse> {
+    return this.http.post<AuthRefreshResponse>(`${this.env.server_url}/auth/refresh_token`, {refresh_token: this.refreshToken})
       .pipe(
-        tap((res: any) => this.saveToken(res)),
+        tap((res: AuthRefreshResponse) => this.saveToken(res)),
         catchError(err => {
           this.token = null;
           this.authTokenStorageService.logOut()

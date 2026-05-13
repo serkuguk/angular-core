@@ -30,6 +30,7 @@ import {providePrimeNG} from "primeng/config";
 import Aura from '@primeng/themes/aura';
 import {NgxPermissionsModule} from "ngx-permissions";
 import { GLOBAL_SHARED_STORE_PROVIDERS } from "@shared/services/global-shared.service";
+import { AUTH_REFRESH_PORT } from "@core/tokens/auth-refresh-port.token";
 
 // ---------- Factories ----------
 
@@ -49,6 +50,10 @@ const CORE_PROVIDERS = [
     {provide: ENV, useValue: environment},
     AuthTokenStorageService,
     AuthService,
+    {
+      provide: AUTH_REFRESH_PORT,
+      useExisting: AuthService
+    },
     TablesService,
     SelectorsService,
     TranslateService,
