@@ -2,16 +2,17 @@ import { HttpClient, HttpErrorResponse, provideHttpClient, withInterceptors } fr
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { of, Subject } from 'rxjs';
-import { AuthRefreshPort, AuthRefreshResponse } from '@core/interfaces/auth-refresh-port.interface';
+import { AuthService } from '@core/services/auth/auth.service';
 import { AuthTokenStorageService } from '@core/services/auth-token-storage.service';
-import { AUTH_REFRESH_PORT } from '@core/tokens/auth-refresh-port.token';
 import { authInterceptor } from './auth.interceptor';
+
+type AuthRefreshResponse = { access_token: string; refresh_token: string };
 
 describe('authInterceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
   let storage: jest.Mocked<Pick<AuthTokenStorageService, 'getToken' | 'logOut'>>;
-  let refreshPort: jest.Mocked<AuthRefreshPort>;
+  let authService: jest.Mocked<Pick<AuthService, 'refreshAccessToken'>>;
 
   beforeEach(() => {
     storage = {
@@ -19,7 +20,7 @@ describe('authInterceptor', () => {
       logOut: jest.fn(),
     };
 
-    refreshPort = {
+    authService = {
       refreshAccessToken: jest.fn(),
     };
 
@@ -28,7 +29,7 @@ describe('authInterceptor', () => {
         provideHttpClient(withInterceptors([authInterceptor])),
         provideHttpClientTesting(),
         { provide: AuthTokenStorageService, useValue: storage },
-        { provide: AUTH_REFRESH_PORT, useValue: refreshPort },
+        { provide: AuthService, useValue: authService },
       ],
     });
 
@@ -77,14 +78,14 @@ describe('authInterceptor', () => {
 
   it('refreshes token on 403 and retries original request', (done) => {
     storage.getToken.mockReturnValue('access-token');
-    refreshPort.refreshAccessToken.mockReturnValue(
+    authService.refreshAccessToken.mockReturnValue(
       of({ access_token: 'new-token', refresh_token: 'new-refresh' }),
     );
 
     http.get('/secure').subscribe({
       next: (response: unknown) => {
         expect(response).toEqual({ ok: true });
-        expect(refreshPort.refreshAccessToken).toHaveBeenCalledTimes(1);
+        expect(authService.refreshAccessToken).toHaveBeenCalledTimes(1);
         done();
       },
       error: (error: HttpErrorResponse) => done.fail(error),
@@ -102,7 +103,7 @@ describe('authInterceptor', () => {
   it('queues concurrent 403 requests while token refresh is in progress', () => {
     storage.getToken.mockReturnValue('access-token');
     const refresh$ = new Subject<AuthRefreshResponse>();
-    refreshPort.refreshAccessToken.mockReturnValue(refresh$.asObservable());
+    authService.refreshAccessToken.mockReturnValue(refresh$.asObservable());
     const resolved: string[] = [];
 
     http.get<{ ok: string }>('/secure-a').subscribe((response) => resolved.push(response.ok));
@@ -113,7 +114,7 @@ describe('authInterceptor', () => {
     first.flush({ message: 'Forbidden' }, { status: 403, statusText: 'Forbidden' });
     second.flush({ message: 'Forbidden' }, { status: 403, statusText: 'Forbidden' });
 
-    expect(refreshPort.refreshAccessToken).toHaveBeenCalledTimes(1);
+    expect(authService.refreshAccessToken).toHaveBeenCalledTimes(1);
 
     refresh$.next({ access_token: 'new-token', refresh_token: 'new-refresh' });
     refresh$.complete();

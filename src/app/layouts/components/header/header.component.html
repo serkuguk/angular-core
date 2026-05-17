@@ -1,6 +1,6 @@
 <div class="header-wrapper" [ngClass]="getHeadClass()">
   <div class="header-container">
-    @if (isMobile()) {
+    @if (isMobile() && (isAuthenticated$ | async)) {
       <button class="hamburger-btn" (click)="onHamburgerClick.emit()" aria-label="Open navigation menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>

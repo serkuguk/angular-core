@@ -20,7 +20,7 @@ import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {JwtModule} from '@auth0/angular-jwt';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {AuthService} from "@pages/auth/services/auth.service";
+import {AuthService} from "@core/services/auth/auth.service";
 import {PlatformModule} from '@angular/cdk/platform';
 import {basicExampleFeature} from "@pages/basic-example/store/basic-example.reducer";
 import {ENV} from "@core/tokens/environment.token";
@@ -30,7 +30,6 @@ import {providePrimeNG} from "primeng/config";
 import Aura from '@primeng/themes/aura';
 import {NgxPermissionsModule} from "ngx-permissions";
 import { GLOBAL_SHARED_STORE_PROVIDERS } from "@shared/services/global-shared.service";
-import { AUTH_REFRESH_PORT } from "@core/tokens/auth-refresh-port.token";
 
 // ---------- Factories ----------
 
@@ -50,10 +49,6 @@ const CORE_PROVIDERS = [
     {provide: ENV, useValue: environment},
     AuthTokenStorageService,
     AuthService,
-    {
-      provide: AUTH_REFRESH_PORT,
-      useExisting: AuthService
-    },
     TablesService,
     SelectorsService,
     TranslateService,

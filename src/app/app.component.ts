@@ -30,7 +30,7 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class AppComponent implements OnInit {
     public isSideNavCollapsed = signal<boolean>(false);
-    public screenWidth = signal<number>(0);
+    public screenWidth = signal<number>(window.innerWidth);
     public mobileOpen = signal<boolean>(false);
 
     public store: Store<fromAuth.State> = inject(Store);
@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
 
     @HostListener('window:resize')
     public onWindowResize(): void {
+        this.screenWidth.set(window.innerWidth);
         if (window.innerWidth > 768 && this.mobileOpen()) {
             this.mobileOpen.set(false);
             this.renderer.removeClass(document.body, 'mobile-nav-open');

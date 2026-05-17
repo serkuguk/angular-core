@@ -4,7 +4,7 @@ import {catchError, exhaustMap, map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
 
-import {AuthService} from "@pages/auth/services/auth.service";
+import {AuthService} from "@core/services/auth/auth.service";
 import * as fromUserActions from './user.actions';
 
 //Init
