@@ -23,7 +23,6 @@ import {UserPanelComponent} from "@app/componentes/user-panel/user-panel.compone
         CdkMenuModule,
         UserPanelComponent
     ],
-    providers: [TranslateService]
 })
 export class HeaderComponent implements OnInit {
     collapsed = input<boolean>(false);
