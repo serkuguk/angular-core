@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import {
-  isAuthCanMach,
+  isAuthCanMatch,
   loggedGuard,
   redirectLoggedInGuard
 } from '@pages/auth/services/auth.guard';
@@ -19,12 +19,12 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('@pages/home/home.component').then(c => c.HomeComponent),
-    canMatch: [isAuthCanMach],
+    canMatch: [isAuthCanMatch],
     canActivate: [loggedGuard]
   },
   {
     path: 'basic-examples',
-    canMatch: [isAuthCanMach],
+    canMatch: [isAuthCanMatch],
     canActivate: [loggedGuard],
     children: [
       {
@@ -59,6 +59,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
+    canActivate: [loggedGuard],
     loadComponent: () => import('@pages/notfound-page/notfound-page.component').then(c => c.NotfoundPageComponent)
   }
 ];

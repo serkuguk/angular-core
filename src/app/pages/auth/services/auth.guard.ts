@@ -27,7 +27,13 @@ export const redirectLoggedInGuard: CanActivateFn = (route, state) => {
   return true;
 };
 
-export const isAuthCanMach: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
+export const isAuthCanMatch: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
   const router: Router = inject(Router);
-  return inject(AuthTokenStorageService).isAuthenticate();
+  const isAuthenticated: boolean = inject(AuthTokenStorageService).isAuthenticate();
+
+  if (isAuthenticated) {
+    return true;
+  }
+
+  return router.createUrlTree(['/login']);
 }
