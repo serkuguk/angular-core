@@ -1,6 +1,7 @@
 .sublevel-nav {
   list-style: none;
-  margin-left: 10px;
+  margin-left: 0;
+  padding-left: 0;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -18,14 +19,14 @@
 
       .sublevel-link-icon {
         font-size: 14px;
-        width: 2rem;
-        min-width: 2rem;
-        margin: 0 0.5rem;
+        width: 1.7rem;
+        min-width: 1.7rem;
+        margin: 0 0.2rem 0 0;
         text-align: center;
       }
 
       .sublevel-link-text {
-        margin: 0 0.8rem 0 0.8rem;
+        margin: 0 0.8rem 0 0;
       }
     }
 
