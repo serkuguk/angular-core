@@ -1,5 +1,7 @@
 @if (collapsed() && data().items) {
-  <ul class="sublevel-nav" [class.sublevel-nav--expanded]="expanded()">
+  <ul class="sublevel-nav"
+      [class.sublevel-nav--expanded]="expanded()"
+      [style.--sublevel-depth]="level()">
     @for (item of data().items; track $index) {
       <li class="sublevel-nav-item">
         @if (item.items && item.items.length > 0) {
@@ -32,6 +34,7 @@
               [collapsed]="collapsed()"
               [multiple]="multiple()"
               [expanded]="item.expanded"
+              [level]="level() + 1"
             ></app-sublevel-menu>
           </div>
         }

@@ -25,6 +25,7 @@ export class SublevelMenuComponent {
   public animating = input<boolean>(false);
   public expanded = input<boolean>(false);
   public multiple = input<boolean>(false);
+  public level = input<number>(1);
 
   public router: Router = inject(Router);
 

@@ -1,4 +1,7 @@
 .sublevel-nav {
+  --sublevel-indent-step: 1rem;
+  --sublevel-base-indent: 0.75rem;
+
   list-style: none;
   margin-left: 0;
   padding-left: 0;
@@ -11,22 +14,24 @@
     .sublevel-nav-link {
       display: flex;
       align-items: center;
-      height: 3rem;
+      padding-left: calc(var(--sublevel-base-indent) + ((var(--sublevel-depth, 1) - 1) * var(--sublevel-indent-step)));
+      height: 2.2rem;
       color: #898989;
       text-decoration: none;
       border-radius: 0.625rem;
       transition: all .3s ease;
 
       .sublevel-link-icon {
-        font-size: 14px;
-        width: 1.7rem;
-        min-width: 1.7rem;
-        margin: 0 0.2rem 0 0;
+        font-size: 7px;
+        width: 0.85rem;
+        min-width: 0.85rem;
+        margin: 0 0.35rem 0 0;
         text-align: center;
       }
 
       .sublevel-link-text {
-        margin: 0 0.8rem 0 0;
+        margin: 0;
+        padding-right: 0.5rem;
       }
     }
 
