@@ -1,19 +1,44 @@
-<h2>Dropdowns</h2>
+<section class="selectors-demo">
+  <header class="selectors-demo__header">
+    <h2>Dropdowns</h2>
+    <p>Select controls share the same spacing, focus rings, and neutral surfaces as the rest of the showcase.</p>
+  </header>
 
-<div class="dropdowns-container">
-  <div class="dropdowns-container__item">
-    <h3>Basic dropdown</h3>
+  <div class="dropdowns-container">
+    <section class="dropdowns-container__item">
+      <h3>Basic dropdown</h3>
+      <p>Single-selection control for compact form layouts.</p>
+
       <app-form-field
         label="Type"
         [required]="true"
         [field]="dropdownForm.createdAt"
         [showLabel]="false"
         [isInline]="isInline()">
-          <app-basic-select
-              [items]="optionList()"
-              [formField]="dropdownForm.createdAt"
-          >
-         </app-basic-select>
+        <app-basic-select
+          [items]="optionList()"
+          [formField]="dropdownForm.createdAt"
+        >
+        </app-basic-select>
       </app-form-field>
+    </section>
+
+    <section class="dropdowns-container__item">
+      <h3>Multi select</h3>
+      <p>Useful when the user needs to choose several entities in one field.</p>
+
+      <app-multi-select
+        [items]="multiSelectOptions()"
+        [placeholder]="'Select technologies'"
+        [showClear]="true"
+        [filter]="true"
+        [value]="selectedStacks()"
+        (changed)="onStacksChanged($event)"
+      />
+
+      <p class="dropdowns-container__hint">
+        Selected: {{ selectedStacks().join(', ') || 'none' }}
+      </p>
+    </section>
   </div>
-</div>
+</section>

@@ -5,7 +5,7 @@
       [options]="items()"
       [disabled]="isDisabled()"
       [placeholder]="placeholder()"
-      [resetFilterOnHide]="resetFilterOnHide"
+      [resetFilterOnHide]="resetFilterOnHide()"
       [filter]="filter()"
       [showClear]="showClearState()"
       [optionLabel]="'name'"
@@ -28,6 +28,6 @@
         </ng-template>
       }
     </p-select>
-    <label for="labelType()">{{placeholder()}}</label>
+    <label [for]="labelType()">{{placeholder()}}</label>
   </p-floatlabel>
 </div>

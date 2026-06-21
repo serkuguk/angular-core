@@ -1,16 +1,24 @@
-<h2>Tables</h2>
-<div class="table-container">
-  <div class="table-container__item">
-    <div class="table-container__item">
-      <h3>Editable Table</h3>
-      <app-table
-           [dataSource]="mockData"
-           [dataSourceColumns]="primeNgTableColumns"
-           [paginator]="true"
-           [iconColor]="'orangered'"
-           [iconClass]="'fa fa-exclamation-triangle'"
-           (rowUpdate)="updateSelectedRow($event)"
-      ></app-table>
+<section class="tables-demo">
+  <header class="tables-demo__header">
+    <h2>Tables</h2>
+    <p>Editable data tables with lighter headers, softer row contrast, and clearer row actions.</p>
+  </header>
+
+  <section class="tables-panel">
+    <div class="tables-panel__header">
+      <div>
+        <h3>Editable Table</h3>
+        <p>Inline row editing with sortable columns and compact actions.</p>
+      </div>
     </div>
-  </div>
-</div>
+
+    <app-table
+      [dataSource]="mockData"
+      [dataSourceColumns]="primeNgTableColumns"
+      [paginator]="true"
+      [iconColor]="'orangered'"
+      [iconClass]="'fa fa-exclamation-triangle'"
+      (rowUpdate)="updateSelectedRow($event)"
+    ></app-table>
+  </section>
+</section>

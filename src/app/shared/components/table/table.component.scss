@@ -1,6 +1,5 @@
 :host ::ng-deep .app-input {
   height: 1.9rem;
-  //border: 1px solid #ced4da;
   color: #495057;
   width: 100%;
   padding-left: 0.2rem;
@@ -10,7 +9,6 @@
 
 :host::ng-deep .ui-inputtext {
   height: 2.1rem;
-  //border: 1px solid rgba(206, 212, 218, 1);
   color: #495057;
   width: 100%;
 }
@@ -32,14 +30,39 @@
   color: rgba(0, 0, 0, 1);
 }
 
-:host ::ng-deep .custom-table th {
-  background-color: #070e27;
-  color: #fff;
+:host ::ng-deep .custom-table {
+  table-layout: auto;
+  width: 100%;
 }
 
-:host ::ng-deep .custom-table td {
-  background-color: #fff;
-  color: #000;
+:host ::ng-deep .custom-table .p-datatable-table-container {
+  border: 1px solid #dbe5f0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+:host ::ng-deep .custom-table .p-datatable-thead > tr > th {
+  padding: 0.95rem 1rem;
+  background: #f8fafc;
+  border-color: #dbe5f0;
+  color: #334155;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+:host ::ng-deep .custom-table .p-datatable-tbody > tr > td {
+  padding: 0.95rem 1rem;
+  background-color: #ffffff;
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+
+:host ::ng-deep .custom-table .p-datatable-tbody > tr:nth-child(even) > td {
+  background: #f8fbff;
+}
+
+:host ::ng-deep .custom-table .p-datatable-tbody > tr:hover > td {
+  background: #eff6ff;
 }
 
 :host ::ng-deep .custom-table th,
@@ -50,11 +73,7 @@
   min-width: 100px;
 }
 
-:host ::ng-deep .custom-table {
-  table-layout: auto;
-  width: 100%;
-}
-
+:host ::ng-deep .custom-table .p-datatable-table-container,
 :host ::ng-deep .custom-table .ui-table-scrollable-body {
   overflow-x: auto;
 }
@@ -66,11 +85,11 @@
 
 .tooltip-wrapper .tooltip-text {
   visibility: hidden;
-  background-color: #487e16;
+  background-color: #0f172a;
   color: #fff;
   text-align: center;
-  padding: 5px;
-  border-radius: 4px;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.5rem;
   position: absolute;
   z-index: 1;
   left: 150%;
@@ -91,19 +110,13 @@
   width: 7%;
   text-align: center;
   white-space: nowrap;
+  background: inherit;
 
   .button-cell {
     display: flex;
     justify-content: center;
-    gap: 4px;
+    gap: 0.4rem;
   }
-}
-
-.action-cell .p-button {
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  margin: 0 2px;
 }
 
 .sr-only {
@@ -122,4 +135,21 @@
   cursor: pointer;
   display: block;
   width: 100%;
+  color: #2563eb;
+}
+
+:host ::ng-deep .custom-table .p-sortable-column-icon,
+:host ::ng-deep .custom-table .p-paginator,
+:host ::ng-deep .custom-table .p-paginator-page,
+:host ::ng-deep .custom-table .p-paginator-next,
+:host ::ng-deep .custom-table .p-paginator-prev,
+:host ::ng-deep .custom-table .p-paginator-first,
+:host ::ng-deep .custom-table .p-paginator-last {
+  color: #475569;
+}
+
+:host ::ng-deep .custom-table .p-paginator {
+  border: none;
+  padding-top: 1rem;
+  background: transparent;
 }

@@ -27,6 +27,7 @@
     "STEPPER" : "Stepper",
     "FORMS" : "Forms",
     "CALENDAR" : "Calendar",
+    "DISPLAY" : "Display",
     "LIST_COUPONS" : "List Coupons",
     "CREATE_COUPONS" : "Create Coupons",
     "SETTINGS_LEVEL_1.1" : "Settings Level 1.1",

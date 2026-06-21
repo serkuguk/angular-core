@@ -1,0 +1,31 @@
+<h2>Display</h2>
+
+<div class="display-grid">
+  <section class="display-card">
+    <h3>Icon avatar</h3>
+    <app-avatar
+      [iconType]="'icon'"
+      [icon]="'pi pi-user'"
+      [size]="'large'">
+    </app-avatar>
+  </section>
+
+  <section class="display-card">
+    <h3>Image avatar</h3>
+    <app-avatar
+      [iconType]="'image'"
+      [imageUrl]="'https://i.pravatar.cc/100?img=12'"
+      [size]="'xlarge'">
+    </app-avatar>
+  </section>
+
+  <section class="display-card">
+    <h3>Avatar with badge</h3>
+    <app-avatar
+      [iconType]="'image'"
+      [imageUrl]="'https://i.pravatar.cc/100?img=32'"
+      [size]="'xlarge'"
+      [overlayBadge]="true">
+    </app-avatar>
+  </section>
+</div>

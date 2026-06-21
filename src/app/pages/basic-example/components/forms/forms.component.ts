@@ -10,6 +10,8 @@ import {validateDateRange} from "@pages/basic-example/components/forms/validator
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
 import {BasicSelectComponent} from "@shared/components/controls/basic-select/basic-select.component";
+import {CheckboxComponent} from "@shared/components/controls/checkbox/checkbox.component";
+import {PasswordInputComponent} from "@shared/components/controls/password-input/password-input.component";
 import {ButtonComponent} from "@shared/components/button/button.component";
 
 @Component({
@@ -20,6 +22,8 @@ import {ButtonComponent} from "@shared/components/button/button.component";
     FormFieldComponent,
     BasicInputComponent,
     BasicSelectComponent,
+    CheckboxComponent,
+    PasswordInputComponent,
     ButtonComponent
   ],
     templateUrl: './forms.component.html',
@@ -30,6 +34,7 @@ export class FormsComponent {
   public readonly isInline: boolean = true;
   readonly type = signal<any[]>(['PERSON', 'LEGAL']);
   readonly nameValue = signal<string | null>(null);
+  readonly marketingConsent = signal<boolean>(true);
 
   nameValidator = inject(NameValidator);
   fb = inject(FormBuilder);
@@ -39,6 +44,7 @@ export class FormsComponent {
     name:  this.fb.control<string>(''),
     inn: this.fb.control<string>(''),
     lastName: this.fb.control<string>(''),
+    password: this.fb.control<string>(''),
     addresses: this.fb.control<string>(''),
     feature: this.fb.control<string>(''),
     dateRange: this.fb.group({
@@ -63,6 +69,10 @@ export class FormsComponent {
 
   addAddress() {
     this.nameValue.set(this.lastNameInput() ?? '');
+  }
+
+  updateMarketingConsent(value: boolean): void {
+    this.marketingConsent.set(value);
   }
 
 }

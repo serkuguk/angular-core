@@ -7,8 +7,10 @@ import {select, Store} from "@ngrx/store";
 import * as basicExampleAction from "@pages/basic-example/store/basic-example.actions";
 import * as basicExampleSelector from "@pages/basic-example/store/basic-example.selectors";
 import {BasicSelectComponent} from "@shared/components/controls/basic-select/basic-select.component";
+import {MultiSelectComponent} from "@shared/components/controls/multi-select/multi-select.component";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {FormField, form} from "@angular/forms/signals";
+import {Value} from "@shared/types/frontend/types/control-item-interface";
 
 @Component({
     selector: 'app-selectors',
@@ -17,6 +19,7 @@ import {FormField, form} from "@angular/forms/signals";
     CommonModule,
     ReactiveFormsModule,
     BasicSelectComponent,
+    MultiSelectComponent,
     FormFieldComponent,
     FormField,
   ],
@@ -34,10 +37,17 @@ export class SelectorsComponent implements OnInit {
     { name: 'Istanbul', code: 'IST' },
     { name: 'Paris', code: 'PRS' }
   ]);
+  protected readonly multiSelectOptions = computed(() => [
+    { label: 'Angular', value: 'angular' },
+    { label: 'RxJS', value: 'rxjs' },
+    { label: 'PrimeNG', value: 'primeng' },
+    { label: 'NgRx', value: 'ngrx' }
+  ]);
   public countries = signal<Observable<BasicDataInterface[]> | []>([]);
   public basicDropdownData$: Observable<BasicDataInterface[] | null> | undefined;
   private store: Store = inject(Store);
   protected isInline = signal<boolean>(true);
+  protected readonly selectedStacks = signal<Value[]>(['angular', 'primeng']);
 
   ngOnInit(): void {
 
@@ -52,4 +62,8 @@ export class SelectorsComponent implements OnInit {
   });
 
   public dropdownForm = form(this.form);
+
+  protected onStacksChanged(values: Value[]): void {
+    this.selectedStacks.set(values);
+  }
 }
