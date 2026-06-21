@@ -8,7 +8,7 @@
       <div class="items">
         <app-form-field label="Username"
                         [field]="loginForm.controls.username">
-          <app-basic-input formControlName="username"
+          <app-basic-input [control]="loginForm.controls.username"
                            [placeholder]="'PAGES.LOGIN.USER' | translate"></app-basic-input>
         </app-form-field>
 

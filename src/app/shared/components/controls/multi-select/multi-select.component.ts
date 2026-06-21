@@ -1,33 +1,26 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  forwardRef, inject,
+  computed,
+  effect,
   input,
-  linkedSignal,
-  OnInit,
+  model,
   output
 } from '@angular/core';
 import {MultiSelect} from "primeng/multiselect";
-import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {ControlItemInterface} from "@shared/types/frontend/types/control-item-interface";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {FormValueControl} from "@angular/forms/signals";
+import {ControlItemInterface, Value} from "@shared/types/frontend/types/control-item-interface";
 
 @Component({
   selector: 'app-multi-select',
   standalone: true,
-  imports: [MultiSelect, FormsModule],
+  imports: [MultiSelect, ReactiveFormsModule],
   templateUrl: './multi-select.component.html',
   styleUrl: './multi-select.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MultiSelectComponent),
-      multi: true
-    }
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MultiSelectComponent implements OnInit, ControlValueAccessor {
+export class MultiSelectComponent implements FormValueControl<Value[]> {
 
   public items = input<ControlItemInterface[]>([]);
   public disabledValue = input<any[]>([]);
@@ -45,46 +38,43 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   public showIcon = input<boolean>(false);
   public virtualScroll = input<boolean>(false);
   public maxSelectedLabels = input<number>(2);
-  public style = input<{}>();
-  public changed = output<number | string>();
-  public selectedItems: string | undefined;
-  public value: string | undefined;
-  public isDisabled: boolean | undefined;
+  public style = input<Record<string, string> | undefined>();
+  public disabled = input<boolean>(false);
+  public changed = output<Value[]>();
+  public value = model<Value[]>([]);
+  public touched = model<boolean>(false);
+  protected readonly multiSelectControl = new FormControl<Value[]>([], {nonNullable: true});
+  protected readonly selectedItems = computed(() => {
+    const suffix = this.selectedItemsLabel()?.trim();
+    return suffix ? `Selecionado {0} ${suffix}` : undefined;
+  });
 
-  private readonly cd = inject(ChangeDetectorRef);
+  constructor() {
+    effect(() => {
+      const currentValue = this.value();
+      if (this.multiSelectControl.value !== currentValue) {
+        this.multiSelectControl.setValue(currentValue, {emitEvent: false});
+      }
+    });
 
-  ngOnInit(): void {
-    this.selectedItems = `Selecionado {0} ${this.selectedItemsLabel()}`;
-  }
+    effect(() => {
+      if (this.disabled()) {
+        this.multiSelectControl.disable({emitEvent: false});
+        return;
+      }
 
-  private propagateChange: any = () => { }
-  private propagateTouched: any = () => { }
-
-  registerOnChange(fn: any): void {
-    this.propagateChange = fn
-  }
-
-  registerOnTouched(fn: any): void {
-    this.propagateTouched = fn
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
-  }
-
-  writeValue(value: any): void {
-    if (value !== undefined) {
-      this.value = value;
-    }
+      this.multiSelectControl.enable({emitEvent: false});
+    });
   }
 
   onBlur(): void {
-    this.propagateTouched()
+    this.touched.set(true);
   }
 
-  onChanged(event: any): void {
-    this.value = event.value;
-    this.propagateChange(event.value);
-    this.changed.emit(event.value)
+  onChanged(event: { value: Value[] }): void {
+    const nextValue = event.value ?? [];
+    this.multiSelectControl.setValue(nextValue, {emitEvent: false});
+    this.value.set(nextValue);
+    this.changed.emit(nextValue);
   }
 }

@@ -13,10 +13,10 @@
 <div class="table-container">
   <div class="table-container__item">
     <app-checkbox
-      [(ngModel)]="esMenorEdad"
+      [formField]="checkboxForm.esMenorEdad"
       [label]="'Tienes menor edad?'"
       (changed)="onCheckboxChanged($event)"
     />
-    <p>Valor actual: {{ esMenorEdad ? 'Sí' : 'No' }}</p>
+    <p>Valor actual: {{ formModel().esMenorEdad ? 'Sí' : 'No' }}</p>
   </div>
 </div>

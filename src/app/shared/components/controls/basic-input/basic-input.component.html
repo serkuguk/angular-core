@@ -1,15 +1,16 @@
 <div class="basic-input">
   <p-floatlabel>
     <input
+      [id]="labelType()"
       type="text"
       pInputText
       class="app-input"
-      [disabled]="isDisabled"
-      (keyup)="onKeyup($event)"
+      [class.app-input_disabled]="isDisabled()"
+      [disabled]="isDisabled()"
+      (input)="onInput($event)"
       (blur)="onBlur()"
-      [value]="value || ''"
+      [value]="value()"
     />
-    <label for="labelType()">{{placeholder()}}</label>
+    <label [for]="labelType()">{{placeholder()}}</label>
   </p-floatlabel>
 </div>
-

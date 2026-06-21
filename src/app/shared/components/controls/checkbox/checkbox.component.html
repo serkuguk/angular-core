@@ -1,10 +1,9 @@
 <div class="checkbox-wrapper">
     <p-checkbox
-        [ngModel]="value"
+        [formControl]="checkboxControl"
         [binary]="binary()"
-        [disabled]="disabled() || isDisabled"
         [readonly]="readonly()"
-        (ngModelChange)="onValueChange($event)"
+        (onChange)="onValueChange($event.checked)"
         (onBlur)="onBlur()"
     />
     @if (label()) {

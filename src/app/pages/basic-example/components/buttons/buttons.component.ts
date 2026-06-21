@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormField, form} from "@angular/forms/signals";
 
 /*import {ButtonComponent} from "@shared/components/button";
 import {LoaderComponent} from "@shared/components/loader/loader.component";*/
@@ -14,22 +14,25 @@ import {CheckboxComponent} from "@shared/components/controls";
     providers: [],
   imports: [
     CommonModule,
-    FormsModule,
     /*ButtonComponent,
     LoaderComponent,*/
     TranslateModule,
     ButtonComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    FormField
   ],
     templateUrl: './buttons.component.html',
     styleUrls: ['./buttons.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonsComponent{
-    esMenorEdad: boolean = false;
+    public readonly formModel = signal({
+        esMenorEdad: false
+    });
+    public readonly checkboxForm = form(this.formModel);
 
     onCheckboxChanged(value: boolean): void {
         console.log('Checkbox value changed:', value);
-        console.log('Es menor de edad:', this.esMenorEdad);
+        console.log('Es menor de edad:', this.formModel().esMenorEdad);
     }
 }

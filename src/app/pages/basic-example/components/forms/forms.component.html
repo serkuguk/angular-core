@@ -22,7 +22,7 @@
                           [field]="form.controls.name"
                           [showLabel]="false"
                           [isInline]="isInline">
-            <app-basic-input formControlName="name"
+            <app-basic-input [control]="form.controls.name"
                        [placeholder]="'PAGES.LOGIN.USER' | translate"></app-basic-input>
           </app-form-field>
 
@@ -32,7 +32,7 @@
                             [field]="form.controls.inn"
                             [showLabel]="false"
                             [isInline]="isInline">
-              <app-basic-input formControlName="inn"
+              <app-basic-input [control]="form.controls.inn"
                          [placeholder]="'Enter INN' | translate"></app-basic-input>
             </app-form-field>
           } @else {
@@ -41,7 +41,7 @@
                             [field]="form.controls.lastName"
                             [showLabel]="false"
                             [isInline]="isInline">
-              <app-basic-input formControlName="lastName"
+              <app-basic-input [control]="form.controls.lastName"
                          [placeholder]="'Enter Last Name' | translate"></app-basic-input>
             </app-form-field>
           }
