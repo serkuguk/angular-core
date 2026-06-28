@@ -4,7 +4,7 @@
   <!-- Basic Horizontal Stepper with Reactive Forms -->
   <div class="stepper-example">
     <h3>Horizontal Stepper (with Form Validation)</h3>
-    <form [formGroup]="stepperFormGroup">
+    <form>
       <app-stepper-control
         [steps]="stepperSteps()"
         [linear]="false"
@@ -19,24 +19,24 @@
 
         <!-- Step 1: Personal Information -->
         <ng-template appStepperStep [step]="0">
-          <div class="step-form" [formGroup]="personalInfoGroup">
+          <div class="step-form">
             <h4>Personal Information</h4>
             <p>Enter your personal details in this step.</p>
 
             <div class="form-group">
               <app-form-field label="Full Name"
-                              [field]="personalInfoGroup.controls.fullName"
+                              [field]="personalInfoGroup.fullName"
                               [required]="true">
-                <app-basic-input formControlName="fullName"
+                <app-basic-input [formField]="personalInfoGroup.fullName"
                                  [placeholder]="'John Doe'"></app-basic-input>
               </app-form-field>
             </div>
 
             <div class="form-group">
               <app-form-field label="Email"
-                              [field]="personalInfoGroup.controls.email"
+                              [field]="personalInfoGroup.email"
                               [required]="true">
-                <app-basic-input formControlName="email"
+                <app-basic-input [formField]="personalInfoGroup.email"
                                  [placeholder]="'john@example.com'"></app-basic-input>
               </app-form-field>
             </div>
@@ -45,34 +45,34 @@
 
         <!-- Step 2: Address Details -->
         <ng-template appStepperStep [step]="1">
-          <div class="step-form" [formGroup]="addressDetailsGroup">
+          <div class="step-form">
             <h4>Address Details</h4>
             <p>Provide your address information.</p>
 
             <div class="form-group">
               <app-form-field label="Street Address"
-                              [field]="addressDetailsGroup.controls.streetAddress"
+                              [field]="addressDetailsGroup.streetAddress"
                               [required]="true">
-                <app-basic-input formControlName="streetAddress"
+                <app-basic-input [formField]="addressDetailsGroup.streetAddress"
                                  [placeholder]="'123 Main St'"></app-basic-input>
               </app-form-field>
             </div>
 
             <div class="form-group">
               <app-form-field label="City"
-                              [field]="addressDetailsGroup.controls.city"
+                              [field]="addressDetailsGroup.city"
                               [required]="true">
-                <app-basic-input formControlName="city"
+                <app-basic-input [formField]="addressDetailsGroup.city"
                                  [placeholder]="'New York'"></app-basic-input>
               </app-form-field>
             </div>
 
             <div class="form-group">
               <app-form-field label="Postal Code"
-                              [field]="addressDetailsGroup.controls.postalCode"
+                              [field]="addressDetailsGroup.postalCode"
                               [required]="true"
                               [patternError]="'Please enter a valid postal code (e.g., 12345 or 12345-6789)'">
-                <app-basic-input formControlName="postalCode"
+                <app-basic-input [formField]="addressDetailsGroup.postalCode"
                                  [placeholder]="'10001'"></app-basic-input>
               </app-form-field>
             </div>
@@ -88,18 +88,18 @@
             <div class="review-summary">
               <div class="review-section">
                 <h5>Personal Information</h5>
-                <p><strong>Full Name:</strong> {{ personalInfoGroup.get('fullName')?.value || 'Not provided' }}</p>
-                <p><strong>Email:</strong> {{ personalInfoGroup.get('email')?.value || 'Not provided' }}</p>
+                <p><strong>Full Name:</strong> {{ personalInfoGroup.fullName().value() || 'Not provided' }}</p>
+                <p><strong>Email:</strong> {{ personalInfoGroup.email().value() || 'Not provided' }}</p>
               </div>
 
               <div class="review-section">
                 <h5>Address Details</h5>
-                <p><strong>Street Address:</strong> {{ addressDetailsGroup.get('streetAddress')?.value || 'Not provided' }}</p>
-                <p><strong>City:</strong> {{ addressDetailsGroup.get('city')?.value || 'Not provided' }}</p>
-                <p><strong>Postal Code:</strong> {{ addressDetailsGroup.get('postalCode')?.value || 'Not provided' }}</p>
+                <p><strong>Street Address:</strong> {{ addressDetailsGroup.streetAddress().value() || 'Not provided' }}</p>
+                <p><strong>City:</strong> {{ addressDetailsGroup.city().value() || 'Not provided' }}</p>
+                <p><strong>Postal Code:</strong> {{ addressDetailsGroup.postalCode().value() || 'Not provided' }}</p>
               </div>
 
-              @if (!stepperFormGroup.valid) {
+              @if (!stepperFormGroup().valid()) {
                 <div class="alert alert-warning">
                   <strong>Warning:</strong> Please complete all required fields before submitting.
                 </div>
@@ -155,20 +155,20 @@
       </div>
       <div class="status-item">
         <strong>Form Valid:</strong>
-        <span [class.text-success]="stepperFormGroup.valid" [class.text-danger]="!stepperFormGroup.valid">
-          {{ stepperFormGroup.valid ? 'Yes' : 'No' }}
+        <span [class.text-success]="stepperFormGroup().valid()" [class.text-danger]="!stepperFormGroup().valid()">
+          {{ stepperFormGroup().valid() ? 'Yes' : 'No' }}
         </span>
       </div>
       <div class="status-item">
         <strong>Personal Info Valid:</strong>
-        <span [class.text-success]="personalInfoGroup.valid" [class.text-danger]="!personalInfoGroup.valid">
-          {{ personalInfoGroup.valid ? 'Yes' : 'No' }}
+        <span [class.text-success]="personalInfoGroup().valid()" [class.text-danger]="!personalInfoGroup().valid()">
+          {{ personalInfoGroup().valid() ? 'Yes' : 'No' }}
         </span>
       </div>
       <div class="status-item">
         <strong>Address Valid:</strong>
-        <span [class.text-success]="addressDetailsGroup.valid" [class.text-danger]="!addressDetailsGroup.valid">
-          {{ addressDetailsGroup.valid ? 'Yes' : 'No' }}
+        <span [class.text-success]="addressDetailsGroup().valid()" [class.text-danger]="!addressDetailsGroup().valid()">
+          {{ addressDetailsGroup().valid() ? 'Yes' : 'No' }}
         </span>
       </div>
     </div>
@@ -176,7 +176,7 @@
     <!-- Debug: Form Values (can be removed in production) -->
     <details class="form-debug">
       <summary>Debug: Form Values (JSON)</summary>
-      <pre>{{ stepperFormGroup.value | json }}</pre>
+      <pre>{{ stepperModel() | json }}</pre>
     </details>
 
     <!-- Reset Button -->

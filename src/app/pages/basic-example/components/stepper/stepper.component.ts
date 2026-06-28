@@ -1,23 +1,24 @@
 import {Component, signal} from '@angular/core';
 import {StepChangeEvent, StepConfig, StepperControlComponent, StepperStepDirective} from "@shared/components/controls";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {JsonPipe} from "@angular/common";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
 import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
+import {FormField, form, required, minLength, email, pattern, submit} from "@angular/forms/signals";
 
 /**
  * Interface for the stepper form data structure
  */
 interface StepperFormData {
-  personalInfo: FormGroup<{
-    fullName: FormControl<string | null>;
-    email: FormControl<string | null>;
-  }>;
-  addressDetails: FormGroup<{
-    streetAddress: FormControl<string | null>;
-    city: FormControl<string | null>;
-    postalCode: FormControl<string | null>;
-  }>;
+  personalInfo: {
+    fullName: string;
+    email: string;
+  };
+  addressDetails: {
+    streetAddress: string;
+    city: string;
+    postalCode: string;
+  };
 }
 
 @Component({
@@ -28,7 +29,8 @@ interface StepperFormData {
     ReactiveFormsModule,
     JsonPipe,
     FormFieldComponent,
-    BasicInputComponent
+    BasicInputComponent,
+    FormField
   ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
@@ -41,18 +43,25 @@ export class StepperComponent {
   public stepperControl = new FormControl<number>(0, {nonNullable: true});
 
   /**
-   * Main form group containing all stepper data
+   * Signal model backing the stepper form
    */
-  public stepperFormGroup = new FormGroup<StepperFormData>({
-    personalInfo: new FormGroup({
-      fullName: new FormControl<string>('', [Validators.required, Validators.minLength(3)]),
-      email: new FormControl<string>('', [Validators.required, Validators.email])
-    }),
-    addressDetails: new FormGroup({
-      streetAddress: new FormControl<string>('', [Validators.required]),
-      city: new FormControl<string>('', [Validators.required]),
-      postalCode: new FormControl<string>('', [Validators.required, Validators.pattern(/^\d{5}(-\d{4})?$/)])
-    })
+  public stepperModel = signal<StepperFormData>({
+    personalInfo: {fullName: '', email: ''},
+    addressDetails: {streetAddress: '', city: '', postalCode: ''}
+  });
+
+  /**
+   * Main signal form containing all stepper data
+   */
+  public stepperFormGroup = form(this.stepperModel, (p) => {
+    required(p.personalInfo.fullName);
+    minLength(p.personalInfo.fullName, 3);
+    required(p.personalInfo.email);
+    email(p.personalInfo.email);
+    required(p.addressDetails.streetAddress);
+    required(p.addressDetails.city);
+    required(p.addressDetails.postalCode);
+    pattern(p.addressDetails.postalCode, /^\d{5}(-\d{4})?$/);
   });
 
   /**
@@ -65,17 +74,17 @@ export class StepperComponent {
   ]);
 
   /**
-   * Get the personal info form group
+   * Get the personal info form field group
    */
-  get personalInfoGroup(): FormGroup {
-    return this.stepperFormGroup.get('personalInfo') as FormGroup;
+  get personalInfoGroup() {
+    return this.stepperFormGroup.personalInfo;
   }
 
   /**
-   * Get the address details form group
+   * Get the address details form field group
    */
-  get addressDetailsGroup(): FormGroup {
-    return this.stepperFormGroup.get('addressDetails') as FormGroup;
+  get addressDetailsGroup() {
+    return this.stepperFormGroup.addressDetails;
   }
 
   /**
@@ -83,7 +92,7 @@ export class StepperComponent {
    */
   onStepChange(event: StepChangeEvent): void {
     console.log('Step changed:', event);
-    console.log('Current form values:', this.stepperFormGroup.value);
+    console.log('Current form values:', this.stepperModel());
   }
 
   /**
@@ -92,21 +101,18 @@ export class StepperComponent {
   onStepperComplete(): void {
     console.log('Stepper completed!');
 
-    if (this.stepperFormGroup.valid) {
-      console.log('Form is valid. Submitting data:', this.stepperFormGroup.value);
+    submit(this.stepperFormGroup, async () => {
+      console.log('Form is valid. Submitting data:', this.stepperModel());
       // Here you would typically send the data to a service/API
       this.submitForm();
-    } else {
-      console.error('Form is invalid. Please check all fields.');
-      this.stepperFormGroup.markAllAsTouched();
-    }
+    });
   }
 
   /**
    * Submit the form data
    */
   private submitForm(): void {
-    const formData = this.stepperFormGroup.getRawValue();
+    const formData = this.stepperModel();
     console.log('Submitting form data:', formData);
     // TODO: Integrate with NgRx store or API service
   }
@@ -115,7 +121,10 @@ export class StepperComponent {
    * Reset the form to initial state
    */
   public resetForm(): void {
-    this.stepperFormGroup.reset();
+    this.stepperModel.set({
+      personalInfo: {fullName: '', email: ''},
+      addressDetails: {streetAddress: '', city: '', postalCode: ''}
+    });
     this.stepperControl.setValue(0);
   }
 }

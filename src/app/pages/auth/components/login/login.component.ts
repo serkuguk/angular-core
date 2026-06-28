@@ -1,13 +1,6 @@
-import {Component, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import {Component, OnInit, inject, ChangeDetectionStrategy, signal} from '@angular/core';
 import {select, Store} from '@ngrx/store'
-import { markFormGroupTouched, regexErrors } from 'src/app/shared/utils';
+import { regexErrors } from 'src/app/shared/utils';
 
 import * as fromAuth from '@pages/auth';
 import * as fromLoginAction from '@pages/auth/store/user.actions';
@@ -21,19 +14,19 @@ import {TranslateModule} from "@ngx-translate/core";
 import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
 import {PasswordInputComponent} from "@shared/components/controls/password-input/password-input.component";
 import {ButtonComponent} from "@shared/components/button/button.component";
+import {FormField, form, required, minLength, submit} from "@angular/forms/signals";
 
 @Component({
   selector: 'app-login',
   providers: [AuthTokenStorageService],
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     TranslateModule,
     FormFieldComponent,
     BasicInputComponent,
     PasswordInputComponent,
-    ButtonComponent
+    ButtonComponent,
+    FormField
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -41,46 +34,30 @@ import {ButtonComponent} from "@shared/components/button/button.component";
 })
 export class LoginComponent implements OnInit {
 
-  public loginForm!: FormGroup
   public isInline: boolean = false;
   public regexErrors = regexErrors
   public loading$: Observable<boolean | null> | undefined;
   public loadingError$: Observable<string | null> | undefined;
 
-  private readonly fb = inject(FormBuilder);
   private readonly store: Store<fromAuth.State> = inject(Store);
+
+  public loginModel = signal({ username: '', password: '' });
+  public loginForm = form(this.loginModel, (p) => {
+    required(p.username);
+    minLength(p.username, 3);
+    required(p.password);
+    minLength(p.password, 3);
+  });
 
   ngOnInit(): void {
     this.loading$ = this.store.pipe(select(fromLoginSelectors.getLoading));
     this.store.dispatch(fromLoginAction.init());
-
-    this.loginForm = this.fb.group({
-        username: [null, {
-            validators: [
-              Validators.required,
-              Validators.minLength(3),
-              //passwordValidators,
-              //passwordWithParamsValidators('secret')
-            ]
-        }],
-        password: [null, {
-          validators: [
-            Validators.required,
-            Validators.minLength(3),
-            //passwordWithParamsValidators('secret')
-          ]
-        }]
-    })
   }
 
   login(): void {
-    if (!this.loginForm.valid) {
-      this.loadingError$ = this.store.pipe(select(fromLoginSelectors.getLoadingError));
-      markFormGroupTouched(this.loginForm);
-      return;
-    }
-
-    this.store.dispatch(fromLoginAction.login(this.loginForm.value));
-
+    this.loadingError$ = this.store.pipe(select(fromLoginSelectors.getLoadingError));
+    submit(this.loginForm, async () => {
+      this.store.dispatch(fromLoginAction.login(this.loginModel()));
+    });
   }
 }
