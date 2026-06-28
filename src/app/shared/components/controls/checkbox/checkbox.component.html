@@ -1,8 +1,8 @@
 <div class="checkbox-wrapper">
     <p-checkbox
-        [ngModel]="value"
+        [ngModel]="value()"
         [binary]="binary()"
-        [disabled]="disabled() || isDisabled"
+        [disabled]="disabled()"
         [readonly]="readonly()"
         (ngModelChange)="onValueChange($event)"
         (onBlur)="onBlur()"

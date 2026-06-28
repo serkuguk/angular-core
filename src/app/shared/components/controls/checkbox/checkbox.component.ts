@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, inject, input, output, ViewEncapsulation} from '@angular/core';
-import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, input, model, output} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {FormValueControl} from '@angular/forms/signals';
 import {CheckboxModule} from 'primeng/checkbox';
 
 @Component({
@@ -9,52 +10,22 @@ import {CheckboxModule} from 'primeng/checkbox';
     templateUrl: './checkbox.component.html',
     styleUrl: './checkbox.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => CheckboxComponent),
-            multi: true
-        }
-    ]
 })
-export class CheckboxComponent implements ControlValueAccessor {
+export class CheckboxComponent implements FormValueControl<boolean> {
     public label = input<string>('');
     public binary = input<boolean>(true);
     public disabled = input<boolean>(false);
     public readonly = input<boolean>(false);
+    public value = model<boolean>(false);
+    public touched = model<boolean>(false);
     public changed = output<boolean>();
 
-    value: boolean = false;
-    isDisabled: boolean = false;
-
-    private propagateChange: any = () => {
-    };
-    private propagateTouched: any = () => {
-    };
-
-    registerOnChange(fn: any): void {
-        this.propagateChange = fn;
-    }
-
-    registerOnTouched(fn: any): void {
-        this.propagateTouched = fn;
-    }
-
-    writeValue(value: boolean): void {
-        this.value = value ?? false;
-    }
-
-    setDisabledState(isDisabled: boolean): void {
-        this.isDisabled = isDisabled;
-    }
-
     onValueChange(checked: boolean): void {
-        this.value = checked;
-        this.propagateChange(checked);
+        this.value.set(checked);
         this.changed.emit(checked);
     }
 
     onBlur(): void {
-        this.propagateTouched();
+        this.touched.set(true);
     }
 }

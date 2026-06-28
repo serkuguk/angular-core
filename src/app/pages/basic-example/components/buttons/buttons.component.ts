@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 
 /*import {ButtonComponent} from "@shared/components/button";
 import {LoaderComponent} from "@shared/components/loader/loader.component";*/
@@ -14,7 +13,6 @@ import {CheckboxComponent} from "@shared/components/controls";
     providers: [],
   imports: [
     CommonModule,
-    FormsModule,
     /*ButtonComponent,
     LoaderComponent,*/
     TranslateModule,
