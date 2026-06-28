@@ -55,13 +55,13 @@
           } @else {
               @if (rowData._editing && col.modificable) {
 
-                <form [formGroup]="initialForm" (keydown.enter)="confirmEdit(rowData)">
+                <form (keydown.enter)="confirmEdit(rowData)">
                   <app-form-field
                        [required]="true"
-                       [field]="initialForm.controls.inputValue">
+                       [field]="initialForm.inputValue">
                     <app-basic-input
                          [placeholder]="''"
-                         [control]="initialForm.controls.inputValue"
+                         [formField]="initialForm.inputValue"
                     ></app-basic-input>
                   </app-form-field>
                 </form>

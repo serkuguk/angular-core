@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component, forwardRef, input, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input, model, output} from '@angular/core';
 import {FloatLabel} from "primeng/floatlabel";
-import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {Password} from "primeng/password";
+import {FormValueControl} from "@angular/forms/signals";
 
 @Component({
     selector: 'app-password-input',
@@ -14,53 +15,24 @@ import {Password} from "primeng/password";
     templateUrl: './password-input.component.html',
     styleUrl: './password-input.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => PasswordInputComponent),
-            multi: true
-        }
-    ],
 })
-export class PasswordInputComponent implements ControlValueAccessor {
+export class PasswordInputComponent implements FormValueControl<string> {
     public placeholder = input<string>("Input your password...");
     public labelType = input<string>("in_label");
     public toggleMask = input<boolean>(true);
     public feedback = input<boolean>(false);
+    public isDisabled = input<boolean>(false);
+    public value = model<string>('');
+    public touched = model<boolean>(false);
     public changed = output<string>();
 
-    value: string = "";
-    isDisabled: boolean = false;
-
-    private propagateChange: any = () => {
-    };
-    private propagateTouched: any = () => {
-    };
-
-    registerOnChange(fn: any): void {
-        this.propagateChange = fn;
-    }
-
-    registerOnTouched(fn: any): void {
-        this.propagateTouched = fn;
-    }
-
-    writeValue(value: string): void {
-        this.value = value;
-    }
-
-    setDisabledState(isDisabled: boolean): void {
-        this.isDisabled = isDisabled;
-    }
-
-    onKeyup(password: any): void {
-        this.value = password.target.value;
-        const passwordValue = password.target.value;
-        this.propagateChange(passwordValue);
-        this.changed.emit(passwordValue);
+    onKeyup(event: Event): void {
+        const value = (event.target as HTMLInputElement).value;
+        this.value.set(value);
+        this.changed.emit(value);
     }
 
     onBlur(): void {
-        this.propagateTouched();
+        this.touched.set(true);
     }
 }

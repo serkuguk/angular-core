@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 
     public store: Store<fromAuth.State> = inject(Store);
     public router: Router = inject(Router);
-    private renderer = inject(Renderer2);
+    private readonly renderer = inject(Renderer2);
     public isAuthenticated$: Observable<boolean> | undefined;
 
     @HostListener('window:resize')

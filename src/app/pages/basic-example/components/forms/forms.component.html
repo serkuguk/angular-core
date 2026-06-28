@@ -1,92 +1,47 @@
-<section class="forms-demo">
-  <header class="forms-demo__header">
-    <h2>Forms</h2>
-    <p>Inputs, selects, and actions share a lighter structure that fits the rest of the demo surface.</p>
-  </header>
+<h2>Forms</h2>
 
-  <div class="forms-container">
-    <section class="controls-showcase">
-      <span class="forms-section-tag">{{'FORMS.FORM_TYPE.DYNAMIC' | translate}}</span>
-      <h3>Shared controls</h3>
-      <p class="forms-section-copy">Reusable controls for text, password, and consent flows.</p>
+<div class="forms-container">
+  <h1>{{'FORMS.FORM_TYPE.DYNAMIC' | translate}}</h1>
 
-      <div class="controls-showcase__grid">
-        <app-form-field
-          label="Name"
-          [required]="true"
-          [field]="form.controls.name"
-          [showLabel]="false"
-          [isInline]="isInline">
-          <app-basic-input
-            [control]="form.controls.name"
-            [placeholder]="'Input your name'">
-          </app-basic-input>
-        </app-form-field>
+  <div class="delivery-form">
+    <h3>{{'FORMS.HEADER_TITLE' | translate}}</h3>
 
-        <app-form-field
-          label="Password"
-          [required]="true"
-          [field]="form.controls.password"
-          [showLabel]="false"
-          [isInline]="isInline">
-          <app-password-input
-            formControlName="password"
-            [placeholder]="'Input your password'">
-          </app-password-input>
-        </app-form-field>
-      </div>
-
-      <div class="controls-showcase__checkbox">
-        <app-checkbox
-          [label]="'Receive product updates'"
-          [value]="marketingConsent()"
-          (changed)="updateMarketingConsent($event)">
-        </app-checkbox>
-
-        <p>Checkbox value: {{ marketingConsent() ? 'enabled' : 'disabled' }}</p>
-      </div>
-    </section>
-
-    <section class="delivery-form">
-      <h3>{{'FORMS.HEADER_TITLE' | translate}}</h3>
-      <p class="forms-section-copy">Example of a denser business form with branching fields and inline actions.</p>
-
-      <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+    <form (submit)="onSubmit($event)">
           <app-form-field label="Type"
                           [required]="true"
-                          [field]="form.controls.type"
+                          [field]="form.type"
                           [showLabel]="false"
                           [isInline]="isInline">
-                    <app-basic-select formControlName="type"
+                    <app-basic-select [formField]="form.type"
                       [items]="type()"
                     ></app-basic-select>
           </app-form-field>
 
           <app-form-field label="Name"
                           [required]="true"
-                          [field]="form.controls.name"
+                          [field]="form.name"
                           [showLabel]="false"
                           [isInline]="isInline">
-            <app-basic-input [control]="form.controls.name"
+            <app-basic-input [formField]="form.name"
                        [placeholder]="'PAGES.LOGIN.USER' | translate"></app-basic-input>
           </app-form-field>
 
-          @if (form.controls.type.value === 'LEGAL') {
+          @if (model().type === 'LEGAL') {
             <app-form-field label="Inn"
                             [required]="true"
-                            [field]="form.controls.inn"
+                            [field]="form.inn"
                             [showLabel]="false"
                             [isInline]="isInline">
-              <app-basic-input [control]="form.controls.inn"
+              <app-basic-input [formField]="form.inn"
                          [placeholder]="'Enter INN' | translate"></app-basic-input>
             </app-form-field>
           } @else {
             <app-form-field label="Last Name"
                             [required]="true"
-                            [field]="form.controls.lastName"
+                            [field]="form.lastName"
                             [showLabel]="false"
                             [isInline]="isInline">
-              <app-basic-input [control]="form.controls.lastName"
+              <app-basic-input [formField]="form.lastName"
                          [placeholder]="'Enter Last Name' | translate"></app-basic-input>
             </app-form-field>
           }
@@ -156,7 +111,6 @@
           </app-button>
 
       </form>
-      <div class="form-result">Last Name {{nameFromInput()}}</div>
-    </section>
+    <pre>Last Name {{nameFromInput()}}</pre>
   </div>
-</section>
+</div>

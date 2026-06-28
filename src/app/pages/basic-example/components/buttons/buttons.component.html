@@ -4,27 +4,15 @@
     <p>Primary actions and toggle controls styled for the current product UI.</p>
   </header>
 
-  <div class="buttons-demo__grid">
-    <section class="buttons-card">
-      <h3>Primary action</h3>
-      <p>Use this style for the main action in forms and data panels.</p>
-
-      <app-button [label]="'Custom Button'"></app-button>
-    </section>
-
-    <section class="buttons-card">
-      <h3>Checkbox example</h3>
-      <p>Boolean controls should stay readable and lightweight.</p>
-
-      <app-checkbox
-        [formField]="checkboxForm.esMenorEdad"
-        [label]="'Tienes menor edad?'"
-        (changed)="onCheckboxChanged($event)"
-      />
-
-      <p class="buttons-card__value">
-        Valor actual: <strong>{{ formModel().esMenorEdad ? 'Sí' : 'No' }}</strong>
-      </p>
-    </section>
+<h3>Checkbox Example</h3>
+<div class="table-container">
+  <div class="table-container__item">
+    <app-checkbox
+      [(value)]="esMenorEdad"
+      [label]="'Tienes menor edad?'"
+      (changed)="onCheckboxChanged($event)"
+    />
+    <p>Valor actual: {{ esMenorEdad ? 'Sí' : 'No' }}</p>
   </div>
+</div>
 </section>

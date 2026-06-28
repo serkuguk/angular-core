@@ -4,7 +4,7 @@ import {
     Component,
     computed,
     ContentChild, effect,
-    input, OnInit,
+    input,
     output,
     signal,
     TemplateRef,
@@ -16,8 +16,8 @@ import {DatePipe, NgTemplateOutlet} from "@angular/common";
 import {ButtonComponent} from "@shared/components/button/button.component";
 import {SortEvent} from "primeng/api";
 import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
+import {FormField, form, required} from "@angular/forms/signals";
 
 type ColumnType =
     | 'datetime' | 'date' | 'date-mes' | 'date-reverse'
@@ -66,14 +66,14 @@ export interface TableRow {
         DatePipe,
         ButtonComponent,
         FormFieldComponent,
-        ReactiveFormsModule,
-        BasicInputComponent
+        BasicInputComponent,
+        FormField
     ],
     templateUrl: './table.component.html',
     styleUrl: './table.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
 
     rows = 10;
     private currentlyEditingRow: TableRow | null = null;
@@ -114,7 +114,10 @@ export class TableComponent implements OnInit {
     showFilterCondition = input<string>();
     editableFieldName = input<string>(); // Optional: explicitly specify which field is editable
     customSortFun = false;
-    initialForm!: FormGroup;
+    editModel = signal<{ inputValue: string | null }>({ inputValue: null });
+    initialForm = form(this.editModel, (p) => {
+        required(p.inputValue);
+    });
 
     //outputs
     selectRow = output<{ row: TableRow, rowIndex: number }>();
@@ -125,21 +128,12 @@ export class TableComponent implements OnInit {
     @ViewChild('table') table!: Table;
     @ContentChild('customCellTemplate') customCellTemplate: TemplateRef<any> | undefined;
 
-    constructor(private readonly cd: ChangeDetectorRef, private readonly fb: FormBuilder) {
+    constructor(private readonly cd: ChangeDetectorRef) {
         effect(() => {
             const ds = this.enrichedDataSource();
             if (ds?.length && this.table) {
                 this.table.first = 0;
             }
-        });
-    }
-
-    ngOnInit() {
-        this.initialForm = this.fb.group({
-            inputValue: [
-                { value: null, disabled: false },
-                { validators: [Validators.required] },
-            ],
         });
     }
 
@@ -233,7 +227,7 @@ export class TableComponent implements OnInit {
             return;
         }
 
-        this.initialForm.controls.inputValue.setValue(row[editableField]);
+        this.editModel.set({ inputValue: row[editableField] });
 
         // If another row was being edited, revert its changes
         if (this.currentlyEditingRow && this.currentlyEditingRow !== row) {
@@ -263,7 +257,7 @@ export class TableComponent implements OnInit {
         this.rowUpdate.emit({
             data: row,
             field: editableField,
-            newValue: this.initialForm.controls.inputValue.value,
+            newValue: this.editModel().inputValue,
         });
     }
 
