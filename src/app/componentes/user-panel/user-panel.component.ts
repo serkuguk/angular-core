@@ -8,7 +8,7 @@ import * as fromAuth from "@pages/auth";
 import {select, Store} from "@ngrx/store";
 import * as fromLoginAction from "@pages/auth/store/user.actions";
 import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
-import {AvatarComponent} from "@shared/components/avatar/avatar.component";
+import {AvatarComponent} from "@springest/ui";
 import {DatePickerModule} from "primeng/datepicker";
 import {Observable} from "rxjs";
 

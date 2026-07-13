@@ -1,9 +1,7 @@
 import {JsonPipe} from '@angular/common';
 import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {FormField, form} from '@angular/forms/signals';
-import {CalendarComponent as SharedCalendarComponent} from '@shared/components/calendar';
-import {ButtonComponent} from "@shared/components/button/button.component";
-import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
+import {ButtonComponent, CalendarComponent as SharedCalendarComponent, FormFieldComponent} from '@springest/ui';
 
 @Component({
   selector: 'app-calendar-example',

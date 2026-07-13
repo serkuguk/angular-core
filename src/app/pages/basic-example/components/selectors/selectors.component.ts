@@ -6,9 +6,7 @@ import {BasicDataInterface} from "@core/models/backend/basick-examples/tables.in
 import {select, Store} from "@ngrx/store";
 import * as basicExampleAction from "@pages/basic-example/store/basic-example.actions";
 import * as basicExampleSelector from "@pages/basic-example/store/basic-example.selectors";
-import {BasicSelectComponent} from "@shared/components/controls/basic-select/basic-select.component";
-import {MultiSelectComponent} from "@shared/components/controls/multi-select/multi-select.component";
-import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
+import {BasicSelectComponent, FormFieldComponent, MultiSelectComponent} from "@springest/ui";
 import {FormField, form} from "@angular/forms/signals";
 import {Value} from "@shared/types/frontend/types/control-item-interface";
 

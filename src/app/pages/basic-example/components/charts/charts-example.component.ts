@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {ChartsComponent} from '@shared/components/charts/charts.component';
+import {ChartsComponent} from '@springest/ui';
 import {ChartData} from './interface/chart-data.interface';
 
 @Component({

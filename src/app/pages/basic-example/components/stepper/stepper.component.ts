@@ -1,9 +1,14 @@
 import {Component, signal} from '@angular/core';
-import {StepChangeEvent, StepConfig, StepperControlComponent, StepperStepDirective} from "@shared/components/controls";
+import {
+  BasicInputComponent,
+  FormFieldComponent,
+  StepChangeEvent,
+  StepConfig,
+  StepperControlComponent,
+  StepperStepDirective
+} from "@springest/ui";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {JsonPipe} from "@angular/common";
-import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
-import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
 import {FormField, form, required, minLength, email, pattern, submit} from "@angular/forms/signals";
 
 /**
