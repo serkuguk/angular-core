@@ -5,7 +5,9 @@
     @for (item of data().items; track $index) {
       <li class="sublevel-nav-item">
         @if (item.items && item.items.length > 0) {
-          <a (click)="hundleClick(item)" [ngClass]="getActiveClass(item)" class="sublevel-nav-link">
+          <button type="button" (click)="hundleClick(item)" [ngClass]="getActiveClass(item)" class="sublevel-nav-link"
+                  [attr.aria-expanded]="item.expanded ?? false"
+                  [attr.aria-label]="('SIDENAV_SUB.' + item.label) | translate">
             <i class="sublevel-link-icon fa fa-circle"></i>
             @if (collapsed()) {
               <span class="sublevel-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" translate>{{'SIDENAV_SUB.' + item.label}}</span>
@@ -13,13 +15,15 @@
             @if (item.items && collapsed()) {
               <i class="menu-collapse-icon" [ngClass]="!item.expanded ? 'fal fa-angle-right':'fal fa-angle-down'"></i>
             }
-          </a>
+          </button>
         }
         @if (!item.items || (item.items && item.items.length === 0)) {
           <a [routerLink]="[item.routerLink]"
              routerLinkActive="active-sublevel"
              [routerLinkActiveOptions]="{exact: true}"
-             class="sublevel-nav-link">
+             class="sublevel-nav-link"
+             (click)="onClose.emit()"
+             [attr.aria-label]="('SIDENAV_SUB.' + item.label) | translate">
                 <i class="sublevel-link-icon fa fa-circle"></i>
                 @if (collapsed()) {
                   <span class="sublevel-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" translate>{{'SIDENAV_SUB.' + item.label}}</span>
@@ -27,14 +31,15 @@
             </a>
         }
 
-        @if (item.items && item.items.length > 0) {
+        @if (item.items && item.items.length > 0 && item.expanded) {
           <div>
             <app-sublevel-menu
               [data]="item"
               [collapsed]="collapsed()"
               [multiple]="multiple()"
-              [expanded]="item.expanded"
+              [expanded]="true"
               [level]="level() + 1"
+              (onClose)="onClose.emit()"
             ></app-sublevel-menu>
           </div>
         }

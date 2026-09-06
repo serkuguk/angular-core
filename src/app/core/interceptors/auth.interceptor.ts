@@ -5,6 +5,8 @@ import {AuthTokenStorageService} from '../services/auth-token-storage.service';
 import {AuthService, AuthRefreshResponse} from '@core/services/auth/auth.service';
 import {ENV} from '@core/tokens/environment.token';
 import {EnvironmentInterface} from '@core/interfaces/environment.interface';
+import {Router} from '@angular/router';
+import {AUTH_UNAUTHORIZED} from '@core/tokens/auth-unauthorized.token';
 
 let refreshInFlight$: Observable<AuthRefreshResponse> | null = null;
 
@@ -12,6 +14,8 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   const authToken = inject(AuthTokenStorageService);
   const authService = inject(AuthService);
   const env = inject<EnvironmentInterface>(ENV);
+  const router = inject(Router, {optional: true});
+  const notifyUnauthorized = inject(AUTH_UNAUTHORIZED, {optional: true});
 
   if (!isTrustedApiRequest(req.url, env.server_url) || isAuthRequest(req.url, env.server_url)) {
     return next(req);
@@ -23,11 +27,17 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   return next(addToken(req, token)).pipe(
     catchError(error => {
       if (error.status === 401) {
-        authToken.logOut();
+        endUnauthorizedSession(authService, notifyUnauthorized, router);
       }
 
       return error.status === 403
-        ? refreshAccessToken(authService).pipe(switchMap(({access_token}) => next(addToken(req, access_token))))
+        ? refreshAccessToken(authService).pipe(
+          switchMap(({access_token}) => next(addToken(req, access_token))),
+          catchError(refreshError => {
+            endUnauthorizedSession(authService, notifyUnauthorized, router);
+            return throwError(() => refreshError);
+          }),
+        )
         : throwError(() => error);
     }),
   );
@@ -42,6 +52,16 @@ function refreshAccessToken(authService: AuthService): Observable<AuthRefreshRes
   }
 
   return refreshInFlight$;
+}
+
+function endUnauthorizedSession(
+  authService: AuthService,
+  notifyUnauthorized: (() => void) | null | undefined,
+  router: Router | null | undefined,
+): void {
+  authService.clearSession();
+  notifyUnauthorized?.();
+  void router?.navigate(['/login']);
 }
 
 function isTrustedApiRequest(requestUrl: string, serverUrl: string): boolean {

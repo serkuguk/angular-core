@@ -10,7 +10,8 @@ import {authInterceptor} from "@core/interceptors/auth.interceptor";
 import {routes as appRotes} from "./app.routes";
 import {provideEffects} from "@ngrx/effects";
 import {provideStore} from '@ngrx/store';
-import {loginEffects} from '@pages/auth';
+import {Store} from '@ngrx/store';
+import {initUnauthorized, loginEffects} from '@pages/auth';
 import {basicExampleEffects} from '@pages/basic-example';
 import {provideRouterStore, routerReducer} from "@ngrx/router-store";
 import {provideStoreDevtools} from "@ngrx/store-devtools";
@@ -30,6 +31,7 @@ import {providePrimeNG} from "primeng/config";
 import Aura from '@primeng/themes/aura';
 import {NgxPermissionsModule} from "ngx-permissions";
 import { GLOBAL_SHARED_STORE_PROVIDERS } from "@shared/services/global-shared.service";
+import {AUTH_UNAUTHORIZED} from '@core/tokens/auth-unauthorized.token';
 
 // ---------- Factories ----------
 
@@ -52,6 +54,13 @@ const CORE_PROVIDERS = [
     TablesService,
     SelectorsService,
     TranslateService,
+    {
+        provide: AUTH_UNAUTHORIZED,
+        useFactory: () => {
+            const store = inject(Store);
+            return () => store.dispatch(initUnauthorized({error: ''}));
+        },
+    },
     ...GLOBAL_SHARED_STORE_PROVIDERS,
 ];
 

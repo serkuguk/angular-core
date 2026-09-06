@@ -35,8 +35,10 @@ export class GlobalStoreService<T extends object> {
   private readonly sensitiveFields: Set<string>;
 
   private readonly stateSig!: WritableSignal<T>;
+  private readonly initialState: T;
 
   constructor(@Inject(APP_STATE) initialState: T, @Optional() @Inject(GLOBAL_STORE_CONFIG) config?: GlobalStoreConfig) {
+    this.initialState = initialState;
     // Aplicamos la configuración
     this.storageKey = config?.storageKey ?? this.DEFAULT_STORAGE_KEY;
     this.maxStorageSize = config?.maxStorageSize ?? this.DEFAULT_MAX_SIZE;
@@ -316,6 +318,7 @@ export class GlobalStoreService<T extends object> {
    */
   clearAll(): void {
     this.safeRemoveItem(this.storageKey);
+    this.stateSig.set(this.initialState);
     this.log('info', 'Cleared all state from localStorage');
   }
 

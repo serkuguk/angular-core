@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import { INavbarData } from '../../interfaces/nav-bar-data.interface';
 import { CommonModule } from '@angular/common';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
@@ -26,6 +26,7 @@ export class SublevelMenuComponent {
   public expanded = input<boolean>(false);
   public multiple = input<boolean>(false);
   public level = input<number>(1);
+  public onClose = output<void>();
 
   public router: Router = inject(Router);
 

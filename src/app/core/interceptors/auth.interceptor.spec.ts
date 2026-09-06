@@ -6,6 +6,8 @@ import {AuthService} from '@core/services/auth/auth.service';
 import {AuthTokenStorageService} from '@core/services/auth-token-storage.service';
 import {ENV} from '@core/tokens/environment.token';
 import {authInterceptor} from './auth.interceptor';
+import {AUTH_UNAUTHORIZED} from '@core/tokens/auth-unauthorized.token';
+import {Router} from '@angular/router';
 
 type AuthRefreshResponse = { access_token: string; refresh_token: string };
 const api = 'https://api.example.test/api';
@@ -14,11 +16,15 @@ describe('authInterceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
   let storage: jest.Mocked<Pick<AuthTokenStorageService, 'getToken' | 'logOut'>>;
-  let authService: jest.Mocked<Pick<AuthService, 'refreshAccessToken'>>;
+  let authService: jest.Mocked<Pick<AuthService, 'clearSession' | 'refreshAccessToken'>>;
+  let notifyUnauthorized: jest.Mock;
+  let router: jest.Mocked<Pick<Router, 'navigate'>>;
 
   beforeEach(() => {
     storage = {getToken: jest.fn().mockReturnValue('access-token'), logOut: jest.fn()};
-    authService = {refreshAccessToken: jest.fn()};
+    authService = {clearSession: jest.fn(), refreshAccessToken: jest.fn()};
+    notifyUnauthorized = jest.fn();
+    router = {navigate: jest.fn().mockResolvedValue(true)};
 
     TestBed.configureTestingModule({
       providers: [
@@ -27,6 +33,8 @@ describe('authInterceptor', () => {
         {provide: ENV, useValue: {server_url: api}},
         {provide: AuthTokenStorageService, useValue: storage},
         {provide: AuthService, useValue: authService},
+        {provide: AUTH_UNAUTHORIZED, useValue: notifyUnauthorized},
+        {provide: Router, useValue: router},
       ],
     });
     http = TestBed.inject(HttpClient);
@@ -90,5 +98,37 @@ describe('authInterceptor', () => {
     httpMock.expectOne(`${api}/second`).flush({}, {status: 403, statusText: 'Forbidden'});
     expect(authService.refreshAccessToken).toHaveBeenCalledTimes(2);
     httpMock.expectOne(`${api}/second`).flush({});
+  });
+
+  it('clears and resets the application session after a 401', () => {
+    http.get(`${api}/unauthorized`).subscribe({error: () => undefined});
+    httpMock.expectOne(`${api}/unauthorized`).flush({}, {status: 401, statusText: 'Unauthorized'});
+
+    expect(authService.clearSession).toHaveBeenCalledTimes(1);
+    expect(notifyUnauthorized).toHaveBeenCalledTimes(1);
+    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('clears and resets the application session when refresh fails', () => {
+    authService.refreshAccessToken.mockReturnValue(throwError(() => new Error('refresh failed')));
+
+    http.get(`${api}/expired`).subscribe({error: () => undefined});
+    httpMock.expectOne(`${api}/expired`).flush({}, {status: 403, statusText: 'Forbidden'});
+
+    expect(authService.clearSession).toHaveBeenCalledTimes(1);
+    expect(notifyUnauthorized).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([
+    [null, 'Internal Server Error'],
+    ['server unavailable', 'Internal Server Error'],
+    [{message: 'server unavailable'}, 'Internal Server Error'],
+  ])('preserves the original HTTP error for a %p response body', (body, statusText) => {
+    let received: unknown;
+
+    http.get(`${api}/failing`).subscribe({error: error => received = error});
+    httpMock.expectOne(`${api}/failing`).flush(body, {status: 500, statusText});
+
+    expect(received).toEqual(expect.objectContaining({status: 500, error: body}));
   });
 });

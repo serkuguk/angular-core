@@ -2,6 +2,7 @@ import {User} from "@core/models/backend/user";
 
 export * as loginEffects from './store/user.effects';
 export * as loginReducers from './store/user.reducer';
+export {initUnauthorized} from './store/user.actions';
 
 export interface State {
   user: User | null;

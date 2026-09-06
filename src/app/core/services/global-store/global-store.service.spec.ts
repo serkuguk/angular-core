@@ -29,4 +29,25 @@ describe('GlobalStoreService', () => {
     expect(localStorage.getItem('foreign-preference')).toBe('keep');
     setItem.mockRestore();
   });
+
+  it('clears persisted and in-memory state back to the injected initial value', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        GlobalStoreService,
+        {provide: APP_STATE, useValue: {value: 'initial'}},
+        {provide: GLOBAL_STORE_CONFIG, useValue: {enableLogging: false}},
+      ],
+    });
+    const service = TestBed.inject<GlobalStoreService<{value: string}>>(GlobalStoreService);
+    service.set('value', 'changed');
+
+    service.clearAll();
+
+    expect(service.getState()).toEqual({value: 'initial'});
+    expect(service.select('value')()).toBe('initial');
+    expect(localStorage.getItem('GLOBAL_STORE_STATE')).toBeNull();
+
+    service.set('value', 'new value');
+    expect(localStorage.getItem('GLOBAL_STORE_STATE')).toContain('new value');
+  });
 });
