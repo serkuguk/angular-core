@@ -1,16 +1,9 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
+import {AutoMapperService} from './automapper';
 
-import { Automapper } from './automapper';
-
-describe('Automapper', () => {
-  let service: Automapper;
-
-  beforeEach(() => {
+describe('AutoMapperService', () => {
+  it('is provided at the root injector', () => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Automapper);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(TestBed.inject(AutoMapperService)).toBeTruthy();
   });
 });

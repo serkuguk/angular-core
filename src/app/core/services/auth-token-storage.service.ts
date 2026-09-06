@@ -33,6 +33,7 @@ export class AuthTokenStorageService {
   }
 
   public logOut(): void {
-    localStorage.clear();
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
   }
 }

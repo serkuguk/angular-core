@@ -1,4 +1,4 @@
-import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
+import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, inject, provideZonelessChangeDetection} from "@angular/core";
 import {
     provideRouter,
@@ -88,7 +88,6 @@ const ANGULAR_PROVIDERS = [
         },
     }),
     provideHttpClient(
-        withInterceptorsFromDi(),
         withInterceptors([authInterceptor]),
     ),
     provideZonelessChangeDetection()

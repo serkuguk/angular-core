@@ -66,7 +66,6 @@ describe("AuthService", () => {
     service.logout().subscribe(() => {
       expect(storage.logOut).toHaveBeenCalled();
       expect((service as any).token).toBeNull();
-      expect((service as any).refreshToken).toBeNull();
       done();
     });
 
@@ -76,9 +75,8 @@ describe("AuthService", () => {
     req.flush({});
   });
 
-  it("refreshes access token and saves new credentials", () => {
-    (service as any).saveToken({ access_token: "old", refresh_token: "stored-refresh" });
-    jest.clearAllMocks();
+  it("reads the current persisted refresh token and saves new credentials", () => {
+    storage.getToken.mockReturnValue("stored-refresh");
 
     service.refreshAccessToken().subscribe();
 
@@ -90,6 +88,16 @@ describe("AuthService", () => {
     expect(storage.setToken).toHaveBeenCalledWith("new-access");
     expect(storage.refreshToken).toHaveBeenCalledWith("new-refresh");
     expect((service as any).token).toBe("new-access");
+  });
+
+  it("uses the persisted refresh token in a fresh service", () => {
+    storage.getToken.mockReturnValue("persisted-refresh");
+
+    service.refreshAccessToken().subscribe();
+
+    const req = httpMock.expectOne(`${env.server_url}/auth/refresh_token`);
+    expect(req.request.body).toEqual({ refresh_token: "persisted-refresh" });
+    req.flush({ access_token: "new-access", refresh_token: "new-refresh" });
   });
 
   it("handles refresh token errors by clearing state and rethrowing", (done) => {

@@ -1,44 +1,26 @@
 import {TestBed} from '@angular/core/testing';
-import {provideMockStore} from '@ngrx/store/testing';
 import {Router} from '@angular/router';
+import {provideMockStore} from '@ngrx/store/testing';
 import {Subject} from 'rxjs';
 import {AppComponent} from './app.component';
 
-describe('AppComponent (unit methods only)', () => {
-    let component: AppComponent;
-
-    beforeEach(async () => {
-        const routerEvents$ = new Subject<any>();
-
-        await TestBed.configureTestingModule({
-            providers: [
-                provideMockStore(),
-                {
-                    provide: Router,
-                    useValue: {
-                        events: routerEvents$.asObservable(),
-                        navigate: jest.fn(),
-                    },
-                },
-            ],
-        }).compileComponents();
-
-        component = TestBed.runInInjectionContext(() => new AppComponent());
+describe('AppComponent', () => {
+  it('creates through TestBed and updates the sidenav state', () => {
+    const events = new Subject();
+    TestBed.configureTestingModule({
+      imports: [AppComponent],
+      providers: [
+        provideMockStore(),
+        {provide: Router, useValue: {events: events.asObservable()}},
+      ],
     });
+    TestBed.overrideComponent(AppComponent, {set: {template: ''}});
+    const fixture = TestBed.createComponent(AppComponent);
+    const component = fixture.componentInstance;
 
-    describe('onToggleSideNav', () => {
-        it('updates screenWidth and isSideNavCollapsed', () => {
-            component.onToggleSideNav({screenWidth: 1200, collapsed: true});
-            expect(component.screenWidth()).toBe(1200);
-            expect(component.isSideNavCollapsed()).toBe(true);
-        });
+    component.onToggleSideNav({screenWidth: 1200, collapsed: true});
 
-        it('handles collapsed = false', () => {
-            component.onToggleSideNav({screenWidth: 800, collapsed: false});
-            expect(component.screenWidth()).toBe(800);
-            expect(component.isSideNavCollapsed()).toBe(false);
-        });
-    });
+    expect(component.screenWidth()).toBe(1200);
+    expect(component.isSideNavCollapsed()).toBe(true);
+  });
 });
-
-

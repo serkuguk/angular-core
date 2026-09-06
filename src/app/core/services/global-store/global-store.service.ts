@@ -74,18 +74,8 @@ export class GlobalStoreService<T extends object> {
         return false;
       }
 
-      // Verificación 3: Cuota de almacenamiento
-      if (!this.hasStorageQuota(sizeInBytes)) {
-        this.log('warn', 'Insufficient storage quota');
-        // Intentamos liberar espacio
-        this.clearOldEntries();
-        // Intentamos de nuevo
-        if (!this.hasStorageQuota(sizeInBytes)) {
-          return false;
-        }
-      }
-
-      // Guardamos
+      // localStorage is the authority on its remaining quota. Estimating it cannot
+      // safely justify deleting data owned by another service.
       localStorage.setItem(key, value);
       return true;
     } catch (error) {
@@ -93,7 +83,6 @@ export class GlobalStoreService<T extends object> {
         // QuotaExceededError
         if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
           this.log('error', 'localStorage quota exceeded', error);
-          this.clearOldEntries();
         } else {
           this.log('error', 'localStorage error', error);
         }
@@ -151,63 +140,6 @@ export class GlobalStoreService<T extends object> {
     } catch {
       return false;
     }
-  }
-
-  /**
-   * Verificar cuota de almacenamiento
-   */
-  private hasStorageQuota(requiredBytes: number): boolean {
-    try {
-      // Estimación aproximada del espacio utilizado
-      let totalSize = 0;
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key) {
-          const value = localStorage.getItem(key) ?? '';
-          totalSize += key.length + value.length;
-        }
-      }
-
-      // Normalmente localStorage tiene un límite de 5-10MB
-      const estimatedQuota = 10 * 1024 * 1024; // 10MB
-      const availableSpace = estimatedQuota - totalSize;
-
-      return availableSpace >= requiredBytes;
-    } catch {
-      return true; // Si no podemos verificar, asumimos que hay espacio
-    }
-  }
-
-  /**
-   * Limpiar entradas antiguas (excepto la clave actual)
-   */
-  private clearOldEntries(): void {
-    try {
-      const keysToRemove: string[] = [];
-
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key !== this.storageKey) {
-          // No eliminamos claves importantes (por ejemplo, tokens de autenticación)
-          if (!this.isProtectedKey(key)) {
-            keysToRemove.push(key);
-          }
-        }
-      }
-
-      keysToRemove.forEach(key => localStorage.removeItem(key));
-      this.log('info', `Cleared ${keysToRemove.length} old localStorage entries`);
-    } catch (error) {
-      this.log('error', 'Error clearing old entries', error);
-    }
-  }
-
-  /**
-   * Verificar si una clave está protegida (no eliminar)
-   */
-  private isProtectedKey(key: string): boolean {
-    const protectedPrefixes = ['auth', 'token', 'user', 'session'];
-    return protectedPrefixes.some(prefix => key.toLowerCase().startsWith(prefix));
   }
 
   // ============================================================

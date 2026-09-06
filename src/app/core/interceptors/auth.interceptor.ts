@@ -1,72 +1,74 @@
-import {inject} from '@angular/core'
-import {HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '@angular/common/http'
+import {inject} from '@angular/core';
+import {HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '@angular/common/http';
+import {catchError, finalize, Observable, shareReplay, switchMap, throwError} from 'rxjs';
 import {AuthTokenStorageService} from '../services/auth-token-storage.service';
-import {BehaviorSubject, catchError, switchMap, tap, throwError} from "rxjs";
-import {filter} from "rxjs/operators";
-import { AuthService } from "@core/services/auth/auth.service";
+import {AuthService, AuthRefreshResponse} from '@core/services/auth/auth.service';
+import {ENV} from '@core/tokens/environment.token';
+import {EnvironmentInterface} from '@core/interfaces/environment.interface';
 
-let isRefreshing$ = new BehaviorSubject<boolean>(false);
+let refreshInFlight$: Observable<AuthRefreshResponse> | null = null;
 
-export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
-    const authToken: AuthTokenStorageService = inject(AuthTokenStorageService);
-    const authService: AuthService = inject(AuthService);
-    const token = authToken.getToken('access_token');
+export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+  const authToken = inject(AuthTokenStorageService);
+  const authService = inject(AuthService);
+  const env = inject<EnvironmentInterface>(ENV);
 
-    if (!token) return next(req);
+  if (!isTrustedApiRequest(req.url, env.server_url) || isAuthRequest(req.url, env.server_url)) {
+    return next(req);
+  }
 
-    if (isRefreshing$.value) {
-      return refreshToken(authService, req, next, token);
-    }
+  const token = authToken.getToken('access_token');
+  if (!token) return next(req);
 
-    return next(addToken(req, token)).pipe(
-      catchError(err => {
-        if (err.status === 401) {
-          authToken.logOut();
-        }
-
-        if (err.status === 403) {
-          return refreshToken(authService, req, next, token);
-        }
-
-        const error = err.error.message || err.statusText;
-        return throwError(() => error);
+  return next(addToken(req, token)).pipe(
+    catchError(error => {
+      if (error.status === 401) {
+        authToken.logOut();
       }
-    ))
+
+      return error.status === 403
+        ? refreshAccessToken(authService).pipe(switchMap(({access_token}) => next(addToken(req, access_token))))
+        : throwError(() => error);
+    }),
+  );
+};
+
+function refreshAccessToken(authService: AuthService): Observable<AuthRefreshResponse> {
+  if (!refreshInFlight$) {
+    refreshInFlight$ = authService.refreshAccessToken().pipe(
+      finalize(() => refreshInFlight$ = null),
+      shareReplay({bufferSize: 1, refCount: true}),
+    );
+  }
+
+  return refreshInFlight$;
 }
 
-const refreshToken = (
-  authService: AuthService,
-  req: HttpRequest<any>,
-  next: HttpHandlerFn,
-  token: string) => {
+function isTrustedApiRequest(requestUrl: string, serverUrl: string): boolean {
+  try {
+    const apiUrl = new URL(serverUrl);
+    const url = new URL(requestUrl);
+    const basePath = apiUrl.pathname.replace(/\/$/, '');
+    return url.origin === apiUrl.origin && (url.pathname === basePath || url.pathname.startsWith(`${basePath}/`));
+  } catch {
+    return false;
+  }
+}
 
-    if (!isRefreshing$.value) {
-      isRefreshing$.next(true);
-      return authService.refreshAccessToken()
-        .pipe(
-          switchMap((res: { access_token: string }) => {
-            return next(addToken(req, res.access_token))
-              .pipe(
-                tap(_ => isRefreshing$.next(false))
-              )
-          })
-        );
-    }
+function isAuthRequest(requestUrl: string, serverUrl: string): boolean {
+  try {
+    const apiUrl = new URL(serverUrl);
+    const url = new URL(requestUrl);
+    const basePath = apiUrl.pathname.replace(/\/$/, '');
+    return url.origin === apiUrl.origin && [
+      `${basePath}/auth/signin`,
+      `${basePath}/auth/refresh_token`,
+    ].includes(url.pathname);
+  } catch {
+    return false;
+  }
+}
 
-    if (req.url.includes('refresh_token')) return next(addToken(req, token));
-
-    return isRefreshing$.pipe(
-      filter(isRefreshing => !isRefreshing),
-      switchMap(_ => next(addToken(req, token)))
-    );
-};
-
-const addToken = (
-  req: HttpRequest<any>,
-  token: string) => {
-  return req.clone({
-    setHeaders: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-};
+function addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
+  return req.clone({setHeaders: {Authorization: `Bearer ${token}`}});
+}

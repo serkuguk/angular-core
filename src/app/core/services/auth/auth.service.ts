@@ -20,7 +20,6 @@ export class AuthService extends ApiBaseService {
   private env = inject<EnvironmentInterface>(ENV);
 
   private token: string | null = null;
-  private refreshToken: string | null = null;
 
   public login(user: LoginRequestInterface): Observable<any> {
     return this.http.post<{ username: string; password: string }>(`${this.env.server_url}/auth/signin`, user).pipe(
@@ -35,14 +34,15 @@ export class AuthService extends ApiBaseService {
     return this.http.post(`${this.env.server_url}/auth/signout`, null).pipe(
       tap(() => {
         this.token = null;
-        this.refreshToken = null;
         this.authTokenStorageService.logOut();
       }),
     );
   }
 
   public refreshAccessToken(): Observable<AuthRefreshResponse> {
-    return this.http.post<AuthRefreshResponse>(`${this.env.server_url}/auth/refresh_token`, { refresh_token: this.refreshToken }).pipe(
+    return this.http.post<AuthRefreshResponse>(`${this.env.server_url}/auth/refresh_token`, {
+      refresh_token: this.authTokenStorageService.getToken('refresh_token'),
+    }).pipe(
       tap((res: AuthRefreshResponse) => this.saveToken(res)),
       catchError((err) => {
         this.token = null;
@@ -75,8 +75,7 @@ export class AuthService extends ApiBaseService {
 
   public saveToken(res: AuthRefreshResponse): void {
     this.token = res.access_token;
-    this.refreshToken = res.refresh_token;
     this.authTokenStorageService.setToken(this.token);
-    this.authTokenStorageService.refreshToken(this.refreshToken);
+    this.authTokenStorageService.refreshToken(res.refresh_token);
   }
 }

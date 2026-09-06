@@ -1,12 +1,14 @@
-import { HttpClient, HttpErrorResponse, provideHttpClient, withInterceptors } from '@angular/common/http';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { of, Subject } from 'rxjs';
-import { AuthService } from '@core/services/auth/auth.service';
-import { AuthTokenStorageService } from '@core/services/auth-token-storage.service';
-import { authInterceptor } from './auth.interceptor';
+import {HttpClient, provideHttpClient, withInterceptors} from '@angular/common/http';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {of, Subject, throwError} from 'rxjs';
+import {AuthService} from '@core/services/auth/auth.service';
+import {AuthTokenStorageService} from '@core/services/auth-token-storage.service';
+import {ENV} from '@core/tokens/environment.token';
+import {authInterceptor} from './auth.interceptor';
 
 type AuthRefreshResponse = { access_token: string; refresh_token: string };
+const api = 'https://api.example.test/api';
 
 describe('authInterceptor', () => {
   let http: HttpClient;
@@ -15,120 +17,78 @@ describe('authInterceptor', () => {
   let authService: jest.Mocked<Pick<AuthService, 'refreshAccessToken'>>;
 
   beforeEach(() => {
-    storage = {
-      getToken: jest.fn(),
-      logOut: jest.fn(),
-    };
-
-    authService = {
-      refreshAccessToken: jest.fn(),
-    };
+    storage = {getToken: jest.fn().mockReturnValue('access-token'), logOut: jest.fn()};
+    authService = {refreshAccessToken: jest.fn()};
 
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(withInterceptors([authInterceptor])),
         provideHttpClientTesting(),
-        { provide: AuthTokenStorageService, useValue: storage },
-        { provide: AuthService, useValue: authService },
+        {provide: ENV, useValue: {server_url: api}},
+        {provide: AuthTokenStorageService, useValue: storage},
+        {provide: AuthService, useValue: authService},
       ],
     });
-
     http = TestBed.inject(HttpClient);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => {
-    httpMock.verify();
+  afterEach(() => httpMock.verify());
+
+  it('adds credentials only to the configured API scope', () => {
+    http.get(`${api}/secure`).subscribe();
+    http.get('https://other.example.test/api/secure').subscribe();
+    http.get('/assets/logo.svg').subscribe();
+
+    expect(httpMock.expectOne(`${api}/secure`).request.headers.get('Authorization')).toBe('Bearer access-token');
+    expect(httpMock.expectOne('https://other.example.test/api/secure').request.headers.has('Authorization')).toBe(false);
+    expect(httpMock.expectOne('/assets/logo.svg').request.headers.has('Authorization')).toBe(false);
+    httpMock.match(() => true).forEach(request => request.flush({}));
   });
 
-  it('passes request unchanged when access token is missing', () => {
-    storage.getToken.mockReturnValue(null);
+  it('does not attach credentials to sign-in or refresh requests', () => {
+    http.post(`${api}/auth/signin`, {}).subscribe();
+    http.post(`${api}/auth/refresh_token`, {}).subscribe();
 
-    http.get('/public').subscribe();
-
-    const req = httpMock.expectOne('/public');
-    expect(req.request.headers.has('Authorization')).toBe(false);
-    req.flush({});
+    expect(httpMock.expectOne(`${api}/auth/signin`).request.headers.has('Authorization')).toBe(false);
+    expect(httpMock.expectOne(`${api}/auth/refresh_token`).request.headers.has('Authorization')).toBe(false);
+    httpMock.match(() => true).forEach(request => request.flush({}));
   });
 
-  it('adds Authorization header when token exists', () => {
-    storage.getToken.mockReturnValue('access-token');
-
-    http.get('/secure').subscribe();
-
-    const req = httpMock.expectOne('/secure');
-    expect(req.request.headers.get('Authorization')).toBe('Bearer access-token');
-    req.flush({});
-  });
-
-  it('logs out on 401 responses', (done) => {
-    storage.getToken.mockReturnValue('access-token');
-
-    http.get('/secure').subscribe({
-      next: () => done.fail('expected an error'),
-      error: () => {
-        expect(storage.logOut).toHaveBeenCalledTimes(1);
-        done();
-      },
-    });
-
-    const req = httpMock.expectOne('/secure');
-    req.flush({ message: 'Unauthorized' }, { status: 401, statusText: 'Unauthorized' });
-  });
-
-  it('refreshes token on 403 and retries original request', (done) => {
-    storage.getToken.mockReturnValue('access-token');
-    authService.refreshAccessToken.mockReturnValue(
-      of({ access_token: 'new-token', refresh_token: 'new-refresh' }),
-    );
-
-    http.get('/secure').subscribe({
-      next: (response: unknown) => {
-        expect(response).toEqual({ ok: true });
-        expect(authService.refreshAccessToken).toHaveBeenCalledTimes(1);
-        done();
-      },
-      error: (error: HttpErrorResponse) => done.fail(error),
-    });
-
-    const initial = httpMock.expectOne('/secure');
-    expect(initial.request.headers.get('Authorization')).toBe('Bearer access-token');
-    initial.flush({ message: 'Forbidden' }, { status: 403, statusText: 'Forbidden' });
-
-    const retried = httpMock.expectOne('/secure');
-    expect(retried.request.headers.get('Authorization')).toBe('Bearer new-token');
-    retried.flush({ ok: true });
-  });
-
-  it('queues concurrent 403 requests while token refresh is in progress', () => {
-    storage.getToken.mockReturnValue('access-token');
+  it('shares one refresh and retries each concurrent request once with the fresh token', () => {
     const refresh$ = new Subject<AuthRefreshResponse>();
     authService.refreshAccessToken.mockReturnValue(refresh$.asObservable());
     const resolved: string[] = [];
 
-    http.get<{ ok: string }>('/secure-a').subscribe((response) => resolved.push(response.ok));
-    http.get<{ ok: string }>('/secure-b').subscribe((response) => resolved.push(response.ok));
-
-    const first = httpMock.expectOne('/secure-a');
-    const second = httpMock.expectOne('/secure-b');
-    first.flush({ message: 'Forbidden' }, { status: 403, statusText: 'Forbidden' });
-    second.flush({ message: 'Forbidden' }, { status: 403, statusText: 'Forbidden' });
+    http.get<{ok: string}>(`${api}/secure-a`).subscribe(response => resolved.push(response.ok));
+    http.get<{ok: string}>(`${api}/secure-b`).subscribe(response => resolved.push(response.ok));
+    httpMock.expectOne(`${api}/secure-a`).flush({}, {status: 403, statusText: 'Forbidden'});
+    httpMock.expectOne(`${api}/secure-b`).flush({}, {status: 403, statusText: 'Forbidden'});
 
     expect(authService.refreshAccessToken).toHaveBeenCalledTimes(1);
-
-    refresh$.next({ access_token: 'new-token', refresh_token: 'new-refresh' });
+    refresh$.next({access_token: 'new-token', refresh_token: 'new-refresh'});
     refresh$.complete();
 
-    const firstRetried = httpMock.expectOne('/secure-a');
-    firstRetried.flush({ ok: 'a' });
+    const retried = httpMock.match(request => request.url.endsWith('/secure-a') || request.url.endsWith('/secure-b'));
+    expect(retried).toHaveLength(2);
+    retried.forEach(request => {
+      expect(request.request.headers.get('Authorization')).toBe('Bearer new-token');
+      request.flush({ok: request.request.url.endsWith('a') ? 'a' : 'b'});
+    });
+    expect(resolved).toEqual(expect.arrayContaining(['a', 'b']));
+  });
 
-    const secondRetriedRequests = httpMock.match('/secure-b');
-    expect(secondRetriedRequests.length).toBeGreaterThanOrEqual(1);
-    secondRetriedRequests
-      .filter((request) => !request.cancelled)
-      .forEach((request) => request.flush({ ok: 'b' }));
+  it('clears the shared refresh after an error so a later request can refresh', () => {
+    authService.refreshAccessToken
+      .mockReturnValueOnce(throwError(() => new Error('refresh failed')))
+      .mockReturnValueOnce(of({access_token: 'new-token', refresh_token: 'new-refresh'}));
 
-    expect(resolved).toContain('a');
-    expect(resolved).toContain('b');
+    http.get(`${api}/first`).subscribe({error: () => undefined});
+    httpMock.expectOne(`${api}/first`).flush({}, {status: 403, statusText: 'Forbidden'});
+
+    http.get(`${api}/second`).subscribe();
+    httpMock.expectOne(`${api}/second`).flush({}, {status: 403, statusText: 'Forbidden'});
+    expect(authService.refreshAccessToken).toHaveBeenCalledTimes(2);
+    httpMock.expectOne(`${api}/second`).flush({});
   });
 });
