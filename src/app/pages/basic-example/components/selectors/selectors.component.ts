@@ -55,8 +55,8 @@ export class SelectorsComponent implements OnInit {
     this.countries.set(this.store.pipe(select(basicExampleSelector.getBasicDropdownData)));
   }
 
-  public form = signal<{ createdAt: [] | null }>({
-      createdAt: []
+  public form = signal<{createdAt: string | null}>({
+      createdAt: null
   });
 
   public dropdownForm = form(this.form);
