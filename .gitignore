@@ -28,6 +28,19 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
+# Local Codex and tooling artifacts
+/.agents/
+/.codex/
+/.playwright-mcp/
+/.pnpm-store/
+/.pnpm-store-codex/
+/.vscode/
+/graphify-out/
+
+# Local workspace material
+/docs/
+/demo 1.json
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/
