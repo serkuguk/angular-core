@@ -1,6 +1,7 @@
 {
   "name": "nttdata-angular-core",
   "version": "1.0.4",
+  "packageManager": "pnpm@10.12.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
