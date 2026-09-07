@@ -2,7 +2,9 @@ import {User} from "@core/models/backend/user";
 
 export * as loginEffects from './store/user.effects';
 export * as loginReducers from './store/user.reducer';
-export {initUnauthorized} from './store/user.actions';
+export {init, initUnauthorized, logOut} from './store/user.actions';
+export {getIsAuthenticated, getUser} from './store/user.selectors';
+export {loginFeature} from './store/user.reducer';
 
 export interface State {
   user: User | null;

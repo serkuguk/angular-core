@@ -3,8 +3,7 @@ import {Component, inject, input, OnInit} from '@angular/core';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
-import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
-import * as fromAuth from "@pages/auth";
+import {getIsAuthenticated, State} from "@pages/auth";
 
 @Component({
     selector: 'app-footer',
@@ -15,12 +14,12 @@ import * as fromAuth from "@pages/auth";
 })
 export class FooterComponent implements OnInit {
     isAuthenticated$: Observable<boolean | null> | undefined;
-    private readonly store: Store<fromAuth.State> = inject(Store);
+    private readonly store: Store<State> = inject(Store);
     collapsed = input<boolean>(false);
     screenWidth = input<number>(0);
 
     ngOnInit(): void {
-        this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
+        this.isAuthenticated$ = this.store.pipe(select(getIsAuthenticated));
     }
 
     getFooterClass(): string {

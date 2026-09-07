@@ -2711,7 +2711,7 @@ packages:
     resolution: {integrity: sha512-DsG+8/LscQIQg68J6Ef3dv10u6nVyetYn923s3/sus5eaGfTo1of5WMZSLf0UJc9KDuKPilPH0UDJCjvNbDNCA==}
 
   '@springest/ui@file:../springest-ui/springest-ui-0.1.0.tgz':
-    resolution: {integrity: sha512-lzXymXS5XaKkTJ55CllPhyti2zCuCPmr205qla6nNXlmE24huVU4Uu+yCvCQrktjqMIfRIub/mixmlruMTL6bg==, tarball: file:../springest-ui/springest-ui-0.1.0.tgz}
+    resolution: {integrity: sha512-S+blAOygDYoU1VDIEfd9e37Aq60PMtNraJ6IWFr7qUL98pAeqmvC6Gwnjtuv0NTSeWMD4vbtKMvf6Ht/b9e5nQ==, tarball: file:../springest-ui/springest-ui-0.1.0.tgz}
     version: 0.1.0
     peerDependencies:
       '@angular/common': ^21.2.0

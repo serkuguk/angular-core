@@ -2,12 +2,10 @@ import {ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, On
 import {languages, userItems} from './header-dummy-data';
 import {AsyncPipe, NgClass} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import * as fromAuth from "@pages/auth";
+import {getUser, logOut, State} from "@pages/auth";
 
 //Stor
 import {select, Store} from "@ngrx/store";
-import * as fromLoginAction from "@pages/auth/store/user.actions";
-import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
 import {AvatarComponent} from "@springest/ui";
 import {DatePickerModule} from "primeng/datepicker";
 import {Observable} from "rxjs";
@@ -27,7 +25,7 @@ import {Observable} from "rxjs";
 })
 export class UserPanelComponent implements OnInit {
     public translate = inject(TranslateService);
-    private readonly store: Store<fromAuth.State> = inject(Store);
+    private readonly store: Store<State> = inject(Store);
 
     public userData$: Observable<any | null> | undefined;
     public selectedLanguage: any;
@@ -39,7 +37,7 @@ export class UserPanelComponent implements OnInit {
     ngOnInit(): void {
         this.translate.setDefaultLang('sp');
         this.selectedLanguage = this.languages[0];
-        this.userData$ = this.store.pipe(select(fromLoginSelectors.getUser));
+        this.userData$ = this.store.pipe(select(getUser));
     }
 
     public userMenuToggle(): void {
@@ -63,7 +61,7 @@ export class UserPanelComponent implements OnInit {
     }
 
     public logout(): void {
-        this.store.dispatch(fromLoginAction.logOut({user: null}));
+        this.store.dispatch(logOut({user: null}));
         //this.store.dispatch(fromLoginAction.init());
     }
 }

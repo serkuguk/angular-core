@@ -5,9 +5,7 @@ import {CommonModule} from "@angular/common";
 
 //Store
 import {select, Store} from "@ngrx/store";
-import * as fromAuth from "@pages/auth";
-import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
-import * as fromLoginAction from "@pages/auth/store/user.actions";
+import {getIsAuthenticated, init, State} from "@pages/auth";
 import {BodyComponent} from "@layouts/components/body/body.component";
 import {HeaderComponent} from "@layouts/components/header/header.component";
 import {FooterComponent} from "@layouts/components/footer/footer.component";
@@ -33,7 +31,7 @@ export class AppComponent implements OnInit {
     public screenWidth = signal<number>(window.innerWidth);
     public mobileOpen = signal<boolean>(false);
 
-    public store: Store<fromAuth.State> = inject(Store);
+    public store: Store<State> = inject(Store);
     public router: Router = inject(Router);
     private readonly renderer = inject(Renderer2);
     public isAuthenticated$: Observable<boolean> | undefined;
@@ -52,10 +50,10 @@ export class AppComponent implements OnInit {
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd)
         ).subscribe(() => {
-            this.store.dispatch(fromLoginAction.init());
+            this.store.dispatch(init());
         });
 
-        this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
+        this.isAuthenticated$ = this.store.pipe(select(getIsAuthenticated));
     }
 
     public onToggleSideNav(data: ISideNavToggle): void {
