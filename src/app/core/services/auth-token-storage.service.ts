@@ -1,12 +1,10 @@
 import {inject, Injectable} from '@angular/core'
 import {JwtHelperService} from "@auth0/angular-jwt";
-import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthTokenStorageService {
 
   private jwtHelper: JwtHelperService = inject(JwtHelperService);
-  private router: Router = inject(Router);
 
   public setToken(token: string | null): void {
     if (typeof token === "string")
@@ -23,13 +21,29 @@ export class AuthTokenStorageService {
   }
 
   public isAuthenticate(): boolean {
-    const token: string | null = localStorage.getItem('access_token');
-    return token ? !this.jwtHelper.isTokenExpired(token) : false;
+    const token = this.getToken('access_token');
+    try {
+      return !!token && !!this.decodeToken() && !this.jwtHelper.isTokenExpired(token);
+    } catch {
+      this.logOut();
+      return false;
+    }
   }
 
   public decodeToken(): any | null {
-    const token: string | null = localStorage.getItem('access_token');
-    return  token ? this.jwtHelper.decodeToken(token) : null;
+    const token = this.getToken('access_token');
+    if (!token) return null;
+    try {
+      const decoded = this.jwtHelper.decodeToken(token);
+      if (!decoded || typeof decoded !== 'object' || Array.isArray(decoded)) {
+        this.logOut();
+        return null;
+      }
+      return decoded;
+    } catch {
+      this.logOut();
+      return null;
+    }
   }
 
   public logOut(): void {

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {AvatarComponent} from "@springest/ui";
+import {AvatarComponent} from "springest";
 
 @Component({
   selector: 'app-display',

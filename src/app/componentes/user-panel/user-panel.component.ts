@@ -6,7 +6,7 @@ import {getUser, logOut, State} from "@pages/auth";
 
 //Stor
 import {select, Store} from "@ngrx/store";
-import {AvatarComponent} from "@springest/ui";
+import {AvatarComponent} from "springest";
 import {DatePickerModule} from "primeng/datepicker";
 import {Observable} from "rxjs";
 

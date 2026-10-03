@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { catchError, defer, finalize, Observable, of, tap } from "rxjs";
+import { defer, finalize, Observable, of, shareReplay, Subject, takeUntil, tap } from "rxjs";
 import { map } from "rxjs/operators";
 import { ApiBaseService } from "@core/services/api-base.service";
 import { AuthTokenStorageService } from "@core/services/auth-token-storage.service";
@@ -25,15 +25,24 @@ export class AuthService extends ApiBaseService {
   private authTokenStorageService: AuthTokenStorageService = inject(AuthTokenStorageService);
   private env = inject<EnvironmentInterface>(ENV);
 
-  private token: string | null = null;
+  private generation = 0;
+  private readonly sessionChanged = new Subject<void>();
+  public readonly sessionChanges$ = this.sessionChanged.asObservable();
+  private refreshInFlight$: Observable<AuthRefreshResponse> | null = null;
+
+  public get sessionVersion(): number {
+    return this.generation;
+  }
 
   public login(user: LoginRequestInterface): Observable<any> {
-    return this.http.post<{ username: string; password: string }>(`${this.env.server_url}/auth/signin`, user).pipe(
-      tap((res: any) => {
-        this.saveToken(res);
-      }),
-      map(() => this.getUser()),
-    );
+    return defer(() => {
+      this.invalidateSession();
+      return this.http.post<AuthRefreshResponse>(`${this.env.server_url}/auth/signin`, user).pipe(
+        takeUntil(this.sessionChanges$),
+        tap(res => this.storeTokens(res)),
+        map(() => this.getUser()),
+      );
+    });
   }
 
   public logout(): Observable<any> {
@@ -44,16 +53,20 @@ export class AuthService extends ApiBaseService {
   }
 
   public refreshAccessToken(): Observable<AuthRefreshResponse> {
-    return this.http.post<AuthRefreshResponse>(`${this.env.server_url}/auth/refresh_token`, {
-      refresh_token: this.authTokenStorageService.getToken('refresh_token'),
-    }).pipe(
-      tap((res: AuthRefreshResponse) => this.saveToken(res)),
-      catchError((err) => {
-        this.clearSession();
-        return this.handleError(err, {});
-      }),
-      finalize(() => of([])),
-    );
+    if (!this.refreshInFlight$) {
+      const refresh$ = defer(() => this.http.post<AuthRefreshResponse>(`${this.env.server_url}/auth/refresh_token`, {
+        refresh_token: this.authTokenStorageService.getToken('refresh_token'),
+      })).pipe(
+        takeUntil(this.sessionChanges$),
+        tap(res => this.storeTokens(res)),
+        finalize(() => {
+          if (this.refreshInFlight$ === refresh$) this.refreshInFlight$ = null;
+        }),
+        shareReplay({bufferSize: 1, refCount: true}),
+      );
+      this.refreshInFlight$ = refresh$;
+    }
+    return this.refreshInFlight$;
   }
 
   public init(): Observable<AuthSession> {
@@ -68,7 +81,6 @@ export class AuthService extends ApiBaseService {
       return of({ authenticated: false, user: null });
     }
 
-    this.token = this.authTokenStorageService.getToken('access_token');
     return of({ authenticated: true, user });
   }
 
@@ -93,7 +105,6 @@ export class AuthService extends ApiBaseService {
       this.clearSession();
       return false;
     }
-    this.token = this.authTokenStorageService.getToken("access_token");
     return true;
   }
 
@@ -102,13 +113,23 @@ export class AuthService extends ApiBaseService {
   }
 
   public saveToken(res: AuthRefreshResponse): void {
-    this.token = res.access_token;
-    this.authTokenStorageService.setToken(this.token);
+    this.invalidateSession();
+    this.storeTokens(res);
+  }
+
+  private storeTokens(res: AuthRefreshResponse): void {
+    this.authTokenStorageService.setToken(res.access_token);
     this.authTokenStorageService.refreshToken(res.refresh_token);
   }
 
   public clearSession(): void {
-    this.token = null;
+    this.invalidateSession();
     this.authTokenStorageService.logOut();
+  }
+
+  private invalidateSession(): void {
+    this.generation++;
+    this.refreshInFlight$ = null;
+    this.sessionChanged.next();
   }
 }

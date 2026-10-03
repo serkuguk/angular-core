@@ -134,8 +134,10 @@ export class SidenavComponent implements OnInit, OnDestroy {
   }
 
   public handleClick(item: INavbarData): void {
+    const wasExpanded = this.isExpanded();
+    if (!wasExpanded) this.toggleCollapse();
     this.shrinkItems(item);
-    item.expanded = !item.expanded;
+    item.expanded = !wasExpanded || !item.expanded;
   }
 
   public shrinkItems(item: INavbarData): void {

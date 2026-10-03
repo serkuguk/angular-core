@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
 import {TranslateModule} from "@ngx-translate/core";
-import {BasicInputComponent, BasicSelectComponent, ButtonComponent, FormFieldComponent} from "@springest/ui";
+import {BasicInputComponent, BasicSelectComponent, ButtonComponent, FormFieldComponent} from "springest";
 import {FormField, form, submit} from "@angular/forms/signals";
 
 @Component({

@@ -6,7 +6,7 @@ import {
   StepConfig,
   StepperControlComponent,
   StepperStepDirective
-} from "@springest/ui";
+} from "springest";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {JsonPipe} from "@angular/common";
 import {FormField, form, required, minLength, email, pattern, submit} from "@angular/forms/signals";

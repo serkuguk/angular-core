@@ -10,7 +10,7 @@ import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {TranslateModule} from "@ngx-translate/core";
-import {BasicInputComponent, ButtonComponent, FormFieldComponent, PasswordInputComponent} from "@springest/ui";
+import {BasicInputComponent, ButtonComponent, FormFieldComponent, PasswordInputComponent} from "springest";
 import {FormField, form, required, minLength, submit} from "@angular/forms/signals";
 
 @Component({

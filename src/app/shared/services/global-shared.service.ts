@@ -32,39 +32,39 @@ export class GlobalSharedService extends BaseStoreService<GlobalStoreState> {
     super(store);
   }
 
-  setDataString<T extends string>(name: any, value: T): void {
-    this.setValue(name, value);
+  setDataString<T extends string>(name: any, value: T): boolean {
+    return this.setValue(name, value);
   }
 
   getDataString(name: any): string | null {
     return this.getValue(name) as string | null;
   }
 
-  setDataNumber<T extends number>(name: any, value: T): void {
-    this.setValue(name, value);
+  setDataNumber<T extends number>(name: any, value: T): boolean {
+    return this.setValue(name, value);
   }
 
   getDataNumber(name: any): number | null {
     return this.getValue(name) as number | null;
   }
 
-  setDataArray<T extends Array<any>>(name: any, value: T): void {
-    this.setValue(name, value);
+  setDataArray<T extends Array<any>>(name: any, value: T): boolean {
+    return this.setValue(name, value);
   }
 
   getDataArray<T>(name: any): T {
     return this.getValue(name) as T;
   }
 
-  setDataObject<T extends object>(name: any, value: T): void {
-    this.setValue(name, value);
+  setDataObject<T extends object>(name: any, value: T): boolean {
+    return this.setValue(name, value);
   }
 
   getDataObject<T extends object>(name: any): T {
     return this.getValue(name) as T;
   }
 
-  clear() {
-    this.clearAll();
+  clear(): boolean {
+    return this.clearAll();
   }
 }

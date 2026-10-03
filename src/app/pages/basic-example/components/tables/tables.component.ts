@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit} f
 import {CommonModule} from "@angular/common";
 
 import {Store} from "@ngrx/store";
-import {TableComponent} from "@springest/ui";
+import {TableComponent} from "springest";
 import {basicColumns} from "@pages/basic-example/config/config-table";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 

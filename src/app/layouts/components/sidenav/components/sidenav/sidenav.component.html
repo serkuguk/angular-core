@@ -4,6 +4,7 @@
   }
 
   <nav class="sidenav"
+       [attr.inert]="isMobile() && !mobileOpen() ? '' : null"
        [ngClass]="{
          'sidenav-collapsed': collapsed(),
          'sidenav--mobile-open': isMobile() && mobileOpen()
@@ -32,7 +33,7 @@
               (mouseleave)="hideSubMenu()">
             @if (data.items && data.items.length > 0) {
               <button type="button" (click)="handleClick(data)" [ngClass]="getActiveClass(data)" class="sidenav-nav-link"
-                 [attr.aria-expanded]="data.expanded ?? false"
+                 [attr.aria-expanded]="isExpanded() && (data.expanded ?? false)"
                  [attr.aria-label]="('SIDENAV.' + data.label) | translate">
                 <i class="sidenav-link-icon" [class]="data.icon"></i>
 

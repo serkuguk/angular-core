@@ -1,14 +1,13 @@
 import {inject} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
 import {HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '@angular/common/http';
-import {catchError, finalize, Observable, shareReplay, switchMap, throwError} from 'rxjs';
-import {AuthTokenStorageService} from '../services/auth-token-storage.service';
-import {AuthService, AuthRefreshResponse} from '@core/services/auth/auth.service';
+import {catchError, defer, EMPTY, switchMap, takeUntil, throwError} from 'rxjs';
+import {AuthTokenStorageService} from '@core/services/auth-token-storage.service';
+import {AuthService} from '@core/services/auth/auth.service';
 import {ENV} from '@core/tokens/environment.token';
 import {EnvironmentInterface} from '@core/interfaces/environment.interface';
 import {Router} from '@angular/router';
 import {AUTH_UNAUTHORIZED} from '@core/tokens/auth-unauthorized.token';
-
-let refreshInFlight$: Observable<AuthRefreshResponse> | null = null;
 
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const authToken = inject(AuthTokenStorageService);
@@ -16,43 +15,46 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   const env = inject<EnvironmentInterface>(ENV);
   const router = inject(Router, {optional: true});
   const notifyUnauthorized = inject(AUTH_UNAUTHORIZED, {optional: true});
+  const baseUrl = inject(DOCUMENT).baseURI;
 
-  if (!isTrustedApiRequest(req.url, env.server_url) || isAuthRequest(req.url, env.server_url)) {
+  if (!isTrustedApiRequest(req.url, env.server_url, baseUrl) || isAuthRequest(req.url, env.server_url, baseUrl)) {
     return next(req);
   }
 
   const token = authToken.getToken('access_token');
   if (!token) return next(req);
+  const sessionVersion = authService.sessionVersion;
 
   return next(addToken(req, token)).pipe(
-    catchError(error => {
+    takeUntil(authService.sessionChanges$),
+    catchError(error => defer(() => {
+      if (sessionVersion !== authService.sessionVersion) return EMPTY;
       if (error.status === 401) {
         endUnauthorizedSession(authService, notifyUnauthorized, router);
       }
 
       return error.status === 403
-        ? refreshAccessToken(authService).pipe(
-          switchMap(({access_token}) => next(addToken(req, access_token))),
-          catchError(refreshError => {
-            endUnauthorizedSession(authService, notifyUnauthorized, router);
+        ? authService.refreshAccessToken().pipe(
+          catchError(refreshError => defer(() => {
+            if (sessionVersion === authService.sessionVersion && (refreshError.status === 401 || refreshError.status === 403)) {
+              endUnauthorizedSession(authService, notifyUnauthorized, router);
+            }
             return throwError(() => refreshError);
-          }),
+          })),
+          switchMap(({access_token}) => sessionVersion === authService.sessionVersion
+            ? next(addToken(req, access_token)).pipe(
+              takeUntil(authService.sessionChanges$),
+              catchError(retryError => defer(() => {
+                if (retryError.status === 401) endUnauthorizedSession(authService, notifyUnauthorized, router);
+                return throwError(() => retryError);
+              })),
+            )
+            : EMPTY),
         )
         : throwError(() => error);
-    }),
+    })),
   );
 };
-
-function refreshAccessToken(authService: AuthService): Observable<AuthRefreshResponse> {
-  if (!refreshInFlight$) {
-    refreshInFlight$ = authService.refreshAccessToken().pipe(
-      finalize(() => refreshInFlight$ = null),
-      shareReplay({bufferSize: 1, refCount: true}),
-    );
-  }
-
-  return refreshInFlight$;
-}
 
 function endUnauthorizedSession(
   authService: AuthService,
@@ -64,10 +66,10 @@ function endUnauthorizedSession(
   void router?.navigate(['/login']);
 }
 
-function isTrustedApiRequest(requestUrl: string, serverUrl: string): boolean {
+function isTrustedApiRequest(requestUrl: string, serverUrl: string, baseUrl: string): boolean {
   try {
-    const apiUrl = new URL(serverUrl);
-    const url = new URL(requestUrl);
+    const apiUrl = new URL(serverUrl, baseUrl);
+    const url = new URL(requestUrl, baseUrl);
     const basePath = apiUrl.pathname.replace(/\/$/, '');
     return url.origin === apiUrl.origin && (url.pathname === basePath || url.pathname.startsWith(`${basePath}/`));
   } catch {
@@ -75,10 +77,10 @@ function isTrustedApiRequest(requestUrl: string, serverUrl: string): boolean {
   }
 }
 
-function isAuthRequest(requestUrl: string, serverUrl: string): boolean {
+function isAuthRequest(requestUrl: string, serverUrl: string, baseUrl: string): boolean {
   try {
-    const apiUrl = new URL(serverUrl);
-    const url = new URL(requestUrl);
+    const apiUrl = new URL(serverUrl, baseUrl);
+    const url = new URL(requestUrl, baseUrl);
     const basePath = apiUrl.pathname.replace(/\/$/, '');
     return url.origin === apiUrl.origin && [
       `${basePath}/auth/signin`,

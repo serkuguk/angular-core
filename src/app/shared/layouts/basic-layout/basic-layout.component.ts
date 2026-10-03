@@ -1,7 +1,7 @@
 import { FormGroup } from '@angular/forms';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {ButtonComponent} from "@springest/ui";
+import {ButtonComponent} from "springest";
 
 @Component({
   selector: 'basic-layout',
