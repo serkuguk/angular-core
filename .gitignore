@@ -11,8 +11,6 @@
 npm-debug.log
 yarn-error.log
 
-pnpm-lock.yaml
-
 # IDEs and editors
 .idea/
 .project
@@ -29,6 +27,19 @@ pnpm-lock.yaml
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+
+# Local Codex and tooling artifacts
+/.agents/
+/.codex/
+/.playwright-mcp/
+/.pnpm-store/
+/.pnpm-store-codex/
+/.vscode/
+/graphify-out/
+
+# Local workspace material
+/docs/
+/demo 1.json
 
 # Miscellaneous
 /.angular/cache

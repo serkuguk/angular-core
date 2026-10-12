@@ -1,9 +1,6 @@
 import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
 import {TranslateModule} from "@ngx-translate/core";
-import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
-import {BasicInputComponent} from "@shared/components/controls/basic-input/basic-input.component";
-import {BasicSelectComponent} from "@shared/components/controls/basic-select/basic-select.component";
-import {ButtonComponent} from "@shared/components/button/button.component";
+import {BasicInputComponent, BasicSelectComponent, ButtonComponent, FormFieldComponent} from "springest";
 import {FormField, form, submit} from "@angular/forms/signals";
 
 @Component({
@@ -22,10 +19,13 @@ import {FormField, form, submit} from "@angular/forms/signals";
 })
 export class FormsComponent {
   public readonly isInline: boolean = true;
-  readonly type = signal<any[]>(['PERSON', 'LEGAL']);
+  readonly type = signal([
+    {name: 'Person', value: 'PERSON'},
+    {name: 'Legal', value: 'LEGAL'}
+  ]);
   readonly nameValue = signal<string | null>(null);
 
-  readonly model = signal({ type: '', name: '', inn: '', lastName: '' });
+  readonly model = signal({type: '', name: '', inn: '', lastName: ''});
   readonly form = form(this.model);
 
   readonly lastNameInput = computed(() => this.model().lastName ?? '');

@@ -1,6 +1,10 @@
 .sublevel-nav {
+  --sublevel-indent-step: 1rem;
+  --sublevel-base-indent: 0.75rem;
+
   list-style: none;
-  margin-left: 10px;
+  margin-left: 0;
+  padding-left: 0;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -10,22 +14,29 @@
     .sublevel-nav-link {
       display: flex;
       align-items: center;
-      height: 3rem;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      text-align: left;
+      padding-left: calc(var(--sublevel-base-indent) + ((var(--sublevel-depth, 1) - 1) * var(--sublevel-indent-step)));
+      height: 2.2rem;
       color: #898989;
       text-decoration: none;
       border-radius: 0.625rem;
       transition: all .3s ease;
 
       .sublevel-link-icon {
-        font-size: 14px;
-        width: 2rem;
-        min-width: 2rem;
-        margin: 0 0.5rem;
+        font-size: 7px;
+        width: 0.85rem;
+        min-width: 0.85rem;
+        margin: 0 0.35rem 0 0;
         text-align: center;
       }
 
       .sublevel-link-text {
-        margin: 0 0.8rem 0 0.8rem;
+        margin: 0;
+        padding-right: 0.5rem;
       }
     }
 

@@ -1,11 +1,8 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from "@angular/common";
 
-/*import {ButtonComponent} from "@shared/components/button";
-import {LoaderComponent} from "@shared/components/loader/loader.component";*/
 import {TranslateModule} from "@ngx-translate/core";
-import {ButtonComponent} from "@shared/components/button/button.component";
-import {CheckboxComponent} from "@shared/components/controls";
+import {CheckboxComponent} from "springest";
 
 
 @Component({
@@ -13,10 +10,7 @@ import {CheckboxComponent} from "@shared/components/controls";
     providers: [],
   imports: [
     CommonModule,
-    /*ButtonComponent,
-    LoaderComponent,*/
     TranslateModule,
-    ButtonComponent,
     CheckboxComponent
   ],
     templateUrl: './buttons.component.html',

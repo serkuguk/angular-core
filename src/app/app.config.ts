@@ -1,4 +1,4 @@
-import {HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
+import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {ApplicationConfig, importProvidersFrom, inject, provideZonelessChangeDetection} from "@angular/core";
 import {
     provideRouter,
@@ -10,12 +10,12 @@ import {authInterceptor} from "@core/interceptors/auth.interceptor";
 import {routes as appRotes} from "./app.routes";
 import {provideEffects} from "@ngrx/effects";
 import {provideStore} from '@ngrx/store';
-import {loginEffects} from '@pages/auth';
+import {Store} from '@ngrx/store';
+import {initUnauthorized, loginEffects, loginFeature} from '@pages/auth';
 import {basicExampleEffects} from '@pages/basic-example';
 import {provideRouterStore, routerReducer} from "@ngrx/router-store";
 import {provideStoreDevtools} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
-import {loginFeature} from "@pages/auth/store/user.reducer";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {JwtModule} from '@auth0/angular-jwt';
@@ -30,6 +30,7 @@ import {providePrimeNG} from "primeng/config";
 import Aura from '@primeng/themes/aura';
 import {NgxPermissionsModule} from "ngx-permissions";
 import { GLOBAL_SHARED_STORE_PROVIDERS } from "@shared/services/global-shared.service";
+import {AUTH_UNAUTHORIZED} from '@core/tokens/auth-unauthorized.token';
 
 // ---------- Factories ----------
 
@@ -52,6 +53,13 @@ const CORE_PROVIDERS = [
     TablesService,
     SelectorsService,
     TranslateService,
+    {
+        provide: AUTH_UNAUTHORIZED,
+        useFactory: () => {
+            const store = inject(Store);
+            return () => store.dispatch(initUnauthorized({error: ''}));
+        },
+    },
     ...GLOBAL_SHARED_STORE_PROVIDERS,
 ];
 
@@ -88,7 +96,6 @@ const ANGULAR_PROVIDERS = [
         },
     }),
     provideHttpClient(
-        withInterceptorsFromDi(),
         withInterceptors([authInterceptor]),
     ),
     provideZonelessChangeDetection()

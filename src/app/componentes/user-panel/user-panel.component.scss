@@ -1,4 +1,13 @@
 .user-panel-wrapper {
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
   &__right {
     display: flex;
     align-items: center;
@@ -52,6 +61,11 @@
       color: #495057;
       cursor: pointer;
 
+      button {
+        width: 100%;
+        text-align: left;
+      }
+
       .icon {
         margin-right: 0.6rem;
       }
@@ -68,7 +82,7 @@
   justify-content: center;
   width: 100%;
 
-  a {
+  button {
     cursor: pointer;
 
     span {

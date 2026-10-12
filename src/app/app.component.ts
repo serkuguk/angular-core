@@ -1,13 +1,12 @@
-import {ChangeDetectionStrategy, Component, HostListener, inject, OnInit, Renderer2, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject, OnInit, Renderer2, signal} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Observable} from "rxjs";
 import {ISideNavToggle} from '@layouts/components/sidenav/interfaces/side-nav-toggle.interface';
 import {CommonModule} from "@angular/common";
 
 //Store
 import {select, Store} from "@ngrx/store";
-import * as fromAuth from "@pages/auth";
-import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
-import * as fromLoginAction from "@pages/auth/store/user.actions";
+import {getIsAuthenticated, init, State} from "@pages/auth";
 import {BodyComponent} from "@layouts/components/body/body.component";
 import {HeaderComponent} from "@layouts/components/header/header.component";
 import {FooterComponent} from "@layouts/components/footer/footer.component";
@@ -33,29 +32,35 @@ export class AppComponent implements OnInit {
     public screenWidth = signal<number>(window.innerWidth);
     public mobileOpen = signal<boolean>(false);
 
-    public store: Store<fromAuth.State> = inject(Store);
+    public store: Store<State> = inject(Store);
     public router: Router = inject(Router);
     private readonly renderer = inject(Renderer2);
+    private readonly destroyRef = inject(DestroyRef);
     public isAuthenticated$: Observable<boolean> | undefined;
 
     @HostListener('window:resize')
     public onWindowResize(): void {
         this.screenWidth.set(window.innerWidth);
         if (window.innerWidth > 768 && this.mobileOpen()) {
-            this.mobileOpen.set(false);
-            this.renderer.removeClass(document.body, 'mobile-nav-open');
+            this.onSidenavClose();
         }
     }
 
     ngOnInit(): void {
 
         this.router.events.pipe(
-            filter(event => event instanceof NavigationEnd)
+            filter(event => event instanceof NavigationEnd),
+            takeUntilDestroyed(this.destroyRef)
         ).subscribe(() => {
-            this.store.dispatch(fromLoginAction.init());
+            this.onSidenavClose();
+            this.store.dispatch(init());
         });
 
-        this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
+        this.isAuthenticated$ = this.store.pipe(select(getIsAuthenticated));
+        this.isAuthenticated$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(authenticated => {
+            if (!authenticated) this.onSidenavClose();
+        });
+        this.destroyRef.onDestroy(() => this.onSidenavClose());
     }
 
     public onToggleSideNav(data: ISideNavToggle): void {
@@ -69,6 +74,9 @@ export class AppComponent implements OnInit {
     }
 
     public onSidenavClose(): void {
+        if (this.mobileOpen() && document.activeElement?.closest('.sidenav')) {
+            document.querySelector<HTMLButtonElement>('.hamburger-btn')?.focus();
+        }
         this.mobileOpen.set(false);
         this.renderer.removeClass(document.body, 'mobile-nav-open');
     }

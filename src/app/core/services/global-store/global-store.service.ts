@@ -35,8 +35,10 @@ export class GlobalStoreService<T extends object> {
   private readonly sensitiveFields: Set<string>;
 
   private readonly stateSig!: WritableSignal<T>;
+  private readonly initialState: T;
 
   constructor(@Inject(APP_STATE) initialState: T, @Optional() @Inject(GLOBAL_STORE_CONFIG) config?: GlobalStoreConfig) {
+    this.initialState = initialState;
     // Aplicamos la configuración
     this.storageKey = config?.storageKey ?? this.DEFAULT_STORAGE_KEY;
     this.maxStorageSize = config?.maxStorageSize ?? this.DEFAULT_MAX_SIZE;
@@ -68,24 +70,8 @@ export class GlobalStoreService<T extends object> {
         return false;
       }
 
-      // Verificación 2: Disponibilidad de localStorage
-      if (!this.isLocalStorageAvailable()) {
-        this.log('warn', 'localStorage is not available');
-        return false;
-      }
-
-      // Verificación 3: Cuota de almacenamiento
-      if (!this.hasStorageQuota(sizeInBytes)) {
-        this.log('warn', 'Insufficient storage quota');
-        // Intentamos liberar espacio
-        this.clearOldEntries();
-        // Intentamos de nuevo
-        if (!this.hasStorageQuota(sizeInBytes)) {
-          return false;
-        }
-      }
-
-      // Guardamos
+      // localStorage is the authority on its remaining quota. Estimating it cannot
+      // safely justify deleting data owned by another service.
       localStorage.setItem(key, value);
       return true;
     } catch (error) {
@@ -93,7 +79,6 @@ export class GlobalStoreService<T extends object> {
         // QuotaExceededError
         if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
           this.log('error', 'localStorage quota exceeded', error);
-          this.clearOldEntries();
         } else {
           this.log('error', 'localStorage error', error);
         }
@@ -109,9 +94,6 @@ export class GlobalStoreService<T extends object> {
    */
   private safeGetItem(key: string): string | null {
     try {
-      if (!this.isLocalStorageAvailable()) {
-        return null;
-      }
       return localStorage.getItem(key);
     } catch (error) {
       this.log('error', 'Error reading from localStorage', error);
@@ -124,9 +106,6 @@ export class GlobalStoreService<T extends object> {
    */
   private safeRemoveItem(key: string): boolean {
     try {
-      if (!this.isLocalStorageAvailable()) {
-        return false;
-      }
       localStorage.removeItem(key);
       return true;
     } catch (error) {
@@ -140,74 +119,15 @@ export class GlobalStoreService<T extends object> {
   // ============================================================
 
   /**
-   * Verificar disponibilidad de localStorage
+   * Verificar acceso de lectura; una escritura todavía puede superar la cuota.
    */
   private isLocalStorageAvailable(): boolean {
     try {
-      const test = '__localStorage_test__';
-      localStorage.setItem(test, test);
-      localStorage.removeItem(test);
+      void localStorage.length;
       return true;
     } catch {
       return false;
     }
-  }
-
-  /**
-   * Verificar cuota de almacenamiento
-   */
-  private hasStorageQuota(requiredBytes: number): boolean {
-    try {
-      // Estimación aproximada del espacio utilizado
-      let totalSize = 0;
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key) {
-          const value = localStorage.getItem(key) ?? '';
-          totalSize += key.length + value.length;
-        }
-      }
-
-      // Normalmente localStorage tiene un límite de 5-10MB
-      const estimatedQuota = 10 * 1024 * 1024; // 10MB
-      const availableSpace = estimatedQuota - totalSize;
-
-      return availableSpace >= requiredBytes;
-    } catch {
-      return true; // Si no podemos verificar, asumimos que hay espacio
-    }
-  }
-
-  /**
-   * Limpiar entradas antiguas (excepto la clave actual)
-   */
-  private clearOldEntries(): void {
-    try {
-      const keysToRemove: string[] = [];
-
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key !== this.storageKey) {
-          // No eliminamos claves importantes (por ejemplo, tokens de autenticación)
-          if (!this.isProtectedKey(key)) {
-            keysToRemove.push(key);
-          }
-        }
-      }
-
-      keysToRemove.forEach(key => localStorage.removeItem(key));
-      this.log('info', `Cleared ${keysToRemove.length} old localStorage entries`);
-    } catch (error) {
-      this.log('error', 'Error clearing old entries', error);
-    }
-  }
-
-  /**
-   * Verificar si una clave está protegida (no eliminar)
-   */
-  private isProtectedKey(key: string): boolean {
-    const protectedPrefixes = ['auth', 'token', 'user', 'session'];
-    return protectedPrefixes.some(prefix => key.toLowerCase().startsWith(prefix));
   }
 
   // ============================================================
@@ -237,10 +157,15 @@ export class GlobalStoreService<T extends object> {
   /**
    * Guardar estado actual en localStorage
    */
-  private persistState(state: T): void {
-    const sanitized = this.sanitizeForStorage(state);
-    const json = JSON.stringify(sanitized);
-    this.safeSetItem(this.storageKey, json);
+  private persistState(state: T): boolean {
+    try {
+      const sanitized = this.sanitizeForStorage(state);
+      const json = JSON.stringify(sanitized);
+      return this.safeSetItem(this.storageKey, json);
+    } catch (error) {
+      this.log('error', 'Error serializing state for localStorage', error);
+      return false;
+    }
   }
 
   /**
@@ -333,58 +258,60 @@ export class GlobalStoreService<T extends object> {
   /**
    * Establecer valor por clave
    */
-  set<K extends keyof T>(key: K, data: T[K]): void {
+  set<K extends keyof T>(key: K, data: T[K]): boolean {
     const curr = this.stateSig();
     const next = { ...curr, [key]: data };
     this.stateSig.set(next);
-    this.persistState(next);
+    return this.persistState(next);
   }
 
   /**
    * Actualizar valor por clave mediante una función
    */
-  updateStore<K extends keyof T>(key: K, fn: (prev: T[K]) => T[K]): void {
+  updateStore<K extends keyof T>(key: K, fn: (prev: T[K]) => T[K]): boolean {
     const curr = this.stateSig();
     const next = { ...curr, [key]: fn(curr[key]) };
     this.stateSig.set(next);
-    this.persistState(next);
+    return this.persistState(next);
   }
 
   /**
    * Limpiar valor por clave
    */
-  clear<K extends keyof T>(key: K): void {
+  clear<K extends keyof T>(key: K): boolean {
     const curr = this.stateSig();
     const { [key]: _removed, ...rest } = curr as Record<string, unknown>;
     const next = rest as T;
     this.stateSig.set(next);
-    this.persistState(next);
+    return this.persistState(next);
   }
 
   /**
    * Restablecer estado al inicial
    */
-  reset(newInitial: T): void {
+  reset(newInitial: T): boolean {
     this.stateSig.set(newInitial);
-    this.persistState(newInitial);
+    return this.persistState(newInitial);
   }
 
   /**
    * Actualización parcial del estado
    */
-  patchState(partial: Partial<T>): void {
+  patchState(partial: Partial<T>): boolean {
     const curr = this.stateSig();
     const next = { ...curr, ...partial };
     this.stateSig.set(next);
-    this.persistState(next);
+    return this.persistState(next);
   }
 
   /**
    * Limpieza completa (incluida localStorage)
    */
-  clearAll(): void {
-    this.safeRemoveItem(this.storageKey);
-    this.log('info', 'Cleared all state from localStorage');
+  clearAll(): boolean {
+    this.stateSig.set(this.initialState);
+    const removed = this.safeRemoveItem(this.storageKey);
+    if (removed) this.log('info', 'Cleared all state from localStorage');
+    return removed;
   }
 
   /**
@@ -395,6 +322,7 @@ export class GlobalStoreService<T extends object> {
     currentSize: number;
     maxSize: number;
     utilization: number;
+    /** Acceso al almacenamiento; no garantiza cuota disponible para escribir. */
     isAvailable: boolean;
   } {
     const json = this.safeGetItem(this.storageKey) ?? '';

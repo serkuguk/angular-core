@@ -1,93 +1,56 @@
+.selectors-demo {
+  max-width: 64rem;
+  padding: 7rem 0 2rem;
+
+  &__header {
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+      color: #0f172a;
+    }
+
+    p {
+      margin: 0;
+      color: #475569;
+      max-width: 44rem;
+    }
+  }
+}
+
 .dropdowns-container {
-  width: 20rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
 
   &__item {
-    margin-top: 1.5rem;
-  }
-}
+    padding: 1.5rem;
+    border: 1px solid #dbe5f0;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
 
-h2 {
-  margin-top: 7rem;
-}
-
-// Stepper Example Styles
-.stepper-container {
-  margin-top: 2rem;
-}
-
-.stepper-example {
-  margin-bottom: 3rem;
-  padding: 1.5rem;
-  border: 1px solid var(--p-surface-200);
-  border-radius: 8px;
-  background: var(--p-surface-0);
-
-  h3 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    color: var(--p-text-color);
-  }
-}
-
-.step-form {
-  h4 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    color: var(--p-text-secondary-color);
-    margin-bottom: 1rem;
-  }
-
-  .form-group {
-    margin-bottom: 1rem;
-
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
+    h3 {
+      margin: 0 0 0.5rem;
+      color: #0f172a;
     }
 
-    .form-control {
-      width: 100%;
-      max-width: 300px;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid var(--p-surface-300);
-      border-radius: 4px;
-      font-size: 1rem;
-
-      &:focus {
-        outline: none;
-        border-color: var(--p-primary-color);
-        box-shadow: 0 0 0 2px var(--p-primary-100);
-      }
+    p {
+      margin: 0 0 1rem;
+      color: #64748b;
+      line-height: 1.5;
     }
   }
-}
 
-.step-content-vertical {
-  padding: 0.5rem 0;
-
-  p {
-    margin: 0;
-    color: var(--p-text-secondary-color);
+  &__hint {
+    margin: 1rem 0 0;
+    color: #475569;
   }
 }
 
-.review-summary {
-  padding: 1rem;
-  background: var(--p-surface-100);
-  border-radius: 4px;
-}
-
-.stepper-status {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: var(--p-surface-100);
-  border-radius: 4px;
-
-  p {
-    margin: 0;
+@media (max-width: 768px) {
+  .selectors-demo {
+    padding-top: 6rem;
   }
 }

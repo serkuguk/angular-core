@@ -55,6 +55,10 @@ export const routes: Routes = [
         path: 'calendar',
         loadComponent: () => import('@pages/basic-example/components/calendar/calendar').then(c => c.CalendarExampleComponent),
       },
+      {
+        path: 'display',
+        loadComponent: () => import('@pages/basic-example/components/display/display.component').then(c => c.DisplayComponent),
+      },
     ]
   },
   {

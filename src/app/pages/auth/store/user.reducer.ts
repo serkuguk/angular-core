@@ -29,11 +29,11 @@ export const loginFeature = createFeature({
     ),
 
     on(UserLoginActions.initAuthorized,
-      (state, {access_token}) => ({...state, access_token: access_token})
+      (state, {access_token, user}) => ({...state, access_token, user, role: user.role, loading: false, error: null})
     ),
 
     on(UserLoginActions.initUnauthorized,
-      state => ({ ...state, user: null, loading: false, error: null })
+      () => ({ ...initialState, loading: false })
     ),
 
     on(UserLoginActions.initError,
@@ -46,24 +46,24 @@ export const loginFeature = createFeature({
     ),
 
     on(UserLoginActions.loginSuccess,
-      (state, {user}) => ({ ...state, user: user, loading: false, error: null })
+      (state, {user}) => ({ ...state, user, access_token: true, role: user.role, loading: false, error: null })
     ),
 
     on(UserLoginActions.loginError,
-      (state, {error}) => ({ ...state,  error: error.message, loading: false })
+      (state, {error}) => ({ ...state, error, loading: false })
     ),
 
     //Logout
     on(UserLoginActions.logOut,
-      state => ({ ...state, loading: true })
+      () => ({ ...initialState, loading: true })
     ),
 
     on(UserLoginActions.logOutSuccess,
-      state => ({ ...state, error: state.error, loading: false })
+      () => ({ ...initialState, loading: false })
     ),
 
     on(UserLoginActions.logOutError,
-      state => ({ ...state,  error: state.error, loading: false })
+      (_state, {error}) => ({ ...initialState, error, loading: false })
     ),
 
     //Update

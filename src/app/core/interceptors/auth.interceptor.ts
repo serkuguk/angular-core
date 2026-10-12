@@ -1,72 +1,96 @@
-import {inject} from '@angular/core'
-import {HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '@angular/common/http'
-import {AuthTokenStorageService} from '../services/auth-token-storage.service';
-import {BehaviorSubject, catchError, switchMap, tap, throwError} from "rxjs";
-import {filter} from "rxjs/operators";
-import { AuthService } from "@core/services/auth/auth.service";
+import {inject} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
+import {HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '@angular/common/http';
+import {catchError, defer, EMPTY, switchMap, takeUntil, throwError} from 'rxjs';
+import {AuthTokenStorageService} from '@core/services/auth-token-storage.service';
+import {AuthService} from '@core/services/auth/auth.service';
+import {ENV} from '@core/tokens/environment.token';
+import {EnvironmentInterface} from '@core/interfaces/environment.interface';
+import {Router} from '@angular/router';
+import {AUTH_UNAUTHORIZED} from '@core/tokens/auth-unauthorized.token';
 
-let isRefreshing$ = new BehaviorSubject<boolean>(false);
+export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+  const authToken = inject(AuthTokenStorageService);
+  const authService = inject(AuthService);
+  const env = inject<EnvironmentInterface>(ENV);
+  const router = inject(Router, {optional: true});
+  const notifyUnauthorized = inject(AUTH_UNAUTHORIZED, {optional: true});
+  const baseUrl = inject(DOCUMENT).baseURI;
 
-export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
-    const authToken: AuthTokenStorageService = inject(AuthTokenStorageService);
-    const authService: AuthService = inject(AuthService);
-    const token = authToken.getToken('access_token');
+  if (!isTrustedApiRequest(req.url, env.server_url, baseUrl) || isAuthRequest(req.url, env.server_url, baseUrl)) {
+    return next(req);
+  }
 
-    if (!token) return next(req);
+  const token = authToken.getToken('access_token');
+  if (!token) return next(req);
+  const sessionVersion = authService.sessionVersion;
 
-    if (isRefreshing$.value) {
-      return refreshToken(authService, req, next, token);
-    }
-
-    return next(addToken(req, token)).pipe(
-      catchError(err => {
-        if (err.status === 401) {
-          authToken.logOut();
-        }
-
-        if (err.status === 403) {
-          return refreshToken(authService, req, next, token);
-        }
-
-        const error = err.error.message || err.statusText;
-        return throwError(() => error);
+  return next(addToken(req, token)).pipe(
+    takeUntil(authService.sessionChanges$),
+    catchError(error => defer(() => {
+      if (sessionVersion !== authService.sessionVersion) return EMPTY;
+      if (error.status === 401) {
+        endUnauthorizedSession(authService, notifyUnauthorized, router);
       }
-    ))
+
+      return error.status === 403
+        ? authService.refreshAccessToken().pipe(
+          catchError(refreshError => defer(() => {
+            if (sessionVersion === authService.sessionVersion && (refreshError.status === 401 || refreshError.status === 403)) {
+              endUnauthorizedSession(authService, notifyUnauthorized, router);
+            }
+            return throwError(() => refreshError);
+          })),
+          switchMap(({access_token}) => sessionVersion === authService.sessionVersion
+            ? next(addToken(req, access_token)).pipe(
+              takeUntil(authService.sessionChanges$),
+              catchError(retryError => defer(() => {
+                if (retryError.status === 401) endUnauthorizedSession(authService, notifyUnauthorized, router);
+                return throwError(() => retryError);
+              })),
+            )
+            : EMPTY),
+        )
+        : throwError(() => error);
+    })),
+  );
+};
+
+function endUnauthorizedSession(
+  authService: AuthService,
+  notifyUnauthorized: (() => void) | null | undefined,
+  router: Router | null | undefined,
+): void {
+  authService.clearSession();
+  notifyUnauthorized?.();
+  void router?.navigate(['/login']);
 }
 
-const refreshToken = (
-  authService: AuthService,
-  req: HttpRequest<any>,
-  next: HttpHandlerFn,
-  token: string) => {
+function isTrustedApiRequest(requestUrl: string, serverUrl: string, baseUrl: string): boolean {
+  try {
+    const apiUrl = new URL(serverUrl, baseUrl);
+    const url = new URL(requestUrl, baseUrl);
+    const basePath = apiUrl.pathname.replace(/\/$/, '');
+    return url.origin === apiUrl.origin && (url.pathname === basePath || url.pathname.startsWith(`${basePath}/`));
+  } catch {
+    return false;
+  }
+}
 
-    if (!isRefreshing$.value) {
-      isRefreshing$.next(true);
-      return authService.refreshAccessToken()
-        .pipe(
-          switchMap((res: { access_token: string }) => {
-            return next(addToken(req, res.access_token))
-              .pipe(
-                tap(_ => isRefreshing$.next(false))
-              )
-          })
-        );
-    }
+function isAuthRequest(requestUrl: string, serverUrl: string, baseUrl: string): boolean {
+  try {
+    const apiUrl = new URL(serverUrl, baseUrl);
+    const url = new URL(requestUrl, baseUrl);
+    const basePath = apiUrl.pathname.replace(/\/$/, '');
+    return url.origin === apiUrl.origin && [
+      `${basePath}/auth/signin`,
+      `${basePath}/auth/refresh_token`,
+    ].includes(url.pathname);
+  } catch {
+    return false;
+  }
+}
 
-    if (req.url.includes('refresh_token')) return next(addToken(req, token));
-
-    return isRefreshing$.pipe(
-      filter(isRefreshing => !isRefreshing),
-      switchMap(_ => next(addToken(req, token)))
-    );
-};
-
-const addToken = (
-  req: HttpRequest<any>,
-  token: string) => {
-  return req.clone({
-    setHeaders: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-};
+function addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
+  return req.clone({setHeaders: {Authorization: `Bearer ${token}`}});
+}

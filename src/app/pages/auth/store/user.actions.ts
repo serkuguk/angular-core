@@ -9,7 +9,7 @@ export const init = createAction(
 
 export const initAuthorized = createAction(
   Types.INIT_AUTHORIZED,
-  props<{ access_token: boolean }>()
+  props<{ access_token: boolean, user: User }>()
 );
 
 export const initUnauthorized = createAction(
@@ -36,7 +36,7 @@ export const loginSuccess = createAction(
 
 export const loginError = createAction(
   Types.LOGIN_ERROR,
-  props<{ error: any }>()
+  props<{ error: string }>()
 );
 
 

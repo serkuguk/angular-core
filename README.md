@@ -2,11 +2,39 @@
 
 Angular Enterprise Application
 
-- Angular version 20
+- Angular version 21.2
 - RxJS version 7
-- TypeScript version 5.8
+- TypeScript version 5.9
 - Arquitectura standalone components (sin NgModules)
 - Detección de cambios sin zonas (zoneless change detection)
+
+## Instalación y validación
+
+Node.js 22.13+ y pnpm 10.12.3. La biblioteca se distribuye como paquete público [`springest@0.1.1`](https://www.npmjs.com/package/springest/v/0.1.1) en npm. La aplicación fija la versión 0.1.1 y no necesita un proyecto vecino ni un tarball local.
+
+```bash
+pnpm install --frozen-lockfile
+pnpm test --runInBand
+pnpm ng build --configuration development
+pnpm ng build --configuration production
+node node_modules/@angular/compiler-cli/bundles/src/bin/ngc.js -p tsconfig.app.json --noEmit
+```
+
+Para instalar la biblioteca en otro proyecto:
+
+```bash
+npm install springest@0.1.1 primeng@^21.1.0 @ngx-translate/core@^15.0.0 chart.js@^4.5.0
+```
+
+Angular common/core/forms y RxJS son peer dependencies. La biblioteca usa Signal Forms de Angular 21; las importaciones son `from 'springest'`.
+
+## Production API y compilación
+
+Production usa `/api` en el mismo origen que la aplicación. El servidor que publica la SPA debe reenviar `/api` al backend y servir `index.html` para las rutas de cliente. El interceptor limita JWT al origen y la ruta del API, y excluye signin/refresh. El backend debe validar los permisos; los guards del cliente no sustituyen esa comprobación.
+
+Se conserva el contrato actual: 403 intenta un refresh, 401 termina la sesión, y un refresh rechazado con 401/403 también la termina. Un error 500 o de red no borra las credenciales.
+
+Los presupuestos de production son initial 1.8 MB (warning) / 2 MB (error) y estilos por componente 4 KB / 8 KB. Roboto se descarga en el navegador; la compilación no descarga ni incrusta Google Fonts. Jenkins y Docker necesitan una actualización separada.
 
 ## Estructura de Carpetas
 

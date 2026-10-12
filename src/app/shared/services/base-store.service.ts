@@ -12,20 +12,20 @@ export class BaseStoreService<T extends object> {
     return this.store.getValue(key);
   }
 
-  setValue<K extends keyof T>(key: K, value: T[K]): void {
-    this.store.set(key, value);
+  setValue<K extends keyof T>(key: K, value: T[K]): boolean {
+    return this.store.set(key, value);
   }
 
-  reset(state: T): void {
-    this.store.reset(state);
+  reset(state: T): boolean {
+    return this.store.reset(state);
   }
 
   getState(): T {
     return this.store.getState();
   }
 
-  clearAll(): void {
-    this.store.clearAll();
+  clearAll(): boolean {
+    return this.store.clearAll();
   }
 
   getStorageInfo() {

@@ -2,14 +2,15 @@
   <div class="user-panel-wrapper__right user-panel">
     <div class="user-panel-avatar-container">
       <div class="user-panel-username">{{ (userData$ | async)?.username }}</div>
-      <div class="user-panel-avatar" (click)="userMenuToggle()">
+      <button type="button" class="user-panel-avatar" (click)="userMenuToggle()"
+              aria-label="Open user menu" [attr.aria-expanded]="showPanel()">
         <app-avatar
              [iconType]="'icon'"
              [icon]="'pi pi-user'"
              [size]="'large'"
              [class]="'text'"
         ></app-avatar>
-      </div>
+      </button>
     </div>
   </div>
 
@@ -18,21 +19,21 @@
       <ul>
         @for (item of userItems; track $index) {
           <li>
-            <a (click)="executeUserEvent(item.userEvent)">
+            <button type="button" (click)="executeUserEvent(item.userEvent)">
               <i class="icon" [ngClass]="item.icon"></i>
               <span translate>{{ 'USER_PANEL.' + item.label }}</span>
-            </a>
+            </button>
           </li>
         }
       </ul>
       <div class="language">
-        <a (click)="translate.use('sp')">
+        <button type="button" (click)="translate.use('sp')" aria-label="Cambiar idioma a español">
           <span>{{ 'Spain' }}</span>
-        </a>
+        </button>
         |
-        <a (click)="translate.use('en')">
+        <button type="button" (click)="translate.use('en')" aria-label="Switch language to English">
           <span>{{ 'English' }}</span>
-        </a>
+        </button>
       </div>
     </div>
   }

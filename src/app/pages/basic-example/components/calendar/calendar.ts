@@ -1,14 +1,14 @@
 import {JsonPipe} from '@angular/common';
-import {Component, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {FormField, form} from '@angular/forms/signals';
-import {CalendarComponent as SharedCalendarComponent} from '@shared/components/calendar';
-import {FormFieldComponent} from "@shared/components/controls/form-field/form-field.component";
+import {ButtonComponent, CalendarComponent as SharedCalendarComponent, FormFieldComponent} from 'springest';
 
 @Component({
   selector: 'app-calendar-example',
-  imports: [SharedCalendarComponent, FormField, JsonPipe, FormFieldComponent],
+  imports: [SharedCalendarComponent, FormField, JsonPipe, FormFieldComponent, ButtonComponent],
   templateUrl: './calendar.html',
   styleUrl: './calendar.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalendarExampleComponent {
   public minDate = new Date(2020, 0, 1);

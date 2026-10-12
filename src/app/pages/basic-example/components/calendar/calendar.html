@@ -1,27 +1,35 @@
-<section>
-  <h3>Signal Form + Calendar</h3>
+<section class="calendar-demo">
+  <header class="calendar-demo__header">
+    <h2>Calendar</h2>
+    <p>Date input now uses the same visual system as the form and select examples.</p>
+  </header>
 
-  <app-form-field label="Date init"
-                  [required]="true"
-                  [field]="myForm.createdAt"
-                  [showLabel]="true"
-                  [isInline]="true">
-      <global-calendar
-        [formField]="myForm.createdAt"
-        placeholder="Date"
-        [minDate]="minDate"
-        [maxDate]="maxDate"
-        (changed)="onDateChanged($event)"
-        (closed)="onClosed()"
-      ></global-calendar>
-  </app-form-field>
+  <section class="calendar-card">
+    <h3>Signal Form + Calendar</h3>
+    <p class="calendar-card__copy">Choose a date and trigger the demo actions with the shared button component.</p>
 
-  <div style="margin-top: 12px; display: flex; gap: 8px;">
-    <button type="button" (click)="reset()">Reset</button>
-    <button type="button" (click)="submit()">Submit</button>
-  </div>
+    <app-form-field label="Date init"
+                    [required]="true"
+                    [field]="myForm.createdAt"
+                    [showLabel]="true"
+                    [isInline]="true">
+        <global-calendar
+          [formField]="myForm.createdAt"
+          placeholder="Date"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          (changed)="onDateChanged($event)"
+          (closed)="onClosed()"
+        ></global-calendar>
+    </app-form-field>
 
-  <p style="margin-top: 12px;">
-   Selected date: {{ formModel().createdAt | json }}
-  </p>
+    <div class="calendar-card__actions">
+      <app-button [label]="'Reset'" (click)="reset()"></app-button>
+      <app-button [label]="'Submit'" (click)="submit()"></app-button>
+    </div>
+
+    <div class="calendar-card__result">
+      Selected date: {{ formModel().createdAt | json }}
+    </div>
+  </section>
 </section>

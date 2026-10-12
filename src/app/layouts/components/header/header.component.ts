@@ -7,8 +7,7 @@ import {OverlayModule} from "@angular/cdk/overlay";
 import {CdkMenuModule} from "@angular/cdk/menu";
 //store
 import {select, Store} from "@ngrx/store";
-import * as fromAuth from "@pages/auth";
-import * as fromLoginSelectors from "@pages/auth/store/user.selectors";
+import {getIsAuthenticated, State} from "@pages/auth";
 import {UserPanelComponent} from "@app/componentes/user-panel/user-panel.component";
 
 @Component({
@@ -34,10 +33,10 @@ export class HeaderComponent implements OnInit {
 
     public isAuthenticated$: Observable<boolean | null> | undefined;
     public translate = inject(TranslateService);
-    private readonly store: Store<fromAuth.State> = inject(Store);
+    private readonly store: Store<State> = inject(Store);
 
     ngOnInit(): void {
-        this.isAuthenticated$ = this.store.pipe(select(fromLoginSelectors.getIsAuthenticated));
+        this.isAuthenticated$ = this.store.pipe(select(getIsAuthenticated));
     }
 
     public getHeadClass(): string {
