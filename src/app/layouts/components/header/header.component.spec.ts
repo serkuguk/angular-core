@@ -1,14 +1,14 @@
 import {TestBed} from '@angular/core/testing';
 import {provideMockStore} from '@ngrx/store/testing';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {provideTranslateService, TranslateService} from '@ngx-translate/core';
 import {getIsAuthenticated} from '@pages/auth';
 import {HeaderComponent} from './header.component';
 
 describe('HeaderComponent language controls', () => {
   it('renders named native buttons and switches the language on activation', () => {
     TestBed.configureTestingModule({
-      imports: [HeaderComponent, TranslateModule.forRoot()],
-      providers: [provideMockStore({selectors: [{selector: getIsAuthenticated, value: false}]})],
+      imports: [HeaderComponent],
+      providers: [provideTranslateService(), provideMockStore({selectors: [{selector: getIsAuthenticated, value: false}]})],
     });
     const fixture = TestBed.createComponent(HeaderComponent);
     fixture.detectChanges();

@@ -38,7 +38,7 @@
                 <i class="sidenav-link-icon" [class]="data.icon"></i>
 
                 @if (isExpanded()) {
-                  <span class="sidenav-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" translate>{{'SIDENAV.' + data.label}}</span>
+                  <span class="sidenav-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" [translate]="'SIDENAV.' + data.label"></span>
                 }
 
                 @if (data.items && isExpanded()) {
@@ -59,7 +59,7 @@
               >
                 <i class="sidenav-link-icon" [class]="data.icon"></i>
                 @if (isExpanded()) {
-                  <span class="sidenav-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" translate>{{'SIDENAV.' + data.label}}</span>
+                  <span class="sidenav-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" [translate]="'SIDENAV.' + data.label"></span>
                 }
               </a>
             }
@@ -84,7 +84,7 @@
                  (mouseenter)="keepSubMenuOpen()"
                  (mouseleave)="hideSubMenu()"
             >
-              <span class="floating-submenu__title" translate>{{'SIDENAV.' + data.label}}</span>
+              <span class="floating-submenu__title" [translate]="'SIDENAV.' + data.label"></span>
               <app-sublevel-menu
                 [data]="data"
                 [collapsed]="!collapsed()"

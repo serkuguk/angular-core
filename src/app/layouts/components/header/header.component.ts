@@ -2,7 +2,7 @@ import {Component, computed, inject, input, OnInit, output} from '@angular/core'
 import {CommonModule} from '@angular/common';
 import {Observable} from "rxjs";
 import {ReactiveFormsModule} from '@angular/forms';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 import {OverlayModule} from "@angular/cdk/overlay";
 import {CdkMenuModule} from "@angular/cdk/menu";
 //store
@@ -16,7 +16,6 @@ import {UserPanelComponent} from "@app/componentes/user-panel/user-panel.compone
     styleUrl: './header.component.scss',
     imports: [
         CommonModule,
-        TranslateModule,
         ReactiveFormsModule,
         OverlayModule,
         CdkMenuModule,

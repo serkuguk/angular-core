@@ -1,6 +1,6 @@
 import {Component, OnInit, inject, ChangeDetectionStrategy, signal} from '@angular/core';
 import {select, Store} from '@ngrx/store'
-import { regexErrors } from 'src/app/shared/utils';
+import { regexErrors } from '@shared/utils';
 
 import * as fromAuth from '@pages/auth';
 import * as fromLoginAction from '@pages/auth/store/user.actions';
@@ -9,7 +9,7 @@ import * as fromLoginSelectors from '@pages/auth/store/user.selectors';
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 import {BasicInputComponent, ButtonComponent, FormFieldComponent, PasswordInputComponent} from "springest";
 import {FormField, form, required, minLength, submit} from "@angular/forms/signals";
 
@@ -18,7 +18,7 @@ import {FormField, form, required, minLength, submit} from "@angular/forms/signa
   providers: [AuthTokenStorageService],
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     FormFieldComponent,
     BasicInputComponent,
     PasswordInputComponent,

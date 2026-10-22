@@ -1,6 +1,5 @@
 import {CommonModule} from '@angular/common';
 import {Component, inject, input, OnInit} from '@angular/core';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {getIsAuthenticated, State} from "@pages/auth";
@@ -9,8 +8,7 @@ import {getIsAuthenticated, State} from "@pages/auth";
     selector: 'app-footer',
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.scss',
-    imports: [CommonModule, TranslateModule],
-    providers: [TranslateService]
+    imports: [CommonModule]
 })
 export class FooterComponent implements OnInit {
     isAuthenticated$: Observable<boolean | null> | undefined;
@@ -32,5 +30,4 @@ export class FooterComponent implements OnInit {
         return styleClass;
     }
 
-    translate = inject(TranslateService);
 }

@@ -2,14 +2,15 @@ import {Component, inject, input, output} from '@angular/core';
 import { INavbarData } from '../../interfaces/nav-bar-data.interface';
 import { CommonModule } from '@angular/common';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-sublevel-menu',
     imports: [CommonModule,
         RouterLinkActive,
         RouterLink,
-        TranslateModule],
+        TranslateDirective,
+        TranslatePipe],
     templateUrl: './sublevel-menu.component.html',
     styleUrl: './sublevel-menu.component.scss',
 })

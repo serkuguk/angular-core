@@ -2,9 +2,9 @@
 
 Angular Enterprise Application
 
-- Angular version 21.2
+- Angular version 22.2
 - RxJS version 7
-- TypeScript version 5.9
+- TypeScript version 6.0
 - Arquitectura standalone components (sin NgModules)
 - Detección de cambios sin zonas (zoneless change detection)
 
@@ -26,7 +26,7 @@ Para instalar la biblioteca en otro proyecto:
 npm install springest@0.1.1 primeng@^21.1.0 @ngx-translate/core@^15.0.0 chart.js@^4.5.0
 ```
 
-Angular common/core/forms y RxJS son peer dependencies. La biblioteca usa Signal Forms de Angular 21; las importaciones son `from 'springest'`.
+Angular common/core/forms y RxJS son peer dependencies. `springest@0.2.1` usa Signal Forms y actualmente declara compatibilidad con Angular 21.2, PrimeNG 21 y ngx-translate 15; requiere una versión compatible antes de que el proyecto pueda compilarse con Angular 22.
 
 ## Production API y compilación
 

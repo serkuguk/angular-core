@@ -17,7 +17,7 @@ import {SublevelMenuComponent} from "@app/layouts";
 import {ISideNavToggle} from "@layouts/components/sidenav/interfaces/side-nav-toggle.interface";
 import {navabarData} from "@layouts/components/sidenav/nav-data";
 import {INavbarData} from "@layouts/components/sidenav/interfaces/nav-bar-data.interface";
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-sidenav',
@@ -26,7 +26,8 @@ import {TranslateModule} from "@ngx-translate/core";
         RouterLink,
         RouterLinkActive,
         RouterModule,
-        TranslateModule,
+        TranslateDirective,
+        TranslatePipe,
     ],
     templateUrl: './sidenav.component.html',
     styleUrl: './sidenav.component.scss',

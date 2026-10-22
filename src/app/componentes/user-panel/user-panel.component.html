@@ -21,7 +21,7 @@
           <li>
             <button type="button" (click)="executeUserEvent(item.userEvent)">
               <i class="icon" [ngClass]="item.icon"></i>
-              <span translate>{{ 'USER_PANEL.' + item.label }}</span>
+              <span [translate]="'USER_PANEL.' + item.label"></span>
             </button>
           </li>
         }

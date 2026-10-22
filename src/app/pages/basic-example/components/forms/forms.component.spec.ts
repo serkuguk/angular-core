@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {TranslateModule} from '@ngx-translate/core';
+import {provideTranslateService} from '@ngx-translate/core';
 import {FormsComponent} from './forms.component';
 
 describe('FormsComponent with the packaged select', () => {
@@ -9,7 +9,8 @@ describe('FormsComponent with the packaged select', () => {
   afterAll(() => Reflect.deleteProperty(window, 'matchMedia'));
 
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [FormsComponent, TranslateModule.forRoot()],
+    imports: [FormsComponent],
+    providers: [provideTranslateService()],
   }));
 
   it('stores LEGAL as a string and displays the INN field after a real option click', async () => {

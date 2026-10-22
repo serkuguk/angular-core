@@ -10,7 +10,7 @@
                   [attr.aria-label]="('SIDENAV_SUB.' + item.label) | translate">
             <i class="sublevel-link-icon fa fa-circle"></i>
             @if (collapsed()) {
-              <span class="sublevel-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" translate>{{'SIDENAV_SUB.' + item.label}}</span>
+              <span class="sublevel-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" [translate]="'SIDENAV_SUB.' + item.label"></span>
             }
             @if (item.items && collapsed()) {
               <i class="menu-collapse-icon" [ngClass]="!item.expanded ? 'fal fa-angle-right':'fal fa-angle-down'"></i>
@@ -26,7 +26,7 @@
              [attr.aria-label]="('SIDENAV_SUB.' + item.label) | translate">
                 <i class="sublevel-link-icon fa fa-circle"></i>
                 @if (collapsed()) {
-                  <span class="sublevel-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" translate>{{'SIDENAV_SUB.' + item.label}}</span>
+                  <span class="sublevel-link-text" animate.enter="nav-fade-enter" animate.leave="nav-fade-leave" [translate]="'SIDENAV_SUB.' + item.label"></span>
                 }
             </a>
         }

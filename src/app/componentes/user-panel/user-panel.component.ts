@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, OnInit, signal} from '@angular/core';
 import {languages, userItems} from './header-dummy-data';
 import {AsyncPipe, NgClass} from "@angular/common";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslateDirective, TranslateService} from "@ngx-translate/core";
 import {getUser, logOut, State} from "@pages/auth";
 
 //Stor
@@ -14,7 +14,7 @@ import {Observable} from "rxjs";
     selector: 'app-user-panel',
     imports: [
         NgClass,
-        TranslateModule,
+        TranslateDirective,
         AsyncPipe,
         AvatarComponent,
         DatePickerModule
@@ -35,7 +35,7 @@ export class UserPanelComponent implements OnInit {
     private elementRef = inject(ElementRef);
 
     ngOnInit(): void {
-        this.translate.setDefaultLang('sp');
+        this.translate.setFallbackLang('sp');
         this.selectedLanguage = this.languages[0];
         this.userData$ = this.store.pipe(select(getUser));
     }

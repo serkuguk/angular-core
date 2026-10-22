@@ -42,7 +42,7 @@ describe('auth guards', () => {
   it('isAuthCanMatch returns true when authenticated', () => {
     isAuthenticateMock.mockReturnValue(true);
 
-    const result = TestBed.runInInjectionContext(() => isAuthCanMatch({} as any, []));
+    const result = TestBed.runInInjectionContext(() => isAuthCanMatch({} as any, [], {} as any));
 
     expect(result).toBe(true);
     expect(createUrlTreeMock).not.toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe('auth guards', () => {
   it('isAuthCanMatch redirects to /login when not authenticated', () => {
     isAuthenticateMock.mockReturnValue(false);
 
-    const result = TestBed.runInInjectionContext(() => isAuthCanMatch({} as any, []));
+    const result = TestBed.runInInjectionContext(() => isAuthCanMatch({} as any, [], {} as any));
 
     expect(result).toBe(loginTree);
     expect(createUrlTreeMock).toHaveBeenCalledWith(['/login']);

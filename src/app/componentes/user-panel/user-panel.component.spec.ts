@@ -1,14 +1,14 @@
 import {TestBed} from '@angular/core/testing';
 import {MockStore, provideMockStore} from '@ngrx/store/testing';
-import {TranslateModule} from '@ngx-translate/core';
+import {provideTranslateService} from '@ngx-translate/core';
 import {getUser, logOut} from '@pages/auth';
 import {UserPanelComponent} from './user-panel.component';
 
 describe('UserPanelComponent menu controls', () => {
   it('opens with a native named button and logs out through a native action', () => {
     TestBed.configureTestingModule({
-      imports: [UserPanelComponent, TranslateModule.forRoot()],
-      providers: [provideMockStore({selectors: [{selector: getUser, value: null}]})],
+      imports: [UserPanelComponent],
+      providers: [provideTranslateService(), provideMockStore({selectors: [{selector: getUser, value: null}]})],
     });
     const fixture = TestBed.createComponent(UserPanelComponent);
     fixture.detectChanges();

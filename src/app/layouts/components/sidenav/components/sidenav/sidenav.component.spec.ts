@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {provideRouter} from '@angular/router';
-import {TranslateModule} from '@ngx-translate/core';
+import {provideTranslateService} from '@ngx-translate/core';
 import {SidenavComponent} from './sidenav.component';
 
 @Component({template: ''})
@@ -9,8 +9,8 @@ class RouteTarget {}
 
 describe('SidenavComponent navigation', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [SidenavComponent, TranslateModule.forRoot()],
-    providers: [provideRouter([{path: 'target', component: RouteTarget}])],
+    imports: [SidenavComponent],
+    providers: [provideTranslateService(), provideRouter([{path: 'target', component: RouteTarget}])],
   }));
 
   function createSidenav(width: number) {

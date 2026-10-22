@@ -11,7 +11,7 @@ pipeline {
 	}
 
 	tools {
-		nodejs "Node 22.0.0"
+		nodejs "Node 24.15.0"
 	}
 
 	environment{
@@ -51,7 +51,7 @@ pipeline {
 
     stage('Install') {
       steps {
-        powershell 'npm ci'
+        powershell 'corepack pnpm@10.12.3 install --frozen-lockfile'
       }
     }
 
@@ -59,9 +59,8 @@ pipeline {
       steps {
         echo "Building ${env.env}"
         script {
-          if (env.env == 'PROD') powershell 'npm run build:pro'
-          else if (env.env == 'UAT') powershell 'npm run build:uat'
-          else powershell 'npm run build'
+        if (env.env == 'QA') powershell 'corepack pnpm@10.12.3 run build -- --configuration development'
+        else powershell 'corepack pnpm@10.12.3 run build -- --configuration production'
         }
       }
     }

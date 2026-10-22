@@ -16,10 +16,10 @@ import {basicExampleEffects} from '@pages/basic-example';
 import {provideRouterStore, routerReducer} from "@ngrx/router-store";
 import {provideStoreDevtools} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
-import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
+import {provideTranslateService} from "@ngx-translate/core";
 import {AuthTokenStorageService} from "@core/services/auth-token-storage.service";
 import {JwtModule} from '@auth0/angular-jwt';
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthService} from "@core/services/auth/auth.service";
 import {PlatformModule} from '@angular/cdk/platform';
 import {basicExampleFeature} from "@pages/basic-example/store/basic-example.reducer";
@@ -27,7 +27,7 @@ import {ENV} from "@core/tokens/environment.token";
 import {TablesService} from "@pages/basic-example/components/tables/services/tables.service";
 import {SelectorsService} from "@pages/basic-example/components/selectors/services/selectors.service";
 import {providePrimeNG} from "primeng/config";
-import Aura from '@primeng/themes/aura';
+import Aura from '@primeuix/themes/aura';
 import {NgxPermissionsModule} from "ngx-permissions";
 import { GLOBAL_SHARED_STORE_PROVIDERS } from "@shared/services/global-shared.service";
 import {AUTH_UNAUTHORIZED} from '@core/tokens/auth-unauthorized.token';
@@ -41,10 +41,6 @@ export function JwtTokenGetter() {
     return token ?? '';
 }
 
-export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http);
-}
-
 // ---------- Core services ----------
 const CORE_PROVIDERS = [
     {provide: ENV, useValue: environment},
@@ -52,7 +48,6 @@ const CORE_PROVIDERS = [
     AuthService,
     TablesService,
     SelectorsService,
-    TranslateService,
     {
         provide: AUTH_UNAUTHORIZED,
         useFactory: () => {
@@ -76,16 +71,10 @@ const MODULE_PROVIDERS = [
             },
         }),
     ),
-    importProvidersFrom(
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-            defaultLanguage: 'sp',
-        }),
-    ),
+    provideTranslateService({
+        loader: provideTranslateHttpLoader(),
+        fallbackLang: 'sp',
+    }),
 ];
 
 // ---------- Angular features ----------
